@@ -5,10 +5,12 @@ function SiteNav() {
   return (
     <nav>
       <ul role="menu">
-        <li role="menuitem"><NavLink to="/about/">About</NavLink></li>
+        <li role="menuitem">
+          <NavLink to="/about/">About</NavLink>
+        </li>
       </ul>
     </nav>
   );
-};
+}
 
 export default SiteNav;
