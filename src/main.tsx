@@ -1,21 +1,14 @@
-import React from 'react'
+import React from 'react';
 import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 
-import App from './App.tsx'
-import ErrorPage from "./routeError.tsx";
-import './index.css'
+import routes from './routes.tsx';
+import './base.css'
 
-const router = createBrowserRouter([
-  {
-    path: "/mechabellum/",
-    element: <App />,
-    errorElement: <ErrorPage />,
-  },
-]);
+const router = createBrowserRouter(routes, {basename: '/mechabellum/'});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

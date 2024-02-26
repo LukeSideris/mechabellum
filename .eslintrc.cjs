@@ -4,18 +4,21 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'eslint-config-prettier',
+    'prettier',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  plugins: ['react-refresh', 'import'],
+  plugins: ['jsx-a11y', 'react-refresh', 'import'],
   rules: {
+    "semi-style": ["error", "last"],
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
-    'import/newline-after-import': ['error', { count: 1 }],
+    'import/newline-after-import': ['error', { count: 1 }]
   },
 }
