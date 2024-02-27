@@ -1,6 +1,10 @@
-import React from 'react';
-import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components';
-
+import {
+  Button,
+  Menu,
+  MenuItem,
+  MenuTrigger,
+  Popover,
+} from 'react-aria-components';
 
 import classes from './SiteNav.module.css';
 
@@ -10,13 +14,15 @@ function SiteNav() {
       <ul>
         <li>
           <MenuTrigger>
-            <Button >
-              ☰ Menu
-            </Button>
+            <Button>☰ Menu</Button>
             <Popover>
               <Menu>
-                <MenuItem className={classes.link} href="/">Home</MenuItem>
-                <MenuItem className={classes.link} href="/about/">About</MenuItem>
+                <MenuItem className={classes.link} href="/">
+                  Home
+                </MenuItem>
+                <MenuItem className={classes.link} href="/about/">
+                  About
+                </MenuItem>
               </Menu>
             </Popover>
           </MenuTrigger>

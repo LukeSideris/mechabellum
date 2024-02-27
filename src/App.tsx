@@ -1,8 +1,6 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { RouterProvider } from 'react-aria-components';
-
 
 import SiteNav from './navigation/SiteNav';
 
