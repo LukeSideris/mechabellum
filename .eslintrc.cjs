@@ -19,6 +19,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    'import/newline-after-import': ['error', { count: 1 }]
+    'import/newline-after-import': ['error', { count: 1 }],
+    'react/react-in-jsx-scope': 'off'
   },
 }

@@ -1,7 +1,7 @@
 function AboutPage() {
   return (
     <>
-      <h1>About This site</h1>
+      <h1>Combat Calculator</h1>
 
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam
