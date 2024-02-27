@@ -1,22 +1,21 @@
 import React from 'react';
 
-import App from './App.tsx'
+import App from './App.tsx';
 import AboutPage from './about/About.tsx';
-import ErrorPage from "./errorPage/routeError.tsx";
+import ErrorPage from './errorPage/routeError.tsx';
 
 const routes = [
   {
-    path: "/",
+    path: '/',
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "about/",
-        element: <AboutPage />
+        path: 'about/',
+        element: <AboutPage />,
       },
     ],
-  }
-
+  },
 ];
 
 export default routes;

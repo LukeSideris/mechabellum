@@ -7,7 +7,7 @@ export const research = {
     modifier: (unit: { damage: number }) => {
       return {
         ...unit,
-        damage: unit.damage *= 1.1,
+        damage: (unit.damage *= 1.1),
       };
     },
   },
@@ -17,7 +17,7 @@ export const research = {
     modifier: (unit: { hp: number }) => {
       return {
         ...unit,
-        hp: unit.hp *= 1.1,
+        hp: (unit.hp *= 1.1),
       };
     },
   },

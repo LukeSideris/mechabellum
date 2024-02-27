@@ -1,0 +1,17 @@
+.siteNav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.siteNav li {
+  margin: 0;
+}
+
+.link {
+  display: block;
+  padding: 8px;
+}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function AboutPage() {
   return (
@@ -6,10 +6,11 @@ function AboutPage() {
       <h1>About This site</h1>
 
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit,
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam
+        velit,
       </p>
     </>
   );
-};
+}
 
 export default AboutPage;
