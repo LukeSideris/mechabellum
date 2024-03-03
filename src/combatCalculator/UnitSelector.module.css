@@ -3,7 +3,7 @@
   grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
   grid-template-rows: 1fr 1fr;
   grid-gap: 0px;
-  grid-auto-flow: column;
+  grid-auto-flow: row;
   justify-content: center;
 }
 
@@ -14,6 +14,10 @@
   padding: 8px;
   position: relative;
   text-align: center;
+}
+
+.unit[data-selected] {
+  background-color: rgba(235, 106, 7, 0.8);
 }
 
 .unitImage {
