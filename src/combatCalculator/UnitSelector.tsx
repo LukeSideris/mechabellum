@@ -1,9 +1,9 @@
-import { ListBox, ListBoxItem } from 'react-aria-components';
+import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 
 import { unitDisplayOrder, units, UnitInterface } from 'src/data/units.ts';
 import classes from './UnitSelector.module.css';
 
-function UnitSelector() {
+function UnitSelector<T extends object>(props: ListBoxProps<T>) {
   return (
     <div>
       <ListBox
@@ -11,6 +11,7 @@ function UnitSelector() {
         aria-label="Unit Selection"
         layout="grid"
         selectionMode="single"
+        {...props}
       >
         {unitDisplayOrder.map((unitName: string) => {
           const unit: UnitInterface = units[unitName as keyof typeof units];
