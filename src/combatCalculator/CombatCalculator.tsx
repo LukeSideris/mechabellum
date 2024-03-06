@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import type { Selection } from 'react-aria-components';
 
-import { units, UnitInterface } from 'src/data/units.ts';
+import { units } from 'src/data/units.ts';
 import UnitSelector from './UnitSelector';
+import UnitStats from 'src/unitDisplay/UnitStats';
 import classes from './CombatCalculator.module.css';
 
 function CombatCalculatorPage() {
@@ -12,8 +13,8 @@ function CombatCalculatorPage() {
   // Get the first unit from the selection set. Currently only one unit can be selected at a time.
   const [leftUnitId] = unitSelection1;
   const [rightUnitId] = unitSelection2;
-  const leftUnit: UnitInterface = units[leftUnitId as keyof typeof units];
-  const rightUnit: UnitInterface = units[rightUnitId as keyof typeof units];
+  const leftUnit = units[leftUnitId as keyof typeof units];
+  const rightUnit = units[rightUnitId as keyof typeof units];
 
   return (
     <>
@@ -22,9 +23,20 @@ function CombatCalculatorPage() {
       <div className={classes.container}>
         <div className={classes.leftSide}>
           <UnitSelector onSelectionChange={setUnitSelection1} selectedKeys={unitSelection1} />
-          <h2>
-            {leftUnit?.name}
-          </h2>
+
+          {leftUnit && (
+            <>
+              <h2>
+                {leftUnit.name}
+              </h2>
+              <img
+                src={leftUnit.thumbnail}
+                alt={leftUnit.name}
+                style={{ width: '100px' }}
+              />
+              <UnitStats unitId={leftUnit.id} />
+            </>
+          )}
         </div>
 
         <div className={classes.divider}>
@@ -33,9 +45,20 @@ function CombatCalculatorPage() {
 
         <div className={classes.rightSide}>
           <UnitSelector onSelectionChange={setUnitSelection2} selectedKeys={unitSelection2} />
-          <h2>
-            {rightUnit?.name}
-          </h2>
+
+          {leftUnit && (
+            <>
+              <h2>
+                {rightUnit.name}
+              </h2>
+              <img
+                src={rightUnit.thumbnail}
+                alt={rightUnit.name}
+                style={{ width: '100px' }}
+              />
+              <UnitStats unitId={rightUnit.id} />
+            </>
+          )}
         </div>
       </div>
     </>
