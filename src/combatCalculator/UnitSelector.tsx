@@ -1,6 +1,6 @@
 import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 
-import { unitDisplayOrder, units, UnitInterface } from 'src/data/units.ts';
+import { unitDisplayOrder, units } from 'src/data/units.ts';
 import classes from './UnitSelector.module.css';
 
 function UnitSelector<T extends object>(props: ListBoxProps<T>) {
@@ -14,13 +14,13 @@ function UnitSelector<T extends object>(props: ListBoxProps<T>) {
         {...props}
       >
         {unitDisplayOrder.map((unitName: string) => {
-          const unit: UnitInterface = units[unitName as keyof typeof units];
+          const unit = units[unitName as keyof typeof units];
           return (
             <ListBoxItem
               className={classes.unit}
               key={unit.id}
               id={unit.id}
-              textValue={unit.name}
+              textValue={unit.test}
             >
               <img
                 className={classes.unitImage}
