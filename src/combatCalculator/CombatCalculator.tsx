@@ -2,8 +2,10 @@ import { useState } from 'react';
 import type { Selection } from 'react-aria-components';
 
 import { units } from 'src/data/units.ts';
-import UnitSelector from './UnitSelector';
+import timeToKill from 'src/algorithms/timetoKill';
 import UnitStats from 'src/unitDisplay/UnitStats';
+import UnitSelector from './UnitSelector';
+
 import classes from './CombatCalculator.module.css';
 
 function CombatCalculatorPage() {
@@ -34,6 +36,11 @@ function CombatCalculatorPage() {
                 alt={leftUnit.name}
                 style={{ width: '100px' }}
               />
+              {rightUnit && (
+                <div>
+                  <b>Time to kill: </b> {Math.round(timeToKill(leftUnit, rightUnit) * 10) / 10}s
+                </div>
+              )}
               <UnitStats unitId={leftUnit.id} />
             </>
           )}
@@ -46,7 +53,7 @@ function CombatCalculatorPage() {
         <div className={classes.rightSide}>
           <UnitSelector onSelectionChange={setUnitSelection2} selectedKeys={unitSelection2} />
 
-          {leftUnit && (
+          {rightUnit && (
             <>
               <h2>
                 {rightUnit.name}
