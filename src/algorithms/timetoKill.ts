@@ -12,7 +12,12 @@ const timeToKill = (attacker: UnitInterface, target: UnitInterface): number => {
     // TODO: add calculation for splash damage here.
     // this involves unit size, rows, etc
 
-    // TODO: Add calculation for rows, melee body blocking
+    // TODO: Add calculation for melee body blocking vs rows
+
+    // TODO: Add calculation for stormcaller and overlord missiles
+
+    // TODO: Add calculation for steel ball, melting point ramping
+
     const totalHitsRequired = target.unitCount * hitsRequired;
 
     return totalHitsRequired / attacker.unitCount * attacker.attackInterval;

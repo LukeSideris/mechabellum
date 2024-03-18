@@ -3,6 +3,7 @@ import type { Selection } from 'react-aria-components';
 
 import { units } from 'src/data/units.ts';
 import timeToKill from 'src/algorithms/timetoKill';
+import combatEfficiency from 'src/algorithms/combatEfficiency';
 import UnitStats from 'src/unitDisplay/UnitStats';
 import UnitSelector from './UnitSelector';
 
@@ -38,7 +39,8 @@ function CombatCalculatorPage() {
               />
               {rightUnit && (
                 <div>
-                  <b>Time to kill: </b> {Math.round(timeToKill(leftUnit, rightUnit) * 10) / 10}s
+                  <b>Time to kill: </b> {Math.round(timeToKill(leftUnit, rightUnit) * 10) / 10}s<br />
+                  <b>effectiveness: {Math.round(combatEfficiency(leftUnit, rightUnit) * 100)}%</b>
                 </div>
               )}
               <UnitStats unitId={leftUnit.id} />

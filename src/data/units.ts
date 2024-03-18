@@ -291,7 +291,7 @@ export const units = {
     id: 'overlord',
     thumbnail: thumbnails['./unitThumbs/overlord.png'] as string,
     flying: true,
-    shootsUp: false,
+    shootsUp: true,
     cost: 400,
     hp: 15630,
     damage: 3654, // x 4 missiles
