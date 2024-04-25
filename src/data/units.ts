@@ -40,8 +40,9 @@ export type UnitInterface = {
   flying: boolean;
   shootsUp: boolean;
   unitCount: number; // number of units in the squad
-  unitSize: number; // individual unit size in meters
+  unitSize: number; // approximate individual unit size in meters
   rows?: number; // number of rows the unit takes up
+  unitSpacing?: number; // estimated gap between units while in loose formation
 };
 
 // NOTE: All the health and damage values need to be checked
@@ -60,9 +61,9 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 24,
-    unitSize: 4.4,
+    unitSize: 4,
     rows: 3,
-    unitSpacing: 0.5,
+    unitSpacing: 2,
   },
   fang: {
     name: 'Fang',
@@ -78,8 +79,9 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 18,
-    unitSize: 1,
+    unitSize: 5.5,
     rows: 3,
+    unitSpacing: 2.4,
   },
   arclight: {
     name: 'Arclight',
@@ -95,7 +97,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 16,
   },
   marksman: {
     name: 'Marksman',
@@ -111,7 +113,7 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 13.5,
   },
   mustang: {
     name: 'Mustang',
@@ -127,8 +129,9 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 12,
-    unitSize: 1,
+    unitSize: 6.4,
     rows: 2,
+    unitSpacing: 1.65,
   },
   sledgehammer: {
     name: 'Sledgehammer',
@@ -143,8 +146,9 @@ export const units = {
     range: 95,
     flying: false,
     shootsUp: false,
-    unitCount: 4,
-    unitSize: 1,
+    unitCount: 5,
+    unitSize: 8, // these are longer than they are wide, about 12m long
+    unitSpacing: 2.5,
   },
   wasp: {
     name: 'Wasp',
@@ -160,8 +164,9 @@ export const units = {
     flying: true,
     shootsUp: true,
     unitCount: 12,
-    unitSize: 1,
+    unitSize: 8,
     rows: 2,
+    unitSpacing: 0.25,
   },
   steel_ball: {
     name: 'Steel Ball',
@@ -178,7 +183,8 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 4,
-    unitSize: 1,
+    unitSize: 11,
+    unitSpacing: 1.2,
   },
   stormcaller: {
     name: 'Stormcaller',
@@ -193,7 +199,8 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 4,
-    unitSize: 1,
+    unitSize: 9,
+    unitSpacing: 3,
   },
   phoenix: {
     name: 'Phoenix',
@@ -209,7 +216,8 @@ export const units = {
     flying: true,
     shootsUp: true,
     unitCount: 2,
-    unitSize: 1,
+    unitSize: 18,
+    unitSpacing: 2,
   },
   rhino: {
     name: 'Rhino',
@@ -225,7 +233,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 28,
   },
   hacker: {
     name: 'Hacker',
@@ -241,7 +249,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 18,
   },
   wraith: {
     name: 'Wraith',
@@ -260,7 +268,7 @@ export const units = {
     flying: true,
     shootsUp: true,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 28,
   },
   scorpion: {
     name: 'Scorpion',
@@ -276,7 +284,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 30,
 
   },
   vulcan: {
@@ -293,7 +301,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 36,
   },
   fortress: {
     name: 'Fortress',
@@ -309,7 +317,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 36,
   },
   melting_point: {
     name: 'Melting Point',
@@ -326,7 +334,7 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 32,
   },
   overlord: {
     name: 'Overlord',
@@ -342,7 +350,7 @@ export const units = {
     flying: true,
     shootsUp: true,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 30,
   },
   war_factory: {
     name: 'War Factory',
@@ -358,6 +366,6 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
-    unitSize: 1,
+    unitSize: 62,
   },
 };
