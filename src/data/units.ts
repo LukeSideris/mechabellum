@@ -189,10 +189,11 @@ export const units = {
   stormcaller: {
     name: 'Stormcaller',
     id: 'stormcaller',
+    thumbnail: thumbnails['./unitThumbs/stormcaller.png'] as string,
     cost: 200,
     hp: 1149,
     speed: 6,
-    damage: 860, // x 4 missiles
+    damage: 860 * 4, // 4 missiles
     splashRadius: 5.5,
     attackInterval: 6.3,
     range: 180,
@@ -238,7 +239,7 @@ export const units = {
   hacker: {
     name: 'Hacker',
     id: 'hacker',
-    thumbnail: thumbnails['./unitThumbs/unknown.png'] as string,
+    thumbnail: thumbnails['./unitThumbs/hacker.png'] as string,
     cost: 300,
     hp: 3249,
     speed: 8,
@@ -254,7 +255,7 @@ export const units = {
   wraith: {
     name: 'Wraith',
     id: 'wraith',
-    thumbnail: thumbnails['./unitThumbs/unknown.png'] as string,
+    thumbnail: thumbnails['./unitThumbs/wraith.png'] as string,
     cost: 300,
     hp: 15001,
     speed: 12,
@@ -273,7 +274,7 @@ export const units = {
   scorpion: {
     name: 'Scorpion',
     id: 'scorpion',
-    thumbnail: thumbnails['./unitThumbs/unknown.png'] as string,
+    thumbnail: thumbnails['./unitThumbs/scorpion.png'] as string,
     cost: 400,
     hp: 19625,
     speed: 7,
@@ -343,7 +344,7 @@ export const units = {
     cost: 400,
     hp: 16099,
     speed: 10,
-    damage: 3514, // x 4 missiles
+    damage: 3514 * 4, // 4 missiles
     splashRadius: 7,
     attackInterval: 4.4,
     range: 110,
@@ -355,7 +356,7 @@ export const units = {
   war_factory: {
     name: 'War Factory',
     id: 'war_factory',
-    thumbnail: thumbnails['./unitThumbs/unknown.png'] as string,
+    thumbnail: thumbnails['./unitThumbs/war_factory.png'] as string,
     cost: 800,
     hp: 166798,
     speed: 6,
