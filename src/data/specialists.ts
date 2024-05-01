@@ -7,7 +7,7 @@ export const specialists = {
     modifier: (unit: { hp: number }) => {
       return {
         ...unit,
-        hp: (unit.hp *= 1.13),
+        hp: (unit.hp *= 1.17),
       };
     },
   },
