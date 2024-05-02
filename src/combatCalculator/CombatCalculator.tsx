@@ -18,6 +18,7 @@ function CombatCalculatorPage() {
   const [rightUnitId] = unitSelection2;
   const leftUnit = units[leftUnitId as keyof typeof units];
   const rightUnit = units[rightUnitId as keyof typeof units];
+  const ttk = timeToKill(leftUnit, rightUnit);
 
   return (
     <>
@@ -39,7 +40,8 @@ function CombatCalculatorPage() {
               />
               {rightUnit && (
                 <div>
-                  <b>Time to kill: </b> {Math.round(timeToKill(leftUnit, rightUnit) * 10) / 10}s<br />
+                  <b>Attack rounds: </b> {ttk.attackRounds || '∞'}<br />
+                  <b>Time to kill: </b> {Math.round(ttk.time * 10) / 10}s<br />
                   <b>effectiveness: {Math.round(combatEfficiency(leftUnit, rightUnit) * 100)}%</b>
                 </div>
               )}

@@ -34,6 +34,7 @@ export type UnitInterface = {
   speed: number;
   damage: number;
   damageMax?: number; // for damage ramp units like steel ball
+  damageTable?: number[]; // for melting point damage values which seem somewhat random
   splashRadius: number; // in meters
   attackInterval: number; // in seconds
   range: number; // in meters
@@ -329,6 +330,18 @@ export const units = {
     speed: 6,
     damage: 1,
     damageMax: 6721,
+    damageTable: [
+      1,
+      4,
+      56,
+      77,
+      121,
+      84,
+      213,
+      276, // estimated
+      354, // estimated
+      // ...
+    ],
     splashRadius: 3,
     attackInterval: 0.2,
     range: 115,

@@ -9,9 +9,11 @@ const combatEfficiency = (attacker: UnitInterface, target: UnitInterface): numbe
   const ttkTarget = timeToKill(target, attacker);
 
   const costRatio = target.cost / attacker.cost;
-  const killRatio = ttkAttacker / ttkTarget;
+  const killRatio = ttkAttacker.time / ttkTarget.time;
 
-  console.log({ costRatio, killRatio, ttkAttacker, ttkTarget });
+  // TODO: Add a calculation here involving ranges and speeds
+  // ex: marksman vs arclight - marksman should be more effective?
+
   return costRatio / killRatio;
 }
 
