@@ -6,6 +6,8 @@
 }
 
 .leftSide {
+  container-type: inline-size;
+  container-name: leftSide;
   flex-grow: 1;
   text-align: right;
 }
@@ -15,6 +17,8 @@
 }
 
 .rightSide {
+  container-type: inline-size;
+  container-name: rightSide;
   flex-grow: 1;
   text-align: left;
 }

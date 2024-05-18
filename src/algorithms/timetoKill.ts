@@ -1,4 +1,12 @@
-import { UnitInterface } from 'src/data/units.ts';
+import { units, UnitInterface } from 'src/data/units.ts';
+
+export type ttkInterface = {
+    attackRounds: number | null;
+    time: number;
+};
+
+// the highest damage value of the melting point damage increments I have measured
+const melterDamageTableMax = units.melting_point.damageTable?.reduce((a, b) => a + b, 0);
 
 // splash damage formula
 const calculateSplashDamageTargets = (attacker: UnitInterface, target: UnitInterface) => {
@@ -32,58 +40,47 @@ const calculateSplashDamageTargets = (attacker: UnitInterface, target: UnitInter
 
 // Calculate an estimated time to kill for a given attacker and defender
 // The parameters for unit stats should have all modifiers applied already
-const timeToKill = (attacker: UnitInterface, target: UnitInterface): number => {
+const timeToKill = (attacker: UnitInterface, target: UnitInterface): ttkInterface => {
+    if (!attacker || !target) {
+        return {
+            attackRounds: null,
+            time: Infinity,
+        };
+    }
+
     // untargetable units can never be killed
     if (target.flying && !attacker.shootsUp) {
-        return Infinity;
+        return {
+            attackRounds: null,
+            time: Infinity,
+        };
     }
 
     let hitsRequired = Math.ceil(target.hp / attacker.damage);
-    if (attacker.damageMax) {
-        // this unit has damage which ramps up with every attack
-        // d = basedamage
-        // md = maxdamage
-        // n = number of hits
-        // solve for:
-        // hp < (
-
-        // I can't figure out the exact formula, so I am guessing logarithmic scaling
-        let n = 1;
-        let cumulativeDamage = attacker.damage;
-        let previousDamage = attacker.damage;
-        while (cumulativeDamage < target.hp) {
-            n++;
-            // todo: figure out this forumla
-            const newDamage = Math.min(attacker.damageMax, previousDamage * 1.6);
-            cumulativeDamage += newDamage;
-            previousDamage = newDamage;
-        }
-
-        hitsRequired = n;
-        console.log(`melter vs `, {
-            targetHP: target.hp,
-            hitsRequired,
-            totalHitsRequired: target.unitCount * hitsRequired,
-            ttk: target.unitCount * hitsRequired * attacker.attackInterval,
-            splashDamageTargets: calculateSplashDamageTargets(attacker, target),
-        }
-        )
-    }
-
-    const totalHitsRequired = target.unitCount * hitsRequired;
+    let totalHitsRequired = target.unitCount * hitsRequired;
 
     if (attacker.id === 'crawler') {
         // as melee units, crawlers can't all engage at once
         // to account for this we assume the first attack is performed by 8 crawlers
         // the second attack is performed by 16 crawlers
-        // the third and subsequent attack is performed by all crawlers
+        // the third and subsequent attacks are performed by all crawlers
+        console.log('qqqq', totalHitsRequired);
         if (totalHitsRequired <= 8) {
-            return attacker.attackInterval;
+            return {
+                attackRounds: 1,
+                time: attacker.attackInterval,
+            };
         } else if (totalHitsRequired <= 24) {
-            return Math.ceil(totalHitsRequired / 16) * attacker.attackInterval;
+            return {
+                attackRounds: 2,
+                time: 2 * attacker.attackInterval,
+            };
         } else {
-            const timeElapsed = (totalHitsRequired) / 16 * attacker.attackInterval;
-            return Math.ceil((totalHitsRequired - 24) / 24) * attacker.attackInterval + timeElapsed;
+            const attackRounds = Math.ceil((totalHitsRequired - 24) / attacker.unitCount) + 2;
+            return {
+                attackRounds,
+                time: attackRounds * attacker.attackInterval,
+            };
         }
     }
 
@@ -98,13 +95,77 @@ const timeToKill = (attacker: UnitInterface, target: UnitInterface): number => {
         }, target);
 
         const hitsToKill = Math.ceil(target.hp / (attacker.damage * attacker.unitCount * 0.6));
-        return Math.ceil(hitsToKill * target.unitCount / splashDamageTargets) * attacker.attackInterval;
+
+        const attackRounds = Math.ceil(hitsToKill * target.unitCount / splashDamageTargets);
+        return {
+            attackRounds,
+            time: attackRounds * attacker.attackInterval,
+        };
+    }
+
+    if (attacker.id === 'steel_ball') {
+        // steel ball damage ramps up to the max by doubling on every hit
+        // If the target is a single unit entity we assume all 4 steel balls attack the same target
+        // otherwise we assume they each attack different targets
+        let cumulativeDamage = 0;
+        let hits = 0;
+        const multiplier = Math.ceil(attacker.unitCount / target.unitCount);
+        while (cumulativeDamage < target.hp) {
+            cumulativeDamage = attacker.damage * Math.pow(2, hits) * multiplier;
+            hits++;
+        }
+
+        if (multiplier === 1) {
+            const totalHits = hits * target.unitCount / attacker.unitCount;
+            return {
+                attackRounds: totalHits,
+                time: totalHits * attacker.attackInterval,
+            };
+        }
+
+        return {
+            attackRounds: hits,
+            time: hits * attacker.attackInterval,
+        };
+    }
+
+    if (attacker.id === 'melting_point' && attacker.damageMax) {
+        let cumulativeDamage = 0;
+        let hits = 0;
+
+        // melting point has really weird damage scaling
+        // I measured some of the damage values. If the target is within this range we use the damage table
+        if (target.hp <= melterDamageTableMax) {
+            while (cumulativeDamage < target.hp) {
+                cumulativeDamage += attacker.damageTable?.[hits] || 0;
+                hits++;
+            }
+        } else {
+            // For now we are estimating using a damage ramp equation based on a cubic formula
+            const nStep = 1 / 22; // 4.4 second ramp time
+
+            const damageRange = attacker.damageMax - attacker.damage;
+            while (cumulativeDamage < target.hp) {
+                const rampProgress = Math.min(1, hits * nStep)
+                const damageRatio = Math.pow(rampProgress, 3);
+                cumulativeDamage += attacker.damage + Math.round(damageRange * damageRatio);
+                hits++;
+            }
+        }
+
+        // overwrite default hits required with the calculated value and resolve TTK formula as normal
+        hitsRequired = hits;
+        totalHitsRequired = target.unitCount * hitsRequired;
     }
 
     const splashDamageTargets = calculateSplashDamageTargets(attacker, target);
 
     // return default formula for unit engagement
-    return Math.ceil(totalHitsRequired / attacker.unitCount / splashDamageTargets) * attacker.attackInterval;
+    const attackRounds = Math.ceil(totalHitsRequired / attacker.unitCount / splashDamageTargets);
+    return {
+        attackRounds: attackRounds,
+        time: attackRounds * attacker.attackInterval,
+    };
 }
 
 export default timeToKill;
