@@ -1,0 +1,69 @@
+$unitMinWidth: 50px;
+$unitMaxWidth: 80px;
+$unitCount: 19;
+/*
+  max/min width is based on a default of 10 units per row.
+  At these sizes we need to adjust row wrapping.
+*/
+$minWidth: $unitMinWidth * 10;
+$maxWidth: $unitMaxWidth * 10;
+
+.unitSelector {
+  display: grid;
+  grid-template-columns: repeat(10, minMax($unitMinWidth, $unitMaxWidth));
+  grid-template-rows: min-content min-content;
+  grid-gap: 0px;
+  grid-auto-flow: row;
+  justify-content: center;
+}
+
+@container(max-width: #{$minWidth}) {
+  .unitSelector {
+    grid-template-columns: repeat(auto-fill, $unitMinWidth);
+  }
+}
+
+@container(min-width: #{$maxWidth}) {
+  .unitSelector {
+    grid-template-columns: repeat(auto-fill, minMax($unitMinWidth, $unitMaxWidth));
+  }
+}
+
+:global(.combat-left-side) .unitSelector {
+  justify-content: end;
+}
+
+:global(.combat-right-side) .unitSelector {
+  justify-content: start;
+}
+
+.unit {
+  aspect-ratio: 1 / 2;
+  background-color: #313131;
+  border: 2px solid rgba(235, 106, 7, 0.8);
+  border-radius: 2px;
+  padding: 8px;
+  position: relative;
+  text-align: center;
+}
+
+.unit[data-selected] {
+  background-color: rgba(235, 106, 7, 0.8);
+}
+
+.unitImage {
+  width: 100%;
+  height: auto;
+}
+
+.unitName {
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  padding: 8px;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

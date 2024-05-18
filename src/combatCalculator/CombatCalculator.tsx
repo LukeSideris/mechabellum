@@ -25,7 +25,7 @@ function CombatCalculatorPage() {
       <h1>Combat Calculator</h1>
 
       <div className={classes.container}>
-        <div className={classes.leftSide}>
+        <div className={`combat-left-side ${classes.leftSide}`}>
           <UnitSelector onSelectionChange={setUnitSelection1} selectedKeys={unitSelection1} />
 
           {leftUnit && (
@@ -40,7 +40,7 @@ function CombatCalculatorPage() {
               />
               {rightUnit && (
                 <div>
-                  <b>Attack rounds: </b> {ttk.attackRounds || '∞'}<br />
+                  <b>Attack rounds: </b> {ttk.attackRounds || '0'}<br />
                   <b>Time to kill: </b> {Math.round(ttk.time * 10) / 10}s<br />
                   <b>effectiveness: {Math.round(combatEfficiency(leftUnit, rightUnit) * 100)}%</b>
                 </div>
@@ -54,7 +54,7 @@ function CombatCalculatorPage() {
           <span className={classes.versus}>VS</span>
         </div>
 
-        <div className={classes.rightSide}>
+        <div className={`combat-right-side ${classes.rightSide}`}>
           <UnitSelector onSelectionChange={setUnitSelection2} selectedKeys={unitSelection2} />
 
           {rightUnit && (

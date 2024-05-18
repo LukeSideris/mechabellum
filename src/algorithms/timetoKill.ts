@@ -41,6 +41,13 @@ const calculateSplashDamageTargets = (attacker: UnitInterface, target: UnitInter
 // Calculate an estimated time to kill for a given attacker and defender
 // The parameters for unit stats should have all modifiers applied already
 const timeToKill = (attacker: UnitInterface, target: UnitInterface): ttkInterface => {
+    if (!attacker || !target) {
+        return {
+            attackRounds: null,
+            time: Infinity,
+        };
+    }
+
     // untargetable units can never be killed
     if (target.flying && !attacker.shootsUp) {
         return {

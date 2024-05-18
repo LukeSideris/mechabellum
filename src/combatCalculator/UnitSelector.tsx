@@ -1,7 +1,7 @@
 import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 
 import { unitDisplayOrder, units } from 'src/data/units.ts';
-import classes from './UnitSelector.module.css';
+import classes from './UnitSelector.module.scss';
 
 function UnitSelector<T extends object>(props: ListBoxProps<T>) {
   return (
@@ -20,7 +20,7 @@ function UnitSelector<T extends object>(props: ListBoxProps<T>) {
               className={classes.unit}
               key={unit.id}
               id={unit.id}
-              textValue={unit.test}
+              textValue={unit.name}
             >
               <img
                 className={classes.unitImage}
