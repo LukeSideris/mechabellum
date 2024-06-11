@@ -56,6 +56,10 @@ $maxWidth: $unitMaxWidth * 10;
   height: auto;
 }
 
+:global(.combat-left-side) .unitImage {
+  transform: scaleX(-1);
+}
+
 .unitName {
   background: rgba(0, 0, 0, 0.5);
   font-size: 12px;

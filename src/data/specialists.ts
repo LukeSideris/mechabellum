@@ -1,35 +1,52 @@
+import { UnitInterface } from './units';
+import { ModInterface } from './ModInterface';
+import thumbnailAerial from './thumbnails/specialists/aerial.png';
+import thumbnailHeavyArmor from './thumbnails/specialists/heavyArmor.png';
+import thumbnailCostControl from './thumbnails/specialists/costControl.png';
+import thumbnailSpeed from './thumbnails/specialists/speed.png';
+
 export const specialistDisplayOrder = ['heavyArmor', 'costControl'];
 
-export type specialistsInterface = {
-  name: string;
-  id: string;
-};
 
-export const specialists = {
+// this object is composed of ModInterface objects
+export const starterSpecialists: { [key: string]: ModInterface } = {
   heavyArmor: {
     name: 'Heavy Armor',
     id: 'heavyArmor',
-    modifyHp: (unit: { hp: number }) => {
-      return {
-        ...unit,
-        hp: (unit.hp *= 1.17),
-      };
-    },
-    modifier: (unit: { hp: number }) => {
-      return {
-        ...unit,
-        hp: (unit.hp *= 1.17),
-      };
-    },
+    description: 'Increase health of all units by 17%',
+    thumbnail: thumbnailHeavyArmor,
+    modifyHp: 0.17,
   },
   costControl: {
     name: 'Cost Control',
     id: 'costControl',
-    modifier: (unit: { hp: number }) => {
+    description: 'Decrease health and attack of all units by 13%',
+    thumbnail: thumbnailCostControl,
+    modifyHp: -0.13,
+    modifyAttack: -0.13,
+  },
+  speed: {
+    name: 'Speed',
+    id: 'speed',
+    description: 'Increase speed of all units by 3m/s',
+    thumbnail: thumbnailSpeed,
+    modifier: (unit: UnitInterface) => {
       return {
         ...unit,
-        hp: (unit.hp *= 0.87),
+        speed: (unit.speed = 3),
       };
-    },
+    }
+  },
+  aerial: {
+    name: 'Aerial',
+    id: 'aerial',
+    description: 'Increase range of flying units by 10m',
+    thumbnail: thumbnailAerial,
+    modifier: (unit: UnitInterface) => {
+      return {
+        ...unit,
+        range: unit.flying ? unit.range + 10 : unit.range,
+      };
+    }
   },
 };

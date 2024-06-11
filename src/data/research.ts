@@ -1,42 +1,40 @@
-const thumbnails = import.meta.glob('./researchThumbs/*.png', {
+import { ModInterface } from './ModInterface';
+
+const thumbnails = import.meta.glob('./thumbnails/research/*.png', {
   eager: true,
   import: 'default',
 });
 
-export type researchInterface = {
-  name: string;
-  id: string;
-  attackModifier?: number;
-  hpModifier?: number;
-  thumbnail: string;
-};
-
-export const attackResearch = [
-  {
+export const attackResearch: { [key: string]: ModInterface } = {
+  rcAttack1: {
     name: 'Attack upgrade 1',
     id: 'rcAttack1',
-    attackModifier: 0.1,
-    thumbnail: thumbnails['./researchThumbs/attack_1.png'] as string,
+    description: 'Increase attack of all units by 10%',
+    thumbnail: thumbnails['./thumbnails/research/attack_1.png'] as string,
+    modifyAttack: 0.1,
   },
-  {
+  rcAttack2: {
     name: 'Attack upgrade 2',
     id: 'rcAttack2',
-    attackModifier: 0.3,
-    thumbnail: thumbnails['./researchThumbs/attack_2.png'] as string,
-  }
-];
+    description: 'Increase health of all units by 30%',
+    thumbnail: thumbnails['./thumbnails/research/attack_2.png'] as string,
+    modifyAttack: 0.3,
+  },
+};
 
-export const defenseResearch = [
-  {
+export const defenseResearch: { [key: string]: ModInterface } = {
+  rcDefense1: {
     name: 'Defense upgrade 1',
     id: 'rcDefense1',
-    hpModifier: 0.1,
-    thumbnail: thumbnails['./researchThumbs/defense_1.png'] as string,
+    description: 'Increase health of all units by 10%',
+    thumbnail: thumbnails['./thumbnails/research/defense_1.png'] as string,
+    modifyHp: 0.1,
   },
-  {
+  rcDefense2: {
     name: 'Defense upgrade 2',
     id: 'rcDefense2',
-    hpModifier: 0.3,
-    thumbnail: thumbnails['./researchThumbs/defense_2.png'] as string,
-  }
-];
+    description: 'Increase health of all units by 30%',
+    thumbnail: thumbnails['./thumbnails/research/defense_2.png'] as string,
+    modifyHp: 0.3,
+  },
+};

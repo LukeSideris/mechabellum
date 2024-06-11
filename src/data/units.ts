@@ -1,29 +1,7 @@
-const thumbnails = import.meta.glob('./unitThumbs/*.png', {
+const thumbnails = import.meta.glob('./thumbnails/units/*.png', {
   eager: true,
   import: 'default',
 });
-
-export const unitDisplayOrder = [
-  'crawler',
-  'fang',
-  'arclight',
-  'marksman',
-  'mustang',
-  'sledgehammer',
-  'stormcaller',
-  'steel_ball',
-  'wasp',
-  'phoenix',
-  'rhino',
-  'hacker',
-  'wraith',
-  'scorpion',
-  'vulcan',
-  'fortress',
-  'melting_point',
-  'overlord',
-  'war_factory',
-];
 
 export type UnitInterface = {
   name: string;
@@ -51,7 +29,7 @@ export const units = {
   crawler: {
     name: 'Crawler',
     id: 'crawler',
-    thumbnail: thumbnails['./unitThumbs/crawler.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/crawler.png'] as string,
     cost: 100,
     hp: 307,
     speed: 16,
@@ -69,7 +47,7 @@ export const units = {
   fang: {
     name: 'Fang',
     id: 'fang',
-    thumbnail: thumbnails['./unitThumbs/fang.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/fang.png'] as string,
     cost: 100,
     hp: 117,
     speed: 6,
@@ -87,7 +65,7 @@ export const units = {
   arclight: {
     name: 'Arclight',
     id: 'arclight',
-    thumbnail: thumbnails['./unitThumbs/arclight.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/arclight.png'] as string,
     cost: 100,
     hp: 4414,
     speed: 7,
@@ -103,7 +81,7 @@ export const units = {
   marksman: {
     name: 'Marksman',
     id: 'marksman',
-    thumbnail: thumbnails['./unitThumbs/marksman.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/marksman.png'] as string,
     cost: 100,
     hp: 1622,
     speed: 8,
@@ -119,7 +97,7 @@ export const units = {
   mustang: {
     name: 'Mustang',
     id: 'mustang',
-    thumbnail: thumbnails['./unitThumbs/mustang.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/mustang.png'] as string,
     cost: 200,
     hp: 343,
     speed: 16,
@@ -137,7 +115,7 @@ export const units = {
   sledgehammer: {
     name: 'Sledgehammer',
     id: 'sledgehammer',
-    thumbnail: thumbnails['./unitThumbs/sledgehammer.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/sledgehammer.png'] as string,
     cost: 200,
     hp: 3478,
     speed: 7,
@@ -154,7 +132,7 @@ export const units = {
   wasp: {
     name: 'Wasp',
     id: 'wasp',
-    thumbnail: thumbnails['./unitThumbs/wasp.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/wasp.png'] as string,
     cost: 300,
     hp: 302,
     speed: 16,
@@ -172,7 +150,7 @@ export const units = {
   steel_ball: {
     name: 'Steel Ball',
     id: 'steel_ball',
-    thumbnail: thumbnails['./unitThumbs/steel_ball.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/steel_ball.png'] as string,
     cost: 200,
     hp: 4571,
     speed: 16,
@@ -190,7 +168,7 @@ export const units = {
   stormcaller: {
     name: 'Stormcaller',
     id: 'stormcaller',
-    thumbnail: thumbnails['./unitThumbs/stormcaller.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/stormcaller.png'] as string,
     cost: 200,
     hp: 1149,
     speed: 6,
@@ -207,7 +185,7 @@ export const units = {
   phoenix: {
     name: 'Phoenix',
     id: 'phoenix',
-    thumbnail: thumbnails['./unitThumbs/phoenix.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/phoenix.png'] as string,
     cost: 200,
     hp: 1464,
     speed: 16,
@@ -224,7 +202,7 @@ export const units = {
   rhino: {
     name: 'Rhino',
     id: 'rhino',
-    thumbnail: thumbnails['./unitThumbs/rhino.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/rhino.png'] as string,
     cost: 200,
     hp: 19297,
     speed: 16,
@@ -240,7 +218,7 @@ export const units = {
   hacker: {
     name: 'Hacker',
     id: 'hacker',
-    thumbnail: thumbnails['./unitThumbs/hacker.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/hacker.png'] as string,
     cost: 300,
     hp: 3249,
     speed: 8,
@@ -256,7 +234,7 @@ export const units = {
   wraith: {
     name: 'Wraith',
     id: 'wraith',
-    thumbnail: thumbnails['./unitThumbs/wraith.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/wraith.png'] as string,
     cost: 300,
     hp: 15001,
     speed: 12,
@@ -275,7 +253,7 @@ export const units = {
   scorpion: {
     name: 'Scorpion',
     id: 'scorpion',
-    thumbnail: thumbnails['./unitThumbs/scorpion.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/scorpion.png'] as string,
     cost: 400,
     hp: 19625,
     speed: 7,
@@ -292,7 +270,7 @@ export const units = {
   vulcan: {
     name: 'Vulcan',
     id: 'vulcan',
-    thumbnail: thumbnails['./unitThumbs/vulcan.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/vulcan.png'] as string,
     cost: 400,
     hp: 38385,
     speed: 6,
@@ -308,7 +286,7 @@ export const units = {
   fortress: {
     name: 'Fortress',
     id: 'fortress',
-    thumbnail: thumbnails['./unitThumbs/fortress.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/fortress.png'] as string,
     cost: 400,
     hp: 51205,
     speed: 6,
@@ -324,7 +302,7 @@ export const units = {
   melting_point: {
     name: 'Melting Point',
     id: 'melting_point',
-    thumbnail: thumbnails['./unitThumbs/melting_point.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/melting_point.png'] as string,
     cost: 400,
     hp: 39869,
     speed: 6,
@@ -353,7 +331,7 @@ export const units = {
   overlord: {
     name: 'Overlord',
     id: 'overlord',
-    thumbnail: thumbnails['./unitThumbs/overlord.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/overlord.png'] as string,
     cost: 400,
     hp: 16099,
     speed: 10,
@@ -369,7 +347,7 @@ export const units = {
   war_factory: {
     name: 'War Factory',
     id: 'war_factory',
-    thumbnail: thumbnails['./unitThumbs/war_factory.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/war_factory.png'] as string,
     cost: 800,
     hp: 166798,
     speed: 6,
