@@ -7,7 +7,6 @@ import thumbnailSpeed from './thumbnails/specialists/speed.png';
 
 export const specialistDisplayOrder = ['heavyArmor', 'costControl'];
 
-
 // this object is composed of ModInterface objects
 export const starterSpecialists: { [key: string]: ModInterface } = {
   heavyArmor: {
@@ -23,7 +22,7 @@ export const starterSpecialists: { [key: string]: ModInterface } = {
     description: 'Decrease health and attack of all units by 13%',
     thumbnail: thumbnailCostControl,
     modifyHp: -0.13,
-    modifyAttack: -0.13,
+    modifyDamage: -0.13,
   },
   speed: {
     name: 'Speed',
@@ -35,7 +34,7 @@ export const starterSpecialists: { [key: string]: ModInterface } = {
         ...unit,
         speed: (unit.speed = 3),
       };
-    }
+    },
   },
   aerial: {
     name: 'Aerial',
@@ -47,6 +46,6 @@ export const starterSpecialists: { [key: string]: ModInterface } = {
         ...unit,
         range: unit.flying ? unit.range + 10 : unit.range,
       };
-    }
+    },
   },
 };

@@ -13,7 +13,7 @@ function UnitSelector<T extends object>(props: ListBoxProps<T>) {
         selectionMode="single"
         {...props}
       >
-        {Object.values(units).map(unit => {
+        {Object.values(units).map((unit) => {
           return (
             <ListBoxItem
               className={classes.unit}

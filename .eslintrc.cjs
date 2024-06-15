@@ -22,4 +22,7 @@ module.exports = {
     'import/newline-after-import': ['error', { count: 1 }],
     'react/react-in-jsx-scope': 'off'
   },
+  settings: {
+    react: { version: 'detect' },
+  },
 }

@@ -4,7 +4,10 @@ import timeToKill from './timetoKill';
 
 // calculate the estimated cost efficiency of a matchup between two units
 // returns a decimal representing the cost efficiency ratio
-const combatEfficiency = (attacker: UnitInterface, target: UnitInterface): number => {
+const combatEfficiency = (
+  attacker: UnitInterface,
+  target: UnitInterface
+): number => {
   const ttkAttacker = timeToKill(attacker, target);
   const ttkTarget = timeToKill(target, attacker);
 
@@ -14,14 +17,13 @@ const combatEfficiency = (attacker: UnitInterface, target: UnitInterface): numbe
   if (rangeDiff > 0) {
     ttkTarget.time += rangeDiff / target.speed;
   } else if (rangeDiff < 0) {
-    ttkAttacker.time += -rangeDiff / attacker.speed
+    ttkAttacker.time += -rangeDiff / attacker.speed;
   }
-
 
   const costRatio = target.cost / attacker.cost;
   const killRatio = ttkAttacker.time / ttkTarget.time;
 
   return costRatio / killRatio;
-}
+};
 
 export default combatEfficiency;

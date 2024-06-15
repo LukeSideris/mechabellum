@@ -11,14 +11,14 @@ export const attackResearch: { [key: string]: ModInterface } = {
     id: 'rcAttack1',
     description: 'Increase attack of all units by 10%',
     thumbnail: thumbnails['./thumbnails/research/attack_1.png'] as string,
-    modifyAttack: 0.1,
+    modifyDamage: 0.1,
   },
   rcAttack2: {
     name: 'Attack upgrade 2',
     id: 'rcAttack2',
     description: 'Increase health of all units by 30%',
     thumbnail: thumbnails['./thumbnails/research/attack_2.png'] as string,
-    modifyAttack: 0.3,
+    modifyDamage: 0.3,
   },
 };
 

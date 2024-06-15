@@ -9,8 +9,10 @@ export type UnitInterface = {
   thumbnail: string;
   cost: number;
   hp: number;
+  hpMod?: number; // applied by applyMods function
   speed: number;
   damage: number;
+  damageMod?: number; // applied by applyMods function
   damageMax?: number; // for damage ramp units like steel ball
   damageTable?: number[]; // for melting point damage values which seem somewhat random
   splashRadius: number; // in meters
@@ -265,7 +267,6 @@ export const units = {
     shootsUp: false,
     unitCount: 1,
     unitSize: 30,
-
   },
   vulcan: {
     name: 'Vulcan',
