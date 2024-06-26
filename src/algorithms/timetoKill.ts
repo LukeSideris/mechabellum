@@ -2,6 +2,7 @@ import { units, UnitInterface } from 'src/data/units.ts';
 
 export type ttkInterface = {
   attackRounds: number | null;
+  hitsPerKill: number | null;
   time: number;
 };
 
@@ -52,19 +53,25 @@ const timeToKill = (
   if (!attacker || !target) {
     return {
       attackRounds: null,
+      hitsPerKill: null,
       time: Infinity,
     };
   }
+  const { damageMod = 1 } = attacker;
+  const { hpMod = 1 } = target;
+  const targetHp = Math.round(target.hp * hpMod);
+  const attackerDamage = Math.round(attacker.damage * damageMod);
 
   // untargetable units can never be killed
   if (target.flying && !attacker.shootsUp) {
     return {
       attackRounds: null,
+      hitsPerKill: null,
       time: Infinity,
     };
   }
 
-  let hitsRequired = Math.ceil(target.hp / attacker.damage);
+  let hitsRequired = Math.ceil(targetHp / attackerDamage);
   let totalHitsRequired = target.unitCount * hitsRequired;
 
   if (attacker.id === 'crawler') {
@@ -75,11 +82,13 @@ const timeToKill = (
     if (totalHitsRequired <= 8) {
       return {
         attackRounds: 1,
+        hitsPerKill: hitsRequired,
         time: attacker.attackInterval,
       };
     } else if (totalHitsRequired <= 24) {
       return {
         attackRounds: 2,
+        hitsPerKill: hitsRequired,
         time: 2 * attacker.attackInterval,
       };
     } else {
@@ -87,6 +96,7 @@ const timeToKill = (
         Math.ceil((totalHitsRequired - 24) / attacker.unitCount) + 2;
       return {
         attackRounds,
+        hitsPerKill: hitsRequired,
         time: attackRounds * attacker.attackInterval,
       };
     }
@@ -107,7 +117,7 @@ const timeToKill = (
     );
 
     const hitsToKill = Math.ceil(
-      target.hp / (attacker.damage * attacker.unitCount * 0.6)
+      targetHp / (attackerDamage * attacker.unitCount * 0.6)
     );
 
     const attackRounds = Math.ceil(
@@ -115,6 +125,7 @@ const timeToKill = (
     );
     return {
       attackRounds,
+      hitsPerKill: hitsRequired,
       time: attackRounds * attacker.attackInterval,
     };
   }
@@ -126,8 +137,8 @@ const timeToKill = (
     let cumulativeDamage = 0;
     let hits = 0;
     const multiplier = Math.ceil(attacker.unitCount / target.unitCount);
-    while (cumulativeDamage < target.hp) {
-      cumulativeDamage = attacker.damage * Math.pow(2, hits) * multiplier;
+    while (cumulativeDamage < targetHp) {
+      cumulativeDamage = attackerDamage * Math.pow(2, hits) * multiplier;
       hits++;
     }
 
@@ -135,12 +146,14 @@ const timeToKill = (
       const totalHits = (hits * target.unitCount) / attacker.unitCount;
       return {
         attackRounds: totalHits,
+        hitsPerKill: hitsRequired,
         time: totalHits * attacker.attackInterval,
       };
     }
 
     return {
       attackRounds: hits,
+      hitsPerKill: hitsRequired,
       time: hits * attacker.attackInterval,
     };
   }
@@ -151,9 +164,11 @@ const timeToKill = (
 
     // melting point has really weird damage scaling
     // I measured some of the damage values. If the target is within this range we use the damage table
-    if (target.hp <= melterDamageTableMax) {
-      while (cumulativeDamage < target.hp) {
-        cumulativeDamage += attacker.damageTable?.[hits] || 0;
+    if (targetHp <= melterDamageTableMax * damageMod) {
+      while (cumulativeDamage < targetHp) {
+        cumulativeDamage += Math.round(
+          (attacker.damageTable?.[hits] || 0) * damageMod
+        );
         hits++;
       }
     } else {
@@ -161,11 +176,12 @@ const timeToKill = (
       const nStep = 1 / 22; // 4.4 second ramp time
 
       const damageRange = attacker.damageMax - attacker.damage;
-      while (cumulativeDamage < target.hp) {
+      while (cumulativeDamage < targetHp) {
         const rampProgress = Math.min(1, hits * nStep);
         const damageRatio = Math.pow(rampProgress, 3);
-        cumulativeDamage +=
-          attacker.damage + Math.round(damageRange * damageRatio);
+        cumulativeDamage += Math.round(
+          (attacker.damage + Math.round(damageRange * damageRatio)) * damageMod
+        );
         hits++;
       }
     }
@@ -183,6 +199,7 @@ const timeToKill = (
   );
   return {
     attackRounds: attackRounds,
+    hitsPerKill: hitsRequired,
     time: attackRounds * attacker.attackInterval,
   };
 };

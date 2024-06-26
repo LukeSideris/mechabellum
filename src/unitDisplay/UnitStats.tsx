@@ -1,12 +1,14 @@
-import { units } from 'src/data/units.ts';
+import { UnitInterface } from 'src/data/units.ts';
 
-const UnitStats = ({ unitId }: { unitId: string }) => {
-  const unit = units[unitId as keyof typeof units];
+const UnitStats = ({ unit }: { unit: UnitInterface }) => {
+  if (!unit) {
+    return null;
+  }
   return (
     <div>
       <p>Cost: {unit.cost}</p>
-      <p>HP: {unit.hp}</p>
-      <p>Damage: {unit.damage}</p>
+      <p>HP: {Math.round(unit.hp * (unit.hpMod || 1))}</p>
+      <p>Damage: {Math.round(unit.damage * (unit.damageMod || 1))}</p>
     </div>
   );
 };

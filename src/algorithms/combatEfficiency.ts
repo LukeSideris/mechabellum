@@ -13,6 +13,7 @@ const combatEfficiency = (
 
   // speed/range approximations
   // TODO: Test that speed represents meters/second
+  // TODO: Missile units like stormcaller might have a maximum speed threshold
   const rangeDiff = attacker.range - target.range;
   if (rangeDiff > 0) {
     ttkTarget.time += rangeDiff / target.speed;
