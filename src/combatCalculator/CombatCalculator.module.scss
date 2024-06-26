@@ -12,8 +12,37 @@
   text-align: right;
 }
 
-.leftSide img {
-  transform: scaleX(-1);
+.leftSideLayout {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.rightSideLayout {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+
+  .modifyUnit {
+    order: 1;
+  }
+}
+
+.modifyUnit {
+  flex-grow: 1;
+  text-align: left;
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+}
+
+.unitDisplay {
+  min-width: 200px;
 }
 
 .rightSide {
@@ -43,4 +72,8 @@
   transform: scale(2);
   transform-origin: center;
   z-index: 1;
+}
+
+.swapButton {
+  margin-top: 175px;
 }
