@@ -39,13 +39,18 @@ const applyUnitMods = (
     }
   });
 
+  console.log('qqq', {
+    attackIncrease, attackDecrease, 
+    positive: attackIncrease.reduce((acc, val) => acc + val, 1),
+    negative: attackDecrease.reduce((acc, val) => acc * (1 + val), 1) });
+
   // apply attack and hp mods
   modifiedUnit.damageMod =
-    (1 + attackIncrease.reduce((acc, val) => acc + val, 0)) *
-    (1 + attackDecrease.reduce((acc, val) => acc * (1 + val), 0));
+    attackIncrease.reduce((acc, val) => acc + val, 1) *
+    attackDecrease.reduce((acc, val) => acc * (1 + val), 1);
   modifiedUnit.hpMod =
-    (1 + hpIncrease.reduce((acc, val) => acc + val, 0)) *
-    (1 + hpDecrease.reduce((acc, val) => acc * (1 + val), 0));
+    hpIncrease.reduce((acc, val) => acc + val, 1) *
+    hpDecrease.reduce((acc, val) => acc * (1 + val), 1);
 
   return modifiedUnit;
 };
