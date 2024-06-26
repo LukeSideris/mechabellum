@@ -1,4 +1,4 @@
-import { UnitInterface, units as baseUnits } from 'src/data/units';
+import { units as baseUnits, UnitInterface } from 'src/data/units';
 import { mods, ModInterface } from 'src/data/mods.ts';
 
 const applyUnitMods = (
@@ -12,8 +12,6 @@ const applyUnitMods = (
 
   let modifiedUnit: UnitInterface = {
     ...baseUnits[unitId],
-    damageMod: 1,
-    hpMod: 1,
   };
   const attackIncrease = [] as number[];
   const attackDecrease = [] as number[];

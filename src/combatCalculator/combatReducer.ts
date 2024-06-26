@@ -1,4 +1,4 @@
-import { units as baseUnits } from 'src/data/units';
+import { units as baseUnits, UnitInterface } from 'src/data/units';
 import applyUnitMods from 'src/algorithms/applyUnitMods';
 
 export const combatReducerInitialState = {
@@ -14,7 +14,10 @@ export const combatReducerInitialState = {
 };
 
 const generateUnitLibrary = (activeMods: Set<string>) => {
-  const modifiedLibrary = {} as typeof baseUnits;
+  type ModifiedLibraryType = {
+    [key in keyof typeof baseUnits]: UnitInterface;
+  };
+  const modifiedLibrary: ModifiedLibraryType = {} as ModifiedLibraryType;
 
   Object.keys(baseUnits).forEach((unitId: string) => {
     modifiedLibrary[unitId as keyof typeof baseUnits] = applyUnitMods(
