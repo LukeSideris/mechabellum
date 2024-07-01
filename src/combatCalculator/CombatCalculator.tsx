@@ -1,7 +1,8 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useReducer, useEffect } from 'react';
 import { Selection } from 'react-aria-components';
+import { useSearchParams } from 'react-router-dom';
 
-import { combatReducer, combatReducerInitialState } from './combatReducer';
+import { combatReducer, getInitialState } from './combatReducer';
 import timeToKill from 'src/algorithms/timetoKill';
 import combatEfficiency from 'src/algorithms/combatEfficiency';
 import UnitStats from 'src/unitDisplay/UnitStats';
@@ -10,7 +11,15 @@ import ModSelector from './ModSelector';
 
 import classes from './CombatCalculator.module.scss';
 
+const paramsNameMap = {
+  unitSelectionA: 'a',
+  unitSelectionB: 'b',
+  modSelectionA: 'mods',
+  modSelectionB: 'mods2',
+};
+
 function CombatCalculatorPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [
     {
       unitSelectionA,
@@ -21,15 +30,25 @@ function CombatCalculatorPage() {
       unitLibraryB,
     },
     dispatch,
-  ] = useReducer(combatReducer, combatReducerInitialState);
+  ] = useReducer(combatReducer, { searchParams, paramsNameMap }, getInitialState);
 
   // Get the first unit from the selection set. Currently only one unit can be selected at a time.
   const [leftUnitId] = unitSelectionA;
   const [rightUnitId] = unitSelectionB;
-  const leftUnit = unitLibraryA[leftUnitId];
-  const rightUnit = unitLibraryB[rightUnitId];
+  const leftUnit = unitLibraryA[leftUnitId as keyof typeof unitLibraryA];
+  const rightUnit = unitLibraryB[rightUnitId as keyof typeof unitLibraryB];
   const ttkA = timeToKill(leftUnit, rightUnit);
   const ttkB = timeToKill(rightUnit, leftUnit);
+
+  // sync state with url params
+  useEffect(() => {
+    setSearchParams({
+      [paramsNameMap.unitSelectionA]: Array.from(unitSelectionA),
+      [paramsNameMap.unitSelectionB]: Array.from(unitSelectionB),
+      [paramsNameMap.modSelectionA]: Array.from(modSelectionA),
+      [paramsNameMap.modSelectionB]: Array.from(modSelectionB),
+    });
+  }, [setSearchParams, unitSelectionA, unitSelectionB, modSelectionA, modSelectionB]);
 
   const handleUnitSelectionA = useCallback(
     (selection: Selection) => {
@@ -87,6 +106,7 @@ function CombatCalculatorPage() {
               <h2>Research & Specialists</h2>
 
               <ModSelector
+                dispatch={dispatch}
                 onSelectionChange={handleModSelectionA}
                 selectedKeys={modSelectionA}
               />
@@ -149,6 +169,7 @@ function CombatCalculatorPage() {
               <h2>Research & Specialists</h2>
 
               <ModSelector
+                dispatch={dispatch}
                 onSelectionChange={handleModSelectionB}
                 selectedKeys={modSelectionB}
               />

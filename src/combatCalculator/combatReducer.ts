@@ -1,7 +1,21 @@
 import { units as baseUnits, UnitInterface } from 'src/data/units';
+import { mods } from 'src/data/mods';
 import applyUnitMods from 'src/algorithms/applyUnitMods';
 
-export const combatReducerInitialState = {
+export type combatStateType = {
+  unitSelectionA: Set<string>;
+  unitSelectionB: Set<string>;
+  modSelectionA: Set<string>;
+  modSelectionB: Set<string>;
+  unitLibraryA: {
+    [key in keyof typeof baseUnits]: UnitInterface;
+  };
+  unitLibraryB: {
+    [key in keyof typeof baseUnits]: UnitInterface;
+  };
+};
+
+export const combatReducerDefaultState: combatStateType = {
   // selection states are used to track the selected items in the list boxes
   unitSelectionA: new Set(),
   unitSelectionB: new Set(),
@@ -12,6 +26,62 @@ export const combatReducerInitialState = {
   unitLibraryA: baseUnits,
   unitLibraryB: baseUnits,
 };
+
+export function getInitialState({
+  searchParams,
+  paramsNameMap,
+}: {
+  searchParams: URLSearchParams,
+  // map provided from CombatCalculator.tsx to translate state var names to query param names
+  paramsNameMap: {
+    unitSelectionA: string;
+    unitSelectionB: string;
+    modSelectionA: string;
+    modSelectionB: string;
+  }
+}): combatStateType {
+  const initialState: combatStateType = { ...combatReducerDefaultState };
+
+  if (searchParams.has(paramsNameMap.unitSelectionA)) {
+    initialState.unitSelectionA = new Set(searchParams.getAll(paramsNameMap.unitSelectionA)
+      // validate the param matches a valid unit id
+      .filter((unitId) => unitId in baseUnits)
+    );
+  }
+
+  if (searchParams.has(paramsNameMap.unitSelectionB)) {
+    initialState.unitSelectionB = new Set(searchParams.getAll(paramsNameMap.unitSelectionB)
+      // validate the param matches a valid unit id
+      .filter((unitId) => unitId in baseUnits)
+    );
+  }
+
+  if (searchParams.has(paramsNameMap.modSelectionA)) {
+    const urlMods = new Set(searchParams.getAll(paramsNameMap.modSelectionA)
+      // validate the param matches a valid mod id
+      .filter((modId) => modId in mods)
+    );
+    initialState.modSelectionA = filterMods(urlMods);
+  }
+
+  if (searchParams.has(paramsNameMap.modSelectionB)) {
+    const urlMods = new Set(searchParams.getAll(paramsNameMap.modSelectionB)
+      // validate the param matches a valid mod id
+      .filter((modId) => modId in mods)
+    );
+    initialState.modSelectionB = filterMods(urlMods);
+  }
+
+  // regenerate unit libraries if mods are selected
+  if (initialState.modSelectionA.size > 0) {
+    initialState.unitLibraryA = generateUnitLibrary(initialState.modSelectionA);
+  }
+  if (initialState.modSelectionB.size > 0) {
+    initialState.unitLibraryB = generateUnitLibrary(initialState.modSelectionB);
+  }
+
+  return initialState;
+}
 
 const generateUnitLibrary = (activeMods: Set<string>) => {
   type ModifiedLibraryType = {
@@ -44,7 +114,7 @@ const filterMods = (modList: Set<string>) => {
     modList.delete('rcDefense1');
   }
 
-  // just in case: only 1 attack or defense mod may be used
+  // only 1 attack or defense mod may be used at a time
   if (modList.has('rcAttack1') && modList.has('rcAttack2')) {
     modList.delete('rcAttack1');
   }
@@ -56,7 +126,7 @@ const filterMods = (modList: Set<string>) => {
 };
 
 export function combatReducer(
-  state: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  state: combatStateType,
   action: { type: string; payload: any } // eslint-disable-line @typescript-eslint/no-explicit-any
 ) {
   switch (action.type) {
@@ -64,6 +134,7 @@ export function combatReducer(
       return {
         ...state,
         unitSelectionA: action.payload,
+        // TODO: Generate efficiency tables for selected unit
       };
     }
 
@@ -71,6 +142,7 @@ export function combatReducer(
       return {
         ...state,
         unitSelectionB: action.payload,
+        // TODO: Generate efficiency tables for selected unit
       };
     }
 
@@ -90,6 +162,10 @@ export function combatReducer(
         modSelectionB: newMods,
         unitLibraryB: generateUnitLibrary(newMods),
       };
+    }
+
+    case 'hoverMod': {
+      return state;
     }
   }
 

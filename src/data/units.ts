@@ -354,7 +354,7 @@ export const units = {
     speed: 6,
     damage: 6843,
     splashRadius: 4.5,
-    attackInterval: 1.8,
+    attackInterval: 0.9, // 1.8 is the listed interval but it has two independent cannons
     range: 110,
     flying: false,
     shootsUp: false,

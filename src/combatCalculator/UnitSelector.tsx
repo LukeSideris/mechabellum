@@ -1,6 +1,6 @@
 import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 
-import { units } from 'src/data/units.ts';
+import { units as baseUnits } from 'src/data/units';
 import classes from './UnitSelector.module.scss';
 
 function UnitSelector<T extends object>(props: ListBoxProps<T>) {
@@ -11,9 +11,10 @@ function UnitSelector<T extends object>(props: ListBoxProps<T>) {
         aria-label="Unit selection"
         layout="grid"
         selectionMode="single"
+        selectionBehavior="replace"
         {...props}
       >
-        {Object.values(units).map((unit) => {
+        {Object.values(baseUnits).map((unit) => {
           return (
             <ListBoxItem
               className={classes.unit}

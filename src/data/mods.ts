@@ -1,6 +1,6 @@
 import { UnitInterface } from './units';
 import thumbnailAerial from './thumbnails/specialists/aerial.png';
-import thumbnailHeavyArmor from './thumbnails/specialists/heavyArmor.png';
+import thumbnailFortifiedSpecialist from './thumbnails/specialists/fortifiedSpecialist.png';
 import thumbnailCostControl from './thumbnails/specialists/costControl.png';
 import thumbnailSpeed from './thumbnails/specialists/speed.png';
 
@@ -21,21 +21,21 @@ export type ModInterface = {
   modifier?: (unit: UnitInterface) => UnitInterface;
 };
 
-export const starterSpecialists = new Set([
-  'heavyArmor',
+export const starterSpecialists = [
+  'fortified',
   'costControl',
   'speed',
   'aerial',
-]);
-export const attackResearch = new Set(['rcAttack1', 'rcAttack2']);
-export const defenseResearch = new Set(['rcDefense1', 'rcDefense2']);
+];
+export const attackResearch = ['rcAttack1', 'rcAttack2'];
+export const defenseResearch = ['rcDefense1', 'rcDefense2'];
 
 export const mods = {
-  heavyArmor: {
-    name: 'Heavy Armor',
-    id: 'heavyArmor',
+  fortified: {
+    name: 'Fortified Specialist',
+    id: 'fortified',
     description: 'Increase health of all units by 17%',
-    thumbnail: thumbnailHeavyArmor,
+    thumbnail: thumbnailFortifiedSpecialist,
     modifyHp: 0.17,
   },
   costControl: {
