@@ -174,7 +174,7 @@ export function combatReducer(
       return {
         ...state,
         unitSelectionA: action.payload,
-        // Generate efficiency tables for selected unit
+        // Generate effectiveness tables for selected unit
         baseCombatResultsA: generateCombatTable(baseUnits[newUnit as UnitIdType], baseUnits),
         moddedCombatResultsA: generateCombatTable(state.unitLibraryA[newUnit as UnitIdType], state.unitLibraryB),
       };
@@ -185,7 +185,7 @@ export function combatReducer(
       return {
         ...state,
         unitSelectionB: action.payload,
-        // Generate efficiency tables for selected unit
+        // Generate effectiveness tables for selected unit
         baseCombatResultsB: generateCombatTable(baseUnits[newUnit as UnitIdType], baseUnits),
         moddedCombatResultsB: generateCombatTable(state.unitLibraryB[newUnit as UnitIdType], state.unitLibraryA),
       };
@@ -200,7 +200,7 @@ export function combatReducer(
         ...state,
         modSelectionA: newMods,
         unitLibraryA: newLibrary,
-        // Generate efficiency tables for new library
+        // Generate effectiveness tables for new library
         moddedCombatResultsA: generateCombatTable(
           newLibrary[activeUnitA as UnitIdType],
           state.unitLibraryB
@@ -221,7 +221,7 @@ export function combatReducer(
         ...state,
         modSelectionB: newMods,
         unitLibraryB: newLibrary,
-        // Generate efficiency tables for new library
+        // Generate effectiveness tables for new library
         moddedCombatResultsA: generateCombatTable(
           state.unitLibraryA[activeUnitA as UnitIdType],
           newLibrary

@@ -27,7 +27,7 @@ function CombatCalculatorPage() {
       modSelectionB,
       unitLibraryA,
       unitLibraryB,
-      // baseCombatResultsA,
+      baseCombatResultsA,
       // baseCombatResultsB,
       moddedCombatResultsA,
       moddedCombatResultsB,
@@ -104,6 +104,8 @@ function CombatCalculatorPage() {
           <UnitSelector
             onSelectionChange={handleUnitSelectionA}
             selectedKeys={unitSelectionA}
+            baseCombatResults={undefined}
+            moddedCombatResults={undefined}
           />
 
           <div className={classes.leftSideLayout}>
@@ -135,7 +137,7 @@ function CombatCalculatorPage() {
                       <b>
                         effectiveness:{' '}
                         {Math.round(
-                          ttkA.efficiency * 100
+                          ttkA.effectiveness * 100
                         )}
                         %
                       </b>
@@ -167,6 +169,8 @@ function CombatCalculatorPage() {
           <UnitSelector
             onSelectionChange={handleUnitSelectionB}
             selectedKeys={unitSelectionB}
+            baseCombatResults={baseCombatResultsA}
+            moddedCombatResults={moddedCombatResultsA}
           />
 
           <div className={classes.rightSideLayout}>
@@ -198,7 +202,7 @@ function CombatCalculatorPage() {
                       <b>
                         effectiveness:{' '}
                         {Math.round(
-                          ttkB.efficiency * 100
+                          ttkB.effectiveness * 100
                         )}
                         %
                       </b>

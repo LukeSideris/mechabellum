@@ -4,7 +4,8 @@ export type ttkInterface = {
   attackRounds: number | null;
   hitsPerKill: number | null;
   time: number;
-  efficiency: number;
+  effectiveness: number;
+  costEfficiency: number;
 };
 
 /*
@@ -111,7 +112,8 @@ export const timeToKill = (
       attackRounds: null,
       hitsPerKill: null,
       time: Infinity,
-      efficiency: 0,
+      effectiveness: 0,
+      costEfficiency: 0,
     };
   }
 
@@ -121,7 +123,8 @@ export const timeToKill = (
       attackRounds: null,
       hitsPerKill: null,
       time: Infinity,
-      efficiency: 0,
+      effectiveness: 0,
+      costEfficiency: 0,
     };
   }
 
@@ -145,15 +148,13 @@ export const timeToKill = (
         attackRounds: 1,
         hitsPerKill: hitsRequired,
         time: attacker.attackInterval,
-        efficiency: 1,
-      };
+      } as ttkInterface;
     } else if (totalHitsRequired <= 24) {
       results = {
         attackRounds: 2,
         hitsPerKill: hitsRequired,
         time: 2 * attacker.attackInterval,
-        efficiency: 1,
-      };
+      } as ttkInterface;
     } else {
       const attackRounds =
         Math.ceil((totalHitsRequired - 24) / attacker.unitCount) + 2;
@@ -161,8 +162,7 @@ export const timeToKill = (
         attackRounds,
         hitsPerKill: hitsRequired,
         time: attackRounds * attacker.attackInterval,
-        efficiency: 1,
-      };
+      } as ttkInterface;
     }
   }
 
@@ -191,8 +191,7 @@ export const timeToKill = (
       attackRounds,
       hitsPerKill: hitsRequired,
       time: attackRounds * attacker.attackInterval,
-      efficiency: 1,
-    };
+    } as ttkInterface;
   }
 
   if (attacker.id === 'steel_ball') {
@@ -213,15 +212,13 @@ export const timeToKill = (
         attackRounds: totalHits,
         hitsPerKill: hitsRequired,
         time: totalHits * attacker.attackInterval,
-        efficiency: 1,
-      };
+      } as ttkInterface;
     } else {
       results = {
         attackRounds: hits,
         hitsPerKill: hitsRequired,
         time: hits * attacker.attackInterval,
-        efficiency: 1,
-      };
+      } as ttkInterface;
     }
   }
 
@@ -270,8 +267,7 @@ export const timeToKill = (
       attackRounds: attackRounds,
       hitsPerKill: hitsRequired,
       time: attackRounds * attacker.attackInterval,
-      efficiency: 1,
-    };
+    } as ttkInterface;
   }
 
 
@@ -285,10 +281,12 @@ export const timeToKill = (
   if (calculateEffieciency) {
     const ttkTarget = timeToKill(target, attacker, false);
 
-    const costRatio = target.cost / attacker.cost;
-    const killRatio = results.time / ttkTarget.time;
+    const costRatio = attacker.cost / target.cost;
+    const killRatio = ttkTarget.time / results.time;
 
-    results.efficiency = costRatio / killRatio;
+    results.effectiveness = killRatio;
+    // TODO: test and validate this equation
+    results.costEfficiency = killRatio / costRatio;
   }
 
   return results;

@@ -26,8 +26,8 @@ function ModListBoxItem({ dispatch, modName }: {
       id={mod.id}
       textValue={mod.name}
       onHoverChange={(isHovering: boolean): void => {
-        console.log('onHoverChange', isHovering);
-        dispatch({ type: 'hoverMod', payload: mod.id });
+        // console.log('onHoverChange', isHovering);
+        dispatch({ type: 'hoverMod', payload: { state: isHovering, id: mod.id } });
       }}
     >
       <img src={mod.thumbnail} alt={mod.name} />
@@ -36,9 +36,9 @@ function ModListBoxItem({ dispatch, modName }: {
   );
 }
 
-function ModSelector({ dispatch, onSelectionChange, selectedKeys }: ListBoxProps<object> & {
+const ModSelector = ({ dispatch, onSelectionChange, selectedKeys }: ListBoxProps<object> & {
   dispatch: React.Dispatch<any>, // eslint-disable-line @typescript-eslint/no-explicit-any
-}) {
+}) => {
   return (
     <ListBox
       aria-label="Unit mod specialist selection"
