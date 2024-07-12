@@ -1,8 +1,8 @@
-import { units as baseUnits, UnitInterface } from 'src/data/units';
+import { units as baseUnits, UnitInterface, UnitIdType } from 'src/data/units';
 import { mods, ModInterface } from 'src/data/mods.ts';
 
 const applyUnitMods = (
-  unitId: keyof typeof baseUnits,
+  unitId: UnitIdType,
   activeMods: Set<string>
 ): UnitInterface => {
   // convert applied mods set into array of mod objects

@@ -4,7 +4,52 @@ export type ttkInterface = {
   attackRounds: number | null;
   hitsPerKill: number | null;
   time: number;
+  efficiency: number;
 };
+
+/*
+const crawlerSplashTable = [
+  [0, 1],
+  [3, 1.3],   // melter
+  [4.5, 2.15], // warfactory 11, 10, 11, 12,11
+  [5, 3],   // fortress, sledge 8, 9, 12
+  // [5.5, 0], // storms
+  [6, 3],   // rhino
+  [7, 4],   // arclight, overlord
+  [8, 4.5],   // wraith
+  [12, 7],    // sandworm
+  [15, 11],  // scorpion, vulcan
+];
+
+/* 
+AI Analysis:
+this seems to represent a quadratic forumla
+y=ax^2 + bx + c 
+The fitted quadratic function is:
+
+y=0.033x^2 + 0.166x + 0.919
+*/
+/*
+const fangSplashTable = [
+  [0, 1],
+  [3, 1.1],   // melter 11, 13, 17, 17, 
+  [4.5, 1.5], // warfactory
+  [5, 1.6],   // fortress, sledge
+  // [5.5, 0], // storms
+  [6, 2.1],   // rhino 8, 9, 8, 9, 8 9
+  [7, 2.75],   // arclight, overlord  7,7,6,7,6,6,6,6
+  [8, 0],   // wraith
+  [15, 10],  // scorpion, vulcan
+];
+
+/* 
+AI Analysis:
+this seems to represent a quadratic forumla
+The fitted quadratic function is:
+
+y = 0.0538x^2 + -0.0504x + 0.6997
+*/
+
 
 // the highest damage value of the melting point damage increments I have measured
 const melterDamageTableMax = units.melting_point.damageTable?.reduce(
@@ -19,6 +64,11 @@ const calculateSplashDamageTargets = (
 ) => {
   let splashDamageTargets = 1;
   if (attacker.splashRadius && target.unitCount > 1) {
+    // TODO: Change calculations
+    // for crawler, fang, mustang....
+    // figure out what number of units get hit at various splash damage thresholds
+    // turn that into a formula, possibly with a splash index value
+
     const { rows = 1 } = target;
     let minDistance = target.unitSize / 2 + (target.unitSpacing || 0);
 
@@ -30,7 +80,7 @@ const calculateSplashDamageTargets = (
       if (rows > rowCount) {
         // +1 hit for the unit in the row behind the target
         splashDamageTargets += 1;
-        const diagonalDistance = Math.hypot(minDistance, minDistance);
+        const diagonalDistance = Math.hypot(minDistance, minDistance) * rowCount;
         if (attacker.splashRadius > diagonalDistance) {
           // Sometimes there are units on both sides of the target, so 50% chance to hit an edge
           splashDamageTargets += 1.5;
@@ -41,26 +91,29 @@ const calculateSplashDamageTargets = (
       rowCount++;
     }
   }
-  return splashDamageTargets;
+
+  // TODO: validate this
+  // splash damage calculation is just too unreliable, because the unit often hits off-center
+  // to account for this we reduce the impact of splash damage by 15%, hopefully this gives more accurate results.
+  return Math.max(1, splashDamageTargets * 0.85);
 };
 
 // Calculate an estimated time to kill for a given attacker and defender
 // The parameters for unit stats should have all modifiers applied already
-const timeToKill = (
+export const timeToKill = (
   attacker: UnitInterface,
-  target: UnitInterface
+  target: UnitInterface,
+  calculateEffieciency = true,
 ): ttkInterface => {
+  // safety check for invalid units
   if (!attacker || !target) {
     return {
       attackRounds: null,
       hitsPerKill: null,
       time: Infinity,
+      efficiency: 0,
     };
   }
-  const { damageMod = 1 } = attacker;
-  const { hpMod = 1 } = target;
-  const targetHp = Math.round(target.hp * hpMod);
-  const attackerDamage = Math.round(attacker.damage * damageMod);
 
   // untargetable units can never be killed
   if (target.flying && !attacker.shootsUp) {
@@ -68,8 +121,16 @@ const timeToKill = (
       attackRounds: null,
       hitsPerKill: null,
       time: Infinity,
+      efficiency: 0,
     };
   }
+
+  let results;
+
+  const { damageMod = 1 } = attacker;
+  const { hpMod = 1 } = target;
+  const targetHp = Math.round(target.hp * hpMod);
+  const attackerDamage = Math.round(attacker.damage * damageMod);
 
   let hitsRequired = Math.ceil(targetHp / attackerDamage);
   let totalHitsRequired = target.unitCount * hitsRequired;
@@ -80,24 +141,27 @@ const timeToKill = (
     // the second attack is performed by 16 crawlers
     // the third and subsequent attacks are performed by all crawlers
     if (totalHitsRequired <= 8) {
-      return {
+      results = {
         attackRounds: 1,
         hitsPerKill: hitsRequired,
         time: attacker.attackInterval,
+        efficiency: 1,
       };
     } else if (totalHitsRequired <= 24) {
-      return {
+      results = {
         attackRounds: 2,
         hitsPerKill: hitsRequired,
         time: 2 * attacker.attackInterval,
+        efficiency: 1,
       };
     } else {
       const attackRounds =
         Math.ceil((totalHitsRequired - 24) / attacker.unitCount) + 2;
-      return {
+      results = {
         attackRounds,
         hitsPerKill: hitsRequired,
         time: attackRounds * attacker.attackInterval,
+        efficiency: 1,
       };
     }
   }
@@ -123,10 +187,11 @@ const timeToKill = (
     const attackRounds = Math.ceil(
       (hitsToKill * target.unitCount) / splashDamageTargets
     );
-    return {
+    results = {
       attackRounds,
       hitsPerKill: hitsRequired,
       time: attackRounds * attacker.attackInterval,
+      efficiency: 1,
     };
   }
 
@@ -144,18 +209,20 @@ const timeToKill = (
 
     if (multiplier === 1) {
       const totalHits = (hits * target.unitCount) / attacker.unitCount;
-      return {
+      results = {
         attackRounds: totalHits,
         hitsPerKill: hitsRequired,
         time: totalHits * attacker.attackInterval,
+        efficiency: 1,
+      };
+    } else {
+      results = {
+        attackRounds: hits,
+        hitsPerKill: hitsRequired,
+        time: hits * attacker.attackInterval,
+        efficiency: 1,
       };
     }
-
-    return {
-      attackRounds: hits,
-      hitsPerKill: hitsRequired,
-      time: hits * attacker.attackInterval,
-    };
   }
 
   if (attacker.id === 'melting_point' && attacker.damageMax) {
@@ -191,17 +258,38 @@ const timeToKill = (
     totalHitsRequired = target.unitCount * hitsRequired;
   }
 
-  const splashDamageTargets = calculateSplashDamageTargets(attacker, target);
+  // if results are not calculated from a special case, use the default formula
+  if (!results) {
+    const splashDamageTargets = calculateSplashDamageTargets(attacker, target);
 
-  // return default formula for unit engagement
-  const attackRounds = Math.ceil(
-    totalHitsRequired / attacker.unitCount / splashDamageTargets
-  );
-  return {
-    attackRounds: attackRounds,
-    hitsPerKill: hitsRequired,
-    time: attackRounds * attacker.attackInterval,
-  };
+    // default formula for unit engagement
+    const attackRounds = Math.ceil(
+      totalHitsRequired / attacker.unitCount / splashDamageTargets
+    );
+    results = {
+      attackRounds: attackRounds,
+      hitsPerKill: hitsRequired,
+      time: attackRounds * attacker.attackInterval,
+      efficiency: 1,
+    };
+  }
+
+
+  // speed/range approximations
+  // TODO: Missile units like stormcaller might have a maximum speed threshold where they can hit a target
+  const rangeDiff = target.range - attacker.range;
+  if (rangeDiff > 0) {
+    results.time = results.time + rangeDiff / attacker.speed;
+  }
+
+  if (calculateEffieciency) {
+    const ttkTarget = timeToKill(target, attacker, false);
+
+    const costRatio = target.cost / attacker.cost;
+    const killRatio = results.time / ttkTarget.time;
+
+    results.efficiency = costRatio / killRatio;
+  }
+
+  return results;
 };
-
-export default timeToKill;

@@ -3,7 +3,7 @@ import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 import { units as baseUnits } from 'src/data/units';
 import classes from './UnitSelector.module.scss';
 
-function UnitSelector<T extends object>(props: ListBoxProps<T>) {
+function UnitSelector<T extends object>({ onSelectionChange, selectedKeys }: ListBoxProps<T>) {
   return (
     <div>
       <ListBox
@@ -12,7 +12,8 @@ function UnitSelector<T extends object>(props: ListBoxProps<T>) {
         layout="grid"
         selectionMode="single"
         selectionBehavior="replace"
-        {...props}
+        onSelectionChange={onSelectionChange}
+        selectedKeys={selectedKeys}
       >
         {Object.values(baseUnits).map((unit) => {
           return (

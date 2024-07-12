@@ -99,3 +99,31 @@ export const mods = {
     modifyHp: 0.3,
   },
 };
+
+// Method to prevent incompatible mods from being selected
+export const filterMods = (modList: Set<string>) => {
+  const latestVal = Array.from(modList).at(-1);
+  // some mods are incompatible with others, we use this to deselect some options
+  if (latestVal === 'rcAttack1') {
+    modList.delete('rcAttack2');
+  }
+  if (latestVal === 'rcAttack2') {
+    modList.delete('rcAttack1');
+  }
+  if (latestVal === 'rcDefense1') {
+    modList.delete('rcDefense2');
+  }
+  if (latestVal === 'rcDefense2') {
+    modList.delete('rcDefense1');
+  }
+
+  // only 1 attack or defense mod may be used at a time
+  if (modList.has('rcAttack1') && modList.has('rcAttack2')) {
+    modList.delete('rcAttack1');
+  }
+  if (modList.has('rcDefense1') && modList.has('rcDefense2')) {
+    modList.delete('rcDefense1');
+  }
+
+  return modList;
+};

@@ -3,13 +3,12 @@ import { Selection } from 'react-aria-components';
 import { useSearchParams } from 'react-router-dom';
 
 import { combatReducer, getInitialState } from './combatReducer';
-import timeToKill from 'src/algorithms/timetoKill';
-import combatEfficiency from 'src/algorithms/combatEfficiency';
 import UnitStats from 'src/unitDisplay/UnitStats';
 import UnitSelector from './UnitSelector';
 import ModSelector from './ModSelector';
 
 import classes from './CombatCalculator.module.scss';
+import { UnitIdType } from 'src/data/units';
 
 const paramsNameMap = {
   unitSelectionA: 'a',
@@ -28,6 +27,10 @@ function CombatCalculatorPage() {
       modSelectionB,
       unitLibraryA,
       unitLibraryB,
+      // baseCombatResultsA,
+      // baseCombatResultsB,
+      moddedCombatResultsA,
+      moddedCombatResultsB,
     },
     dispatch,
   ] = useReducer(combatReducer, { searchParams, paramsNameMap }, getInitialState);
@@ -35,10 +38,12 @@ function CombatCalculatorPage() {
   // Get the first unit from the selection set. Currently only one unit can be selected at a time.
   const [leftUnitId] = unitSelectionA;
   const [rightUnitId] = unitSelectionB;
-  const leftUnit = unitLibraryA[leftUnitId as keyof typeof unitLibraryA];
-  const rightUnit = unitLibraryB[rightUnitId as keyof typeof unitLibraryB];
-  const ttkA = timeToKill(leftUnit, rightUnit);
-  const ttkB = timeToKill(rightUnit, leftUnit);
+  const leftUnit = unitLibraryA[leftUnitId as UnitIdType];
+  const rightUnit = unitLibraryB[rightUnitId as UnitIdType];
+
+
+  const ttkA = moddedCombatResultsA[rightUnitId as UnitIdType];
+  const ttkB = moddedCombatResultsB[leftUnitId as UnitIdType];
 
   // sync state with url params
   useEffect(() => {
@@ -130,7 +135,7 @@ function CombatCalculatorPage() {
                       <b>
                         effectiveness:{' '}
                         {Math.round(
-                          combatEfficiency(leftUnit, rightUnit) * 100
+                          ttkA.efficiency * 100
                         )}
                         %
                       </b>
@@ -193,7 +198,7 @@ function CombatCalculatorPage() {
                       <b>
                         effectiveness:{' '}
                         {Math.round(
-                          combatEfficiency(rightUnit, leftUnit) * 100
+                          ttkB.efficiency * 100
                         )}
                         %
                       </b>
