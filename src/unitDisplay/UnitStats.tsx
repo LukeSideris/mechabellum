@@ -9,6 +9,7 @@ const UnitStats = ({ unit }: { unit: UnitInterface }) => {
       <p>Cost: {unit.cost}</p>
       <p>HP: {Math.round(unit.hp * (unit.hpMod || 1))}</p>
       <p>Damage: {Math.round(unit.damage * (unit.damageMod || 1))}</p>
+      <p>Range: {Math.round(unit.range * (unit.damageMod || 1))}</p>
     </div>
   );
 };

@@ -42,7 +42,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 24,
-    unitSize: 4,
+    unitSize: 3,
     rows: 3,
     unitSpacing: 2,
   },
@@ -60,9 +60,9 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 18,
-    unitSize: 5.5,
+    unitSize: 5,
     rows: 3,
-    unitSpacing: 2.4,
+    unitSpacing: 3,
   },
   arclight: {
     name: 'Arclight',
@@ -273,7 +273,7 @@ export const units = {
     id: 'vulcan',
     thumbnail: thumbnails['./thumbnails/units/vulcan.png'] as string,
     cost: 400,
-    hp: 38385,
+    hp: 39920,
     speed: 6,
     damage: 90,
     splashRadius: 15,
@@ -289,7 +289,7 @@ export const units = {
     id: 'fortress',
     thumbnail: thumbnails['./thumbnails/units/fortress.png'] as string,
     cost: 400,
-    hp: 51205,
+    hp: 48644,
     speed: 6,
     damage: 6369,
     splashRadius: 5,
@@ -336,9 +336,9 @@ export const units = {
     cost: 400,
     hp: 16099,
     speed: 10,
-    damage: 3514 * 4, // 4 missiles
+    damage: 3742 * 4, // 4 missiles
     splashRadius: 7,
-    attackInterval: 4.4,
+    attackInterval: 4.6,
     range: 110,
     flying: true,
     shootsUp: true,
@@ -354,11 +354,13 @@ export const units = {
     speed: 6,
     damage: 6843,
     splashRadius: 4.5,
-    attackInterval: 1.8,
-    range: 110,
+    attackInterval: 0.9, // 1.8 is the listed interval but it has two independent cannons
+    range: 100,
     flying: false,
     shootsUp: false,
     unitCount: 1,
     unitSize: 62,
   },
 };
+
+export type UnitIdType = keyof typeof units;

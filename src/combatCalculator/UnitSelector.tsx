@@ -1,9 +1,18 @@
 import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 
-import { units } from 'src/data/units.ts';
+import { CombatResultsInterface } from 'src/combatCalculator/combatReducer';
+import { units as baseUnits, UnitIdType } from 'src/data/units';
 import classes from './UnitSelector.module.scss';
 
-function UnitSelector<T extends object>(props: ListBoxProps<T>) {
+const UnitSelector = ({
+  onSelectionChange,
+  selectedKeys,
+  baseCombatResults,
+  moddedCombatResults,
+}: ListBoxProps<object> & {
+  baseCombatResults: CombatResultsInterface | undefined;
+  moddedCombatResults: CombatResultsInterface | undefined;
+}) => {
   return (
     <div>
       <ListBox
@@ -11,14 +20,21 @@ function UnitSelector<T extends object>(props: ListBoxProps<T>) {
         aria-label="Unit selection"
         layout="grid"
         selectionMode="single"
-        {...props}
+        selectionBehavior="replace"
+        onSelectionChange={onSelectionChange}
+        selectedKeys={selectedKeys}
       >
-        {Object.values(units).map((unit) => {
+        {Object.keys(baseUnits).map((unitId: string) => {
+          const unit = baseUnits[unitId as UnitIdType];
+          const baseEfficiency = baseCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
+          const moddedEfficiency = moddedCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
+          const diff = moddedEfficiency / baseEfficiency;
+
           return (
             <ListBoxItem
               className={classes.unit}
-              key={unit.id}
-              id={unit.id}
+              key={unitId}
+              id={unitId}
               textValue={unit.name}
             >
               <img
@@ -27,6 +43,7 @@ function UnitSelector<T extends object>(props: ListBoxProps<T>) {
                 alt={unit.name}
               />
               <span className={classes.unitName}>{unit.name}</span>
+              <ModEffect diff={diff} />
             </ListBoxItem>
           );
         })}
@@ -34,5 +51,34 @@ function UnitSelector<T extends object>(props: ListBoxProps<T>) {
     </div>
   );
 }
+
+// Display component to indicate how the modded combat effectiveness differ from the base results
+// Diff prop is a decimal representing the percentage difference between the two values
+const ModEffect = ({ diff }: { diff: number }) => {
+  let indicator = undefined;
+  if (!diff || diff === 1) {
+    return undefined;
+  }
+
+  if (diff >= 1.3) {
+    indicator = <span className={classes.positiveEffect}>+++</span>;
+  } else if (diff >= 1.15) {
+    indicator = <span className={classes.positiveEffect}>++</span>;
+  } else if (diff > 1) {
+    indicator = <span className={classes.positiveEffect}>+</span>;
+  } else if (diff <= 0.76) { // inverse of 1.3
+    indicator = <span className={classes.negativeEffect}>---</span>;
+  } else if (diff <= 0.86) { // inverse of 1.15
+    indicator = <span className={classes.negativeEffect}>--</span>;
+  } else if (diff < 1) {
+    indicator = <span className={classes.negativeEffect}>-</span>;
+  }
+
+  return (
+    <div className={classes.modEffect}>
+      {indicator}
+    </div>
+  );
+};
 
 export default UnitSelector;

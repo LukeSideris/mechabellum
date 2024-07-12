@@ -38,7 +38,7 @@ $maxWidth: $unitMaxWidth * 10;
 }
 
 .unit {
-  aspect-ratio: 1 / 2;
+  aspect-ratio: 1 / 1.5;
   background-color: #313131;
   border: 2px solid rgba(235, 106, 7, 0.8);
   border-radius: 2px;
@@ -70,4 +70,26 @@ $maxWidth: $unitMaxWidth * 10;
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.modEffect {
+  background: rgba(0, 0, 0, 0.8);
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: bold;
+  position: absolute;
+  padding: 8px;
+  text-align: center;
+  top: 0;
+  left: 0;
+  height: 30px;
+  min-width: 30px;
+}
+
+.positiveEffect {
+  color: #12de00d1;
+}
+
+.negativeEffect {
+  color: #de0000d1;
 }
