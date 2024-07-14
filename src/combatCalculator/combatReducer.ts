@@ -120,6 +120,7 @@ export function getInitialState({
       baseUnits
     );
 
+    // TODO: FIX THIS
     if (initialState.modSelectionB.size > 0) {
       initialState.moddedCombatResultsB = generateCombatTable(
         initialState.unitLibraryB[selectedUnitB as UnitIdType],

@@ -89,7 +89,7 @@ export const mods = {
     id: 'rcDefense1',
     description: 'Increase health of all units by 10%',
     thumbnail: researchThumbs['./thumbnails/research/defense_1.png'] as string,
-    modifyHp: 0.1,
+    modifyHp: 0.15,
   },
   rcDefense2: {
     name: 'Defense upgrade 2',
