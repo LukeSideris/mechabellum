@@ -361,6 +361,22 @@ export const units = {
     unitCount: 1,
     unitSize: 62,
   },
+  tarantula: {
+    name: 'Tarantula',
+    id: 'tarantula',
+    thumbnail: thumbnails['./thumbnails/units/tarantula.png'] as string,
+    cost: 200,
+    hp: 16789,
+    speed: 8,
+    damage: 469,
+    splashRadius: 5.0,
+    attackInterval: 0.6,
+    range: 75,
+    flying: false,
+    shootsUp: false,
+    unitCount: 1,
+    unitSize: 25,
+  },
 };
 
 export type UnitIdType = keyof typeof units;

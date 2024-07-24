@@ -105,14 +105,10 @@ export function getInitialState({
       baseUnits
     );
 
-    if (initialState.modSelectionA.size > 0) {
-      initialState.moddedCombatResultsA = generateCombatTable(
-        initialState.unitLibraryA[selectedUnitA as UnitIdType],
-        initialState.unitLibraryB
-      );
-    } else {
-      initialState.moddedCombatResultsA = initialState.baseCombatResultsA;
-    }
+    initialState.moddedCombatResultsA = generateCombatTable(
+      initialState.unitLibraryA[selectedUnitA as UnitIdType],
+      initialState.unitLibraryB
+    );
   }
   if (selectedUnitB) {
     initialState.baseCombatResultsB = generateCombatTable(
@@ -120,15 +116,10 @@ export function getInitialState({
       baseUnits
     );
 
-    // TODO: FIX THIS
-    if (initialState.modSelectionB.size > 0) {
-      initialState.moddedCombatResultsB = generateCombatTable(
-        initialState.unitLibraryB[selectedUnitB as UnitIdType],
-        initialState.unitLibraryA
-      );
-    } else {
-      initialState.moddedCombatResultsB = initialState.baseCombatResultsB;
-    }
+    initialState.moddedCombatResultsB = generateCombatTable(
+      initialState.unitLibraryB[selectedUnitB as UnitIdType],
+      initialState.unitLibraryA
+    );
   }
 
   return initialState;
