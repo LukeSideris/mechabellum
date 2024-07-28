@@ -2,7 +2,7 @@ import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 
 import { CombatResultsInterface } from 'src/combatCalculator/combatReducer';
 import { units as baseUnits, UnitIdType } from 'src/data/units';
-import classes from './UnitSelector.module.scss';
+import classes from './UnitCardSelector.module.scss';
 
 const UnitSelector = ({
   onSelectionChange,
@@ -36,10 +36,12 @@ const UnitSelector = ({
             id={unitId}
             textValue={unit.name}
           >
-            <img
+            <div
               className={classes.unitImage}
-              src={unit.thumbnail}
-              alt={unit.name}
+              style={{ 
+                backgroundImage: `url("${unit.card}")`,
+              }}
+              aria-hidden
             />
             <span className={classes.unitName}>{unit.name}</span>
             <ModEffect diff={diff} />

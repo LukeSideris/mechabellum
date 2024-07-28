@@ -1,63 +1,63 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 
-.container {
-  display: flex;
-  flex-direction: row;
+.gridContainer {
+  display: grid;
+  grid-row-gap: 12px;
+  grid-template-columns: 1fr 1fr 32px 1fr 1fr;
+  grid-template-rows: 1fr 1fr auto auto;
+  grid-template-areas:
+    "unitsA   unitsA    gap unitsB  unitsB"
+    "unitsA   unitsA    gap unitsB  unitsB"
+    "attacker defender  gap unitsB  unitsB"
+    "modsA    modsA     gap modsB   modsB";
+  width: 100%;
+  height: calc(100vh - 128px);
 }
 
-.leftSide {
-  container-type: inline-size;
-  container-name: leftSide;
-  flex-grow: 1;
-  text-align: right;
+.modsA {
+  grid-area: modsA;
 }
 
-.leftSideLayout {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
+.modsB {
+  grid-area: modsB;
 }
 
-.rightSideLayout {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-
-  .modifyUnit {
-    order: 1;
-  }
+.gap {
+  grid-area: gap;
 }
 
-.modifyUnit {
-  flex-grow: 1;
-  text-align: left;
-
-  h2 {
-    font-size: 20px;
-  }
-
-  h3 {
-    font-size: 16px;
-  }
+.unitsA {
+  grid-area: unitsA;
 }
 
-.unitDisplay {
-  min-width: 200px;
+.unitsB {
+  grid-area: unitsB;
 }
 
-.rightSide {
-  container-type: inline-size;
-  container-name: rightSide;
-  flex-grow: 1;
-  text-align: left;
+.test {
+  float: right;
 }
 
-.divider {
-  flex-grow: 0;
-  flex-shrink: 0;
-  overflow: visible;
-  padding-top: 12vh;
-  width: 64px;
+.attacker {
+  // display: none;
+  grid-area: attacker;
+  position: relative;
+}
+
+.attackerThumbnail {
+  transform: scaleX(-1);
+}
+
+.defender {
+  // display: none;
+  grid-area: defender;
+}
+
+.combatUtils {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
 }
 
 .versus {
@@ -67,13 +67,9 @@
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  display: block;
   text-align: center;
-  position: relative;
-  transform: scale(2);
   transform-origin: center;
   z-index: 1;
-}
-
-.swapButton {
-  margin-top: 175px;
+  margin-bottom: 12px;
 }

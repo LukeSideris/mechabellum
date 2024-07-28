@@ -2,8 +2,6 @@ import {
   ListBox,
   ListBoxItem,
   ListBoxProps,
-  Section,
-  Header,
 } from 'react-aria-components';
 import {
   mods,
@@ -48,26 +46,17 @@ const ModSelector = ({ dispatch, onSelectionChange, selectedKeys }: ListBoxProps
       onSelectionChange={onSelectionChange}
       selectedKeys={selectedKeys}
     >
-      <Section>
-        <Header>Starting Specialists</Header>
-        {starterSpecialists.map((modName) => (
-          <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
-        ))}
-      </Section>
+      {starterSpecialists.map((modName) => (
+        <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
+      ))}
 
-      <Section>
-        <Header>Tower Research ATK</Header>
-        {attackResearch.map((modName) => (
-          <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
-        ))}
-      </Section>
+      {attackResearch.map((modName) => (
+        <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
+      ))}
 
-      <Section>
-        <Header>Tower Research DEF</Header>
-        {defenseResearch.map((modName) => (
-          <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
-        ))}
-      </Section>
+      {defenseResearch.map((modName) => (
+        <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
+      ))}
     </ListBox>
   );
 }

@@ -1,3 +1,7 @@
+const cards = import.meta.glob('./cards/units/*.png', {
+  eager: true,
+  import: 'default',
+});
 const thumbnails = import.meta.glob('./thumbnails/units/*.png', {
   eager: true,
   import: 'default',
@@ -31,6 +35,7 @@ export const units = {
   crawler: {
     name: 'Crawler',
     id: 'crawler',
+    card: cards['./cards/units/crawler.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/crawler.png'] as string,
     cost: 100,
     hp: 292,
@@ -49,6 +54,7 @@ export const units = {
   fang: {
     name: 'Fang',
     id: 'fang',
+    card: cards['./cards/units/fang.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/fang.png'] as string,
     cost: 100,
     hp: 117,
@@ -67,6 +73,7 @@ export const units = {
   arclight: {
     name: 'Arclight',
     id: 'arclight',
+    card: cards['./cards/units/arclight.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/arclight.png'] as string,
     cost: 100,
     hp: 4414,
@@ -83,6 +90,7 @@ export const units = {
   marksman: {
     name: 'Marksman',
     id: 'marksman',
+    card: cards['./cards/units/marksman.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/marksman.png'] as string,
     cost: 100,
     hp: 1622,
@@ -99,6 +107,7 @@ export const units = {
   mustang: {
     name: 'Mustang',
     id: 'mustang',
+    card: cards['./cards/units/mustang.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/mustang.png'] as string,
     cost: 200,
     hp: 343,
@@ -117,6 +126,7 @@ export const units = {
   sledgehammer: {
     name: 'Sledgehammer',
     id: 'sledgehammer',
+    card: cards['./cards/units/sledgehammer.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/sledgehammer.png'] as string,
     cost: 200,
     hp: 3478,
@@ -134,6 +144,7 @@ export const units = {
   wasp: {
     name: 'Wasp',
     id: 'wasp',
+    card: cards['./cards/units/wasp.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/wasp.png'] as string,
     cost: 300,
     hp: 311,
@@ -152,6 +163,7 @@ export const units = {
   steel_ball: {
     name: 'Steel Ball',
     id: 'steel_ball',
+    card: cards['./cards/units/steel_ball.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/steel_ball.png'] as string,
     cost: 200,
     hp: 4571,
@@ -170,6 +182,7 @@ export const units = {
   stormcaller: {
     name: 'Stormcaller',
     id: 'stormcaller',
+    card: cards['./cards/units/stormcaller.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/stormcaller.png'] as string,
     cost: 200,
     hp: 1149,
@@ -187,6 +200,7 @@ export const units = {
   phoenix: {
     name: 'Phoenix',
     id: 'phoenix',
+    card: cards['./cards/units/phoenix.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/phoenix.png'] as string,
     cost: 200,
     hp: 1464,
@@ -204,6 +218,7 @@ export const units = {
   rhino: {
     name: 'Rhino',
     id: 'rhino',
+    card: cards['./cards/units/rhino.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/rhino.png'] as string,
     cost: 200,
     hp: 19297,
@@ -220,6 +235,7 @@ export const units = {
   hacker: {
     name: 'Hacker',
     id: 'hacker',
+    card: cards['./cards/units/hacker.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/hacker.png'] as string,
     cost: 300,
     hp: 3249,
@@ -236,6 +252,7 @@ export const units = {
   wraith: {
     name: 'Wraith',
     id: 'wraith',
+    card: cards['./cards/units/wraith.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/wraith.png'] as string,
     cost: 300,
     hp: 15001,
@@ -255,6 +272,7 @@ export const units = {
   scorpion: {
     name: 'Scorpion',
     id: 'scorpion',
+    card: cards['./cards/units/scorpion.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/scorpion.png'] as string,
     cost: 400,
     hp: 19625,
@@ -271,6 +289,7 @@ export const units = {
   vulcan: {
     name: 'Vulcan',
     id: 'vulcan',
+    card: cards['./cards/units/vulcan.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/vulcan.png'] as string,
     cost: 400,
     hp: 39920,
@@ -287,6 +306,7 @@ export const units = {
   fortress: {
     name: 'Fortress',
     id: 'fortress',
+    card: cards['./cards/units/fortress.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/fortress.png'] as string,
     cost: 400,
     hp: 45297,
@@ -303,6 +323,7 @@ export const units = {
   melting_point: {
     name: 'Melting Point',
     id: 'melting_point',
+    card: cards['./cards/units/melting_point.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/melting_point.png'] as string,
     cost: 400,
     hp: 36360,
@@ -332,6 +353,7 @@ export const units = {
   overlord: {
     name: 'Overlord',
     id: 'overlord',
+    card: cards['./cards/units/overlord.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/overlord.png'] as string,
     cost: 400,
     hp: 16099,
@@ -348,6 +370,7 @@ export const units = {
   war_factory: {
     name: 'War Factory',
     id: 'war_factory',
+    card: cards['./cards/units/war_factory.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/war_factory.png'] as string,
     cost: 800,
     hp: 166798,
@@ -364,6 +387,7 @@ export const units = {
   tarantula: {
     name: 'Tarantula',
     id: 'tarantula',
+    card: cards['./cards/units/placeholder.png'] as string,
     thumbnail: thumbnails['./thumbnails/units/tarantula.png'] as string,
     cost: 200,
     hp: 16789,

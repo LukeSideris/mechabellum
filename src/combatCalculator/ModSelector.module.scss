@@ -1,16 +1,19 @@
 .modSelector {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, minMax(100px, 1fr));
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 4px;
 }
 
 .modOption {
-  background-color: #313131;
-  border: 2px solid rgba(235, 106, 7, 0.8);
-  border-radius: 2px;
+  background-color: var(--interactive-off);
+  border: 1px solid var(--border-interactive-off);
+  border-radius: var(--radius-sm);
   display: flex;
   font-size: 12px;
-  padding: 4px;
+  margin: 2px 2px 2px 0;
+  padding: 2px;
+  text-align: left;
 
   img {
     height: 48px;
@@ -20,5 +23,6 @@
 }
 
 .modOption[data-selected] {
-  background-color: rgba(235, 106, 7, 0.8);
+  background-color: var(--interactive-on);
+  border-color: var(--border-interactive-on);
 }

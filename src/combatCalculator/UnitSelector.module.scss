@@ -1,6 +1,6 @@
 $unitMinWidth: 50px;
 $unitMaxWidth: 80px;
-$unitCount: 19;
+$unitCount: 20;
 /*
   max/min width is based on a default of 10 units per row.
   At these sizes we need to adjust row wrapping.
@@ -10,7 +10,7 @@ $maxWidth: $unitMaxWidth * 10;
 
 .unitSelector {
   display: grid;
-  grid-template-columns: repeat(10, minMax($unitMinWidth, $unitMaxWidth));
+  grid-template-columns: repeat(2, minMax($unitMinWidth, $unitMaxWidth));
   grid-template-rows: min-content min-content;
   grid-gap: 0px;
   grid-auto-flow: row;
@@ -39,16 +39,17 @@ $maxWidth: $unitMaxWidth * 10;
 
 .unit {
   aspect-ratio: 1 / 1.5;
-  background-color: #313131;
-  border: 2px solid rgba(235, 106, 7, 0.8);
-  border-radius: 2px;
+  background-color: var(--interactive-off);
+  border: 2px solid var(--border-interactive-off);
+  border-radius: var(--radius-sm);
   padding: 8px;
   position: relative;
   text-align: center;
 }
 
 .unit[data-selected] {
-  background-color: rgba(235, 106, 7, 0.8);
+  background-color: var(--interactive-on);
+  border-color: var(--border-interactive-on);
 }
 
 .unitImage {
@@ -87,9 +88,9 @@ $maxWidth: $unitMaxWidth * 10;
 }
 
 .positiveEffect {
-  color: #12de00d1;
+  color: var(--positive-change);
 }
 
 .negativeEffect {
-  color: #de0000d1;
+  color: var(--negative-change);
 }

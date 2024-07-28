@@ -1,4 +1,9 @@
 .app {
+  background-image: url("/site-background-top.jpg"), url("/site-background-bottom.jpg");
+  background-position: top center, bottom center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-blend-mode: lighten;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;

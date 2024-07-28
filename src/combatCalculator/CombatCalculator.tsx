@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { combatReducer, getInitialState } from './combatReducer';
 import UnitStats from 'src/unitDisplay/UnitStats';
 import UnitSelector from './UnitSelector';
+import UnitCardSelector from './UnitCardSelector';
 import ModSelector from './ModSelector';
 
 import classes from './CombatCalculator.module.scss';
@@ -99,122 +100,86 @@ function CombatCalculatorPage() {
     <>
       <h1>Combat Calculator</h1>
 
-      <div className={classes.container}>
-        <div className={`combat-left-side ${classes.leftSide}`}>
-          <UnitSelector
+      <div className={classes.gridContainer}>
+        <div className={classes.modsA}>
+          <h2 className="title-h3"><span>Attacker mods</span></h2>
+          <ModSelector
+            dispatch={dispatch}
+            onSelectionChange={handleModSelectionA}
+            selectedKeys={modSelectionA}
+          />
+        </div>
+
+        <div className={classes.modsB}>
+          <h2 className="title-h3"><span>Defender mods</span></h2>
+          <ModSelector
+            dispatch={dispatch}
+            onSelectionChange={handleModSelectionB}
+            selectedKeys={modSelectionB}
+          />
+        </div>
+
+        <div className={`combat-left-side ${classes.unitsA}`}> 
+          <h2 className="title-h3"><span>Select a unit</span></h2>
+          <UnitCardSelector
             onSelectionChange={handleUnitSelectionA}
             selectedKeys={unitSelectionA}
             baseCombatResults={undefined}
             moddedCombatResults={undefined}
           />
-
-          <div className={classes.leftSideLayout}>
-            <div className={classes.modifyUnit}>
-              <h2>Research & Specialists</h2>
-
-              <ModSelector
-                dispatch={dispatch}
-                onSelectionChange={handleModSelectionA}
-                selectedKeys={modSelectionA}
-              />
-            </div>
-
-            <div className={classes.unitDisplay}>
-              {leftUnit && (
-                <>
-                  <h2>{leftUnit.name}</h2>
-                  <img
-                    src={leftUnit.thumbnail}
-                    alt={leftUnit.name}
-                    style={{ width: '100px' }}
-                  />
-                  {rightUnit && (
-                    <div>
-                      <b>Attack rounds: </b> {ttkA.attackRounds || 0}
-                      <br />
-                      <b>Time to kill: </b> {Math.round(ttkA.time * 10) / 10}s
-                      <br />
-                      <b>
-                        effectiveness:{' '}
-                        {Math.round(
-                          ttkA.effectiveness * 100
-                        )}
-                        %
-                      </b>
-                      <br />
-                      <b>Hits per kill: {ttkA.hitsPerKill || 0}</b>
-                    </div>
-                  )}
-                  <UnitStats unit={leftUnit} />
-                </>
-              )}
-            </div>
-          </div>
         </div>
 
-        <div className={classes.divider}>
-          <span className={classes.versus}>VS</span>
-          <button
-            className={classes.swapButton}
-            onClick={() => {
-              handleUnitSelectionA(unitSelectionB);
-              handleUnitSelectionB(unitSelectionA);
-            }}
-          >
-            ↔
-          </button>
-        </div>
-
-        <div className={`combat-right-side ${classes.rightSide}`}>
-          <UnitSelector
+        <div className={`combat-right-side ${classes.unitsB}`}>
+          <UnitCardSelector
             onSelectionChange={handleUnitSelectionB}
             selectedKeys={unitSelectionB}
             baseCombatResults={baseCombatResultsA}
             moddedCombatResults={moddedCombatResultsA}
           />
+        </div>
 
-          <div className={classes.rightSideLayout}>
-            <div className={classes.modifyUnit}>
-              <h2>Research & Specialists</h2>
-
-              <ModSelector
-                dispatch={dispatch}
-                onSelectionChange={handleModSelectionB}
-                selectedKeys={modSelectionB}
+        <div className={classes.gap} />
+        
+        <div className={classes.attacker}>
+          {leftUnit && (
+            <>
+              <h2>{leftUnit.name}</h2>
+              <img
+                className={classes.attackerThumbnail}
+                src={leftUnit.thumbnail}
+                alt={leftUnit.name}
+                style={{ width: '100px' }}
               />
-            </div>
+            </>
+          )}
 
-            <div className={classes.unitDisplay}>
-              {rightUnit && (
-                <>
-                  <h2>{rightUnit.name}</h2>
-                  <img
-                    src={rightUnit.thumbnail}
-                    alt={rightUnit.name}
-                    style={{ width: '100px' }}
-                  />
-                  {leftUnit && (
-                    <div>
-                      <b>Attack rounds: </b> {ttkB.attackRounds || 0}
-                      <br />
-                      <b>Time to kill: </b> {Math.round(ttkB.time * 10) / 10}s
-                      <br />
-                      <b>
-                        effectiveness:{' '}
-                        {Math.round(
-                          ttkB.effectiveness * 100
-                        )}
-                        %
-                      </b>
-                      <br />
-                      <b>Hits per kill: {ttkB.hitsPerKill || 0}</b>
-                    </div>
-                  )}
-                  <UnitStats unit={rightUnit} />
-                </>
-              )}
+          {leftUnit && rightUnit && (
+            <div className={classes.combatUtils}>
+              <span className={classes.versus}>VS</span>
+              <button
+                className={classes.swapButton}
+                onClick={() => {
+                  handleUnitSelectionA(unitSelectionB);
+                  handleUnitSelectionB(unitSelectionA);
+                }}
+              >
+                ↔
+              </button>
             </div>
-          </div>
+          )}
+        </div>
+
+        <div className={classes.defender}>
+          {rightUnit && (
+            <>
+              <h2>{rightUnit.name}</h2>
+              <img
+                src={rightUnit.thumbnail}
+                alt={rightUnit.name}
+                style={{ width: '100px' }}
+              />
+            </>
+          )}
         </div>
       </div>
     </>
