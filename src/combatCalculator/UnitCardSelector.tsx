@@ -25,8 +25,10 @@ const UnitSelector = ({
     >
       {Object.keys(baseUnits).map((unitId: string) => {
         const unit = baseUnits[unitId as UnitIdType];
-        const baseEfficiency = baseCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
-        const moddedEfficiency = moddedCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
+        const baseEfficiency =
+          baseCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
+        const moddedEfficiency =
+          moddedCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
         const diff = moddedEfficiency / baseEfficiency;
 
         return (
@@ -38,7 +40,7 @@ const UnitSelector = ({
           >
             <div
               className={classes.unitImage}
-              style={{ 
+              style={{
                 backgroundImage: `url("${unit.card}")`,
               }}
               aria-hidden
@@ -50,7 +52,7 @@ const UnitSelector = ({
       })}
     </ListBox>
   );
-}
+};
 
 // Display component to indicate how the modded combat effectiveness differ from the base results
 // Diff prop is a decimal representing the percentage difference between the two values
@@ -66,19 +68,17 @@ const ModEffect = ({ diff }: { diff: number }) => {
     indicator = <span className={classes.positiveEffect}>++</span>;
   } else if (diff > 1) {
     indicator = <span className={classes.positiveEffect}>+</span>;
-  } else if (diff <= 0.76) { // inverse of 1.3
+  } else if (diff <= 0.76) {
+    // inverse of 1.3
     indicator = <span className={classes.negativeEffect}>---</span>;
-  } else if (diff <= 0.86) { // inverse of 1.15
+  } else if (diff <= 0.86) {
+    // inverse of 1.15
     indicator = <span className={classes.negativeEffect}>--</span>;
   } else if (diff < 1) {
     indicator = <span className={classes.negativeEffect}>-</span>;
   }
 
-  return (
-    <div className={classes.modEffect}>
-      {indicator}
-    </div>
-  );
+  return <div className={classes.modEffect}>{indicator}</div>;
 };
 
 export default UnitSelector;

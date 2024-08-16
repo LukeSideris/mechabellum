@@ -1,0 +1,85 @@
+.unitCombatReport {
+  text-align: left;
+
+  h3 {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  table {
+    border-spacing: 0;
+  }
+
+  th {
+    font-weight: normal;
+    text-align: right;
+    padding: 0;
+  }
+
+  td {
+    padding: 0 0 0 6px;
+  }
+}
+
+.unitHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.defender .hasVersus.unitHeader {
+  padding-left: 8px;
+}
+
+.versus {
+  font-size: 14px;
+  font-weight: 900;
+  background: linear-gradient(red, yellow);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  display: block;
+  text-align: center;
+  transform: translateX(50%);
+  margin-right: -8px;
+}
+
+.combatStats {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  margin-bottom: 8px;
+
+  dl {
+    margin-right: auto;
+  }
+}
+
+.unitStats {
+  background: var(--background-L0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px;
+}
+
+.thumbnail {
+  width: 64px;
+  height: auto;
+  order: 0;
+}
+
+.attacker .thumbnail {
+  transform: scaleX(-1);
+  order: 1;
+  margin-left: auto;
+}
+
+.defender .unitHeader {
+  justify-content: flex-start;
+}
+
+@media (max-height: 900px) {
+  .unitCombatReport {
+    font-size: 0.85em;
+  }
+}

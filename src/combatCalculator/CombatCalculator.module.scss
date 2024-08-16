@@ -4,14 +4,66 @@
   display: grid;
   grid-row-gap: 12px;
   grid-template-columns: 1fr 1fr 32px 1fr 1fr;
-  grid-template-rows: 1fr 1fr auto auto;
+  grid-template-rows: auto 1fr 1fr auto auto;
   grid-template-areas:
+    "header   header    gap infopanel infopanel"
     "unitsA   unitsA    gap unitsB  unitsB"
     "unitsA   unitsA    gap unitsB  unitsB"
     "attacker defender  gap unitsB  unitsB"
     "modsA    modsA     gap modsB   modsB";
   width: 100%;
-  height: calc(100vh - 128px);
+  height: calc(100vh - 3.2rem);
+}
+
+.pageTitle {
+  grid-area: header;
+  align-content: start;
+  text-align: left;
+  padding-left: 120px;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.infopanel {
+  align-content: start;
+  text-align: left;
+  grid-area: infopanel;
+  width: 100%;
+  margin-top: -1.6rem;
+  padding: 6px 12px;
+  position: relative;
+
+  // styles are similar to base.css h3 styles
+  border-bottom: 1px solid var(--border-highlight);
+  border-left: 3px solid var(--border-highlight);
+  border-radius: var(--radius-sm);
+  border-bottom-left-radius: var(--radius-md);
+  box-shadow: inset 3px -3px 5px -2px var(--glow-interactive-off);
+  font-size: 12px;
+  background: linear-gradient(to bottom left,
+      rgba(var(--background-L2-rgb), 0.0) 0%,
+      rgba(var(--background-L2-rgb), 0.5) 64px,
+      rgba(var(--background-L2-rgb), 0.5));
+
+
+  strong {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: var(--radius-sm);
+    border-bottom-left-radius: var(--radius-md);
+    padding: 6px 12px;
+    background: var(--background-L1);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1em;
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .modsA {
@@ -39,17 +91,11 @@
 }
 
 .attacker {
-  // display: none;
   grid-area: attacker;
   position: relative;
 }
 
-.attackerThumbnail {
-  transform: scaleX(-1);
-}
-
 .defender {
-  // display: none;
   grid-area: defender;
 }
 
@@ -58,18 +104,4 @@
   right: 0;
   top: 50%;
   transform: translate(50%, -50%);
-}
-
-.versus {
-  font-family: "Russo One", sans-serif;
-  font-size: 30px;
-  background: linear-gradient(red, yellow);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  display: block;
-  text-align: center;
-  transform-origin: center;
-  z-index: 1;
-  margin-bottom: 12px;
 }

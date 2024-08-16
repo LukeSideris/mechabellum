@@ -3,10 +3,14 @@ import { units, UnitInterface } from 'src/data/units.ts';
 export type ttkInterface = {
   attackRounds: number | null;
   hitsPerKill: number | null;
+  splashDamageTargets: number | null;
   time: number;
+  timeToFirstKill?: number;
   effectiveness: number;
   costEfficiency: number;
 };
+
+// TODO: Stormcallers are broken
 
 /*
 const crawlerSplashTable = [
@@ -35,7 +39,7 @@ const fangSplashTable = [
   [0, 1],
   [3, 1.1],   // melter 11, 13, 17, 17, 
   [4.5, 1.5], // warfactory
-  [5, 1.6],   // fortress, sledge
+  [5, 1.75  ],   // fortress, sledge
   // [5.5, 0], // storms
   [6, 2.1],   // rhino 8, 9, 8, 9, 8 9
   [7, 2.75],   // arclight, overlord  7,7,6,7,6,6,6,6
@@ -50,7 +54,6 @@ The fitted quadratic function is:
 
 y = 0.0538x^2 + -0.0504x + 0.6997
 */
-
 
 // the highest damage value of the melting point damage increments I have measured
 const melterDamageTableMax = units.melting_point.damageTable?.reduce(
@@ -81,7 +84,8 @@ const calculateSplashDamageTargets = (
       if (rows > rowCount) {
         // +1 hit for the unit in the row behind the target
         splashDamageTargets += 1;
-        const diagonalDistance = Math.hypot(minDistance, minDistance) * rowCount;
+        const diagonalDistance =
+          Math.hypot(minDistance, minDistance) * rowCount;
         if (attacker.splashRadius > diagonalDistance) {
           // Sometimes there are units on both sides of the target, so 50% chance to hit an edge
           splashDamageTargets += 1.5;
@@ -104,13 +108,14 @@ const calculateSplashDamageTargets = (
 export const timeToKill = (
   attacker: UnitInterface,
   target: UnitInterface,
-  calculateEffieciency = true,
+  calculateEffieciency = true
 ): ttkInterface => {
   // safety check for invalid units
   if (!attacker || !target) {
     return {
       attackRounds: null,
       hitsPerKill: null,
+      splashDamageTargets: null,
       time: Infinity,
       effectiveness: 0,
       costEfficiency: 0,
@@ -122,6 +127,7 @@ export const timeToKill = (
     return {
       attackRounds: null,
       hitsPerKill: null,
+      splashDamageTargets: null,
       time: Infinity,
       effectiveness: 0,
       costEfficiency: 0,
@@ -147,12 +153,14 @@ export const timeToKill = (
       results = {
         attackRounds: 1,
         hitsPerKill: hitsRequired,
+        splashDamageTargets: 1,
         time: attacker.attackInterval,
       } as ttkInterface;
     } else if (totalHitsRequired <= 24) {
       results = {
         attackRounds: 2,
         hitsPerKill: hitsRequired,
+        splashDamageTargets: 1,
         time: 2 * attacker.attackInterval,
       } as ttkInterface;
     } else {
@@ -161,6 +169,7 @@ export const timeToKill = (
       results = {
         attackRounds,
         hitsPerKill: hitsRequired,
+        splashDamageTargets: 1,
         time: attackRounds * attacker.attackInterval,
       } as ttkInterface;
     }
@@ -190,6 +199,7 @@ export const timeToKill = (
     results = {
       attackRounds,
       hitsPerKill: hitsRequired,
+      splashDamageTargets: splashDamageTargets,
       time: attackRounds * attacker.attackInterval,
     } as ttkInterface;
   }
@@ -211,12 +221,14 @@ export const timeToKill = (
       results = {
         attackRounds: totalHits,
         hitsPerKill: hitsRequired,
+        splashDamageTargets: 1,
         time: totalHits * attacker.attackInterval,
       } as ttkInterface;
     } else {
       results = {
         attackRounds: hits,
         hitsPerKill: hitsRequired,
+        splashDamageTargets: 1,
         time: hits * attacker.attackInterval,
       } as ttkInterface;
     }
@@ -266,27 +278,50 @@ export const timeToKill = (
     results = {
       attackRounds: attackRounds,
       hitsPerKill: hitsRequired,
+      splashDamageTargets: splashDamageTargets,
       time: attackRounds * attacker.attackInterval,
     } as ttkInterface;
   }
 
-
   // speed/range approximations
   // TODO: Missile units like stormcaller might have a maximum speed threshold where they can hit a target
   const rangeDiff = target.range - attacker.range;
-  if (rangeDiff > 0) {
-    results.time = results.time + rangeDiff / attacker.speed;
-  }
 
   if (calculateEffieciency) {
     const ttkTarget = timeToKill(target, attacker, false);
 
+    if (rangeDiff > 0) {
+      results.time = results.time + rangeDiff / attacker.speed;
+    }
     const costRatio = attacker.cost / target.cost;
     const killRatio = ttkTarget.time / results.time;
 
     results.effectiveness = killRatio;
     // TODO: test and validate this equation
     results.costEfficiency = killRatio / costRatio;
+
+    if (attacker.unitCount > 1 && attacker.id !== target.id) {
+      // factor in unit deaths during the time it takes to kill the target
+      // We base this on the time required for the attacker to kill one entity in the target squad
+      // then get a ratio of how many attackers might be killed off during that duration
+      const timeToFirstKill =
+        target.unitCount === 1
+          ? results.time
+          : // todo: add timeToFirstKill to ttk logic and use it instead here
+          Math.max(0, rangeDiff / attacker.speed) +
+          ((results.attackRounds || 0) / target.unitCount) * attacker.attackInterval;
+      // ex: an attrition ratio of 25% means 1/4 of the attackers were killed before
+      // they could kill the target.
+      let attritionAmount =
+        Math.floor((timeToFirstKill / ttkTarget.time) * attacker.unitCount) /
+        attacker.unitCount;
+      // This value can be above 100% if there's lots of overkill, we cap this at 200%
+      attritionAmount = Math.min(attritionAmount, 2);
+
+      // use attrition ratio to reduce effectiveness
+      results.effectiveness = results.effectiveness / (attritionAmount + 1);
+      results.costEfficiency = results.effectiveness / costRatio;
+    }
   }
 
   return results;
