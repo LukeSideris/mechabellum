@@ -93,10 +93,12 @@
 .attacker {
   grid-area: attacker;
   position: relative;
+  padding-right: 8px;
 }
 
 .defender {
   grid-area: defender;
+  padding-left: 8px;
 }
 
 .combatUtils {
