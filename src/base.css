@@ -1,11 +1,41 @@
+/* Note: Ubuntu sans offers condensed and mono typefaces */
+/* Other options: Maven, Orbitron */
+/* Question - should I do link embed instead of css import? */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* UI base colors */
+  --border-subtle: #1b2b43;
+  --border-highlight: #5a74c0;
+  --background-L0: #0f1013;
+  --background-L1: #1a233f;
+  --background-L2: #264da4;
+  --background-L2-rgb: 38, 77, 164;
+
+  /* interactive elements */
+  --interactive-off: #24283b;
+  --interactive-on: #495777;
+  --border-interactive-off: #5a74c0;
+  --border-interactive-on: #00b0f9;
+  /* state management */
+  --selected: #61cf5a;
+  --selectedRGB: 32, 194, 14;
+  --positive-change: #0ad000;
+  --negative-change: #cb0000;
+
+  /* UI base rules */
+  --radius-sm: 1px;
+  --radius-md: 4px;
+}
+
+:root {
+  font-family: 'Ubuntu', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: var(--background-L0);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -24,6 +54,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -40,8 +71,31 @@ h1 {
   margin-top: 0;
 }
 
+.title-h3 {
+  border-bottom: 1px solid var(--border-highlight);
+  border-left: 3px solid var(--border-highlight);
+  border-bottom-left-radius: var(--radius-md);
+  box-shadow: inset 3px -3px 5px -2px var(--glow-interactive-off);
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.title-h3 > span {
+  background: linear-gradient(
+    to left,
+    rgba(var(--background-L2-rgb), 0) 0%,
+    rgba(var(--background-L2-rgb), 0.5) 48px,
+    rgba(var(--background-L2-rgb), 0.5)
+  );
+  display: inline-block;
+  padding: 2px 6px;
+  padding-right: 64px;
+}
+
 button {
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -51,23 +105,25 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* 
+  Focus style
+*/
+:focus-visible,
+*:focus {
+  border-color: var(--selected);
+  outline: none;
+  transition: box-shadow 0.2s ease-out;
+  box-shadow:
+    0 0 12px 0 rgba(var(--selectedRGB), 0.6),
+    0 0 0 2px var(--selected);
 }

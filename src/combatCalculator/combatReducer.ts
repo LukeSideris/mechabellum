@@ -9,7 +9,7 @@ export type UnitLibraryInterface = {
 
 export type CombatResultsInterface = {
   [key in UnitIdType]: ttkInterface;
-}
+};
 
 export type combatStateType = {
   unitSelectionA: Set<string>;
@@ -47,43 +47,51 @@ export function getInitialState({
   searchParams,
   paramsNameMap,
 }: {
-  searchParams: URLSearchParams,
+  searchParams: URLSearchParams;
   // map provided from CombatCalculator.tsx to translate state var names to query param names
   paramsNameMap: {
     unitSelectionA: string;
     unitSelectionB: string;
     modSelectionA: string;
     modSelectionB: string;
-  }
+  };
 }): combatStateType {
   const initialState: combatStateType = { ...combatReducerDefaultState };
 
   if (searchParams.has(paramsNameMap.unitSelectionA)) {
-    initialState.unitSelectionA = new Set(searchParams.getAll(paramsNameMap.unitSelectionA)
-      // validate the param matches a valid unit id
-      .filter((unitId) => unitId in baseUnits)
+    initialState.unitSelectionA = new Set(
+      searchParams
+        .getAll(paramsNameMap.unitSelectionA)
+        // validate the param matches a valid unit id
+        .filter((unitId) => unitId in baseUnits)
     );
   }
 
   if (searchParams.has(paramsNameMap.unitSelectionB)) {
-    initialState.unitSelectionB = new Set(searchParams.getAll(paramsNameMap.unitSelectionB)
-      // validate the param matches a valid unit id
-      .filter((unitId) => unitId in baseUnits)
+    initialState.unitSelectionB = new Set(
+      searchParams
+        .getAll(paramsNameMap.unitSelectionB)
+        // validate the param matches a valid unit id
+        .filter((unitId) => unitId in baseUnits)
     );
   }
 
   if (searchParams.has(paramsNameMap.modSelectionA)) {
-    const urlMods = new Set(searchParams.getAll(paramsNameMap.modSelectionA)
-      // validate the param matches a valid mod id
-      .filter((modId) => modId in mods)
+    const urlMods = new Set(
+      searchParams
+        .getAll(paramsNameMap.modSelectionA)
+        // validate the param matches a valid mod id
+        .filter((modId) => modId in mods)
     );
     initialState.modSelectionA = filterMods(urlMods);
   }
 
   if (searchParams.has(paramsNameMap.modSelectionB)) {
-    const urlMods = new Set(searchParams.getAll(paramsNameMap.modSelectionB)
-      // validate the param matches a valid mod id
-      .filter((modId) => modId in mods)
+    const urlMods = new Set(
+      searchParams
+        .getAll(paramsNameMap.modSelectionB)
+        // validate the param matches a valid mod id
+        .filter((modId) => modId in mods)
     );
     initialState.modSelectionB = filterMods(urlMods);
   }
@@ -140,7 +148,10 @@ const generateUnitLibrary = (activeMods: Set<string>) => {
   return modifiedLibrary;
 };
 
-const generateCombatTable = (attacker: UnitInterface, targetLibrary: UnitLibraryInterface) => {
+const generateCombatTable = (
+  attacker: UnitInterface,
+  targetLibrary: UnitLibraryInterface
+) => {
   const table = {} as CombatResultsInterface;
   if (!attacker) {
     return table;
@@ -154,7 +165,7 @@ const generateCombatTable = (attacker: UnitInterface, targetLibrary: UnitLibrary
   }
 
   return table;
-}
+};
 
 export function combatReducer(
   state: combatStateType,
@@ -167,8 +178,14 @@ export function combatReducer(
         ...state,
         unitSelectionA: action.payload,
         // Generate effectiveness tables for selected unit
-        baseCombatResultsA: generateCombatTable(baseUnits[newUnit as UnitIdType], baseUnits),
-        moddedCombatResultsA: generateCombatTable(state.unitLibraryA[newUnit as UnitIdType], state.unitLibraryB),
+        baseCombatResultsA: generateCombatTable(
+          baseUnits[newUnit as UnitIdType],
+          baseUnits
+        ),
+        moddedCombatResultsA: generateCombatTable(
+          state.unitLibraryA[newUnit as UnitIdType],
+          state.unitLibraryB
+        ),
       };
     }
 
@@ -178,8 +195,14 @@ export function combatReducer(
         ...state,
         unitSelectionB: action.payload,
         // Generate effectiveness tables for selected unit
-        baseCombatResultsB: generateCombatTable(baseUnits[newUnit as UnitIdType], baseUnits),
-        moddedCombatResultsB: generateCombatTable(state.unitLibraryB[newUnit as UnitIdType], state.unitLibraryA),
+        baseCombatResultsB: generateCombatTable(
+          baseUnits[newUnit as UnitIdType],
+          baseUnits
+        ),
+        moddedCombatResultsB: generateCombatTable(
+          state.unitLibraryB[newUnit as UnitIdType],
+          state.unitLibraryA
+        ),
       };
     }
 

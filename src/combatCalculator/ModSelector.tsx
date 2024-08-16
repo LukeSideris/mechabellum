@@ -1,10 +1,4 @@
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxProps,
-  Section,
-  Header,
-} from 'react-aria-components';
+import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 import {
   mods,
   starterSpecialists,
@@ -14,9 +8,12 @@ import {
 
 import classes from './ModSelector.module.scss';
 
-function ModListBoxItem({ dispatch, modName }: {
-  dispatch: React.Dispatch<any>, // eslint-disable-line @typescript-eslint/no-explicit-any 
-  modName: string
+function ModListBoxItem({
+  dispatch,
+  modName,
+}: {
+  dispatch: React.Dispatch<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  modName: string;
 }) {
   const mod = mods[modName as keyof typeof mods];
   return (
@@ -27,7 +24,10 @@ function ModListBoxItem({ dispatch, modName }: {
       textValue={mod.name}
       onHoverChange={(isHovering: boolean): void => {
         // console.log('onHoverChange', isHovering);
-        dispatch({ type: 'hoverMod', payload: { state: isHovering, id: mod.id } });
+        dispatch({
+          type: 'hoverMod',
+          payload: { state: isHovering, id: mod.id },
+        });
       }}
     >
       <img src={mod.thumbnail} alt={mod.name} />
@@ -36,8 +36,12 @@ function ModListBoxItem({ dispatch, modName }: {
   );
 }
 
-const ModSelector = ({ dispatch, onSelectionChange, selectedKeys }: ListBoxProps<object> & {
-  dispatch: React.Dispatch<any>, // eslint-disable-line @typescript-eslint/no-explicit-any
+const ModSelector = ({
+  dispatch,
+  onSelectionChange,
+  selectedKeys,
+}: ListBoxProps<object> & {
+  dispatch: React.Dispatch<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 }) => {
   return (
     <ListBox
@@ -48,28 +52,19 @@ const ModSelector = ({ dispatch, onSelectionChange, selectedKeys }: ListBoxProps
       onSelectionChange={onSelectionChange}
       selectedKeys={selectedKeys}
     >
-      <Section>
-        <Header>Starting Specialists</Header>
-        {starterSpecialists.map((modName) => (
-          <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
-        ))}
-      </Section>
+      {starterSpecialists.map((modName) => (
+        <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
+      ))}
 
-      <Section>
-        <Header>Tower Research ATK</Header>
-        {attackResearch.map((modName) => (
-          <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
-        ))}
-      </Section>
+      {attackResearch.map((modName) => (
+        <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
+      ))}
 
-      <Section>
-        <Header>Tower Research DEF</Header>
-        {defenseResearch.map((modName) => (
-          <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
-        ))}
-      </Section>
+      {defenseResearch.map((modName) => (
+        <ModListBoxItem dispatch={dispatch} modName={modName} key={modName} />
+      ))}
     </ListBox>
   );
-}
+};
 
 export default ModSelector;

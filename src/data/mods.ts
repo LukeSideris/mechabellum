@@ -17,6 +17,9 @@ export type ModInterface = {
   // hp and attack use different mathematics depending on being positive or negative
   modifyHp?: number;
   modifyDamage?: number;
+  // special modifiers for aerial specialist
+  modifyHpAerial?: number;
+  modifyDamageAerial?: number;
   // generic modifier to apply to any unit stat. Do not use to modify attack or HP.
   modifier?: (unit: UnitInterface) => UnitInterface;
 };
@@ -63,40 +66,36 @@ export const mods = {
     id: 'aerial',
     description: 'Increase range of flying units by 10m',
     thumbnail: thumbnailAerial,
-    modifier: (unit: UnitInterface) => {
-      return {
-        ...unit,
-        range: unit.flying ? unit.range + 10 : unit.range,
-      };
-    },
+    modifyHpAerial: 0.1,
+    modifyDamageAerial: 0.1,
   },
   rcAttack1: {
-    name: 'Attack upgrade 1',
+    name: 'Attack 1',
     id: 'rcAttack1',
-    description: 'Increase attack of all units by 10%',
+    description: 'Increase attack of all units by 12%',
     thumbnail: researchThumbs['./thumbnails/research/attack_1.png'] as string,
-    modifyDamage: 0.1,
+    modifyDamage: 0.12,
   },
   rcAttack2: {
-    name: 'Attack upgrade 2',
+    name: 'Attack 2',
     id: 'rcAttack2',
-    description: 'Increase health of all units by 30%',
+    description: 'Increase health of all units by 36%',
     thumbnail: researchThumbs['./thumbnails/research/attack_2.png'] as string,
-    modifyDamage: 0.3,
+    modifyDamage: 0.36,
   },
   rcDefense1: {
-    name: 'Defense upgrade 1',
+    name: 'Defense 1',
     id: 'rcDefense1',
     description: 'Increase health of all units by 10%',
     thumbnail: researchThumbs['./thumbnails/research/defense_1.png'] as string,
     modifyHp: 0.15,
   },
   rcDefense2: {
-    name: 'Defense upgrade 2',
+    name: 'Defense 2',
     id: 'rcDefense2',
     description: 'Increase health of all units by 30%',
     thumbnail: researchThumbs['./thumbnails/research/defense_2.png'] as string,
-    modifyHp: 0.3,
+    modifyHp: 0.45,
   },
 };
 

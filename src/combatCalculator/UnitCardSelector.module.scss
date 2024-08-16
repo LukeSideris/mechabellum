@@ -1,0 +1,77 @@
+.unitSelector {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  // TODO: Add container queries to adjust number of cols based on size?
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-gap: 3px;
+}
+
+.unit {
+  background-color: var(--background-L1);
+  border: 2px solid var(--border-interactive-off);
+  border-radius: var(--radius-sm);
+  position: relative;
+  text-align: center;
+  min-width: 60px;
+}
+
+.unitSelector::after {
+  content: "";
+  flex-grow: 99;
+  height: 0;
+}
+
+.unit[data-selected] {
+  border-color: var(--border-interactive-on);
+}
+
+.unitImage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 25%;
+}
+
+:global(.combat-left-side) .unitImage {
+  transform: scaleX(-1);
+}
+
+.unitName {
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  padding: 8px;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.modEffect {
+  background: rgba(0, 0, 0, 0.8);
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: bold;
+  position: absolute;
+  padding: 8px;
+  text-align: center;
+  top: 0;
+  left: 0;
+  height: 30px;
+  min-width: 30px;
+}
+
+.positiveEffect {
+  color: var(--positive-change);
+}
+
+.negativeEffect {
+  color: var(--negative-change);
+}

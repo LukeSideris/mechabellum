@@ -34,6 +34,16 @@ const applyUnitMods = (
         hpDecrease.push(mod.modifyHp);
       }
     }
+
+    // special mods for aerial specialist
+    if (mod.modifyDamageAerial && modifiedUnit.flying) {
+      attackIncrease.push(mod.modifyDamageAerial);
+    }
+    if (mod.modifyHpAerial && modifiedUnit.flying) {
+      hpIncrease.push(mod.modifyHpAerial);
+    }
+
+    // apply generic modifier
     if (mod.modifier) {
       modifiedUnit = mod.modifier(modifiedUnit);
     }

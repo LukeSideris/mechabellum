@@ -1,0 +1,12 @@
+.increase {
+  color: var(--positive-change);
+}
+.decrease {
+  color: var(--negative-change);
+}
+.modded {
+  font-weight: bold;
+  font-size: 0.8em;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 1);
+  margin-left: 2px;
+}

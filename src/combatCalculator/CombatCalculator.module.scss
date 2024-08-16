@@ -1,79 +1,109 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 
-.container {
-  display: flex;
-  flex-direction: row;
+.gridContainer {
+  display: grid;
+  grid-row-gap: 12px;
+  grid-template-columns: 1fr 1fr 32px 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr auto auto;
+  grid-template-areas:
+    "header   header    gap infopanel infopanel"
+    "unitsA   unitsA    gap unitsB  unitsB"
+    "unitsA   unitsA    gap unitsB  unitsB"
+    "attacker defender  gap unitsB  unitsB"
+    "modsA    modsA     gap modsB   modsB";
+  width: 100%;
+  height: calc(100vh - 3.2rem);
 }
 
-.leftSide {
-  container-type: inline-size;
-  container-name: leftSide;
-  flex-grow: 1;
-  text-align: right;
-}
-
-.leftSideLayout {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-}
-
-.rightSideLayout {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-
-  .modifyUnit {
-    order: 1;
-  }
-}
-
-.modifyUnit {
-  flex-grow: 1;
+.pageTitle {
+  grid-area: header;
+  align-content: start;
   text-align: left;
+  padding-left: 120px;
 
-  h2 {
-    font-size: 20px;
-  }
-
-  h3 {
-    font-size: 16px;
+  h1 {
+    margin: 0;
   }
 }
 
-.unitDisplay {
-  min-width: 200px;
-}
-
-.rightSide {
-  container-type: inline-size;
-  container-name: rightSide;
-  flex-grow: 1;
+.infopanel {
+  align-content: start;
   text-align: left;
-}
-
-.divider {
-  flex-grow: 0;
-  flex-shrink: 0;
-  overflow: visible;
-  padding-top: 12vh;
-  width: 64px;
-}
-
-.versus {
-  font-family: "Russo One", sans-serif;
-  font-size: 30px;
-  background: linear-gradient(red, yellow);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  text-align: center;
+  grid-area: infopanel;
+  width: 100%;
+  margin-top: -1.6rem;
+  padding: 6px 12px;
   position: relative;
-  transform: scale(2);
-  transform-origin: center;
-  z-index: 1;
+
+  // styles are similar to base.css h3 styles
+  border-bottom: 1px solid var(--border-highlight);
+  border-left: 3px solid var(--border-highlight);
+  border-radius: var(--radius-sm);
+  border-bottom-left-radius: var(--radius-md);
+  box-shadow: inset 3px -3px 5px -2px var(--glow-interactive-off);
+  font-size: 12px;
+  background: linear-gradient(to bottom left,
+      rgba(var(--background-L2-rgb), 0.0) 0%,
+      rgba(var(--background-L2-rgb), 0.5) 64px,
+      rgba(var(--background-L2-rgb), 0.5));
+
+
+  strong {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: var(--radius-sm);
+    border-bottom-left-radius: var(--radius-md);
+    padding: 6px 12px;
+    background: var(--background-L1);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1em;
+    position: relative;
+    z-index: 1;
+  }
 }
 
-.swapButton {
-  margin-top: 175px;
+.modsA {
+  grid-area: modsA;
+}
+
+.modsB {
+  grid-area: modsB;
+}
+
+.gap {
+  grid-area: gap;
+}
+
+.unitsA {
+  grid-area: unitsA;
+}
+
+.unitsB {
+  grid-area: unitsB;
+}
+
+.test {
+  float: right;
+}
+
+.attacker {
+  grid-area: attacker;
+  position: relative;
+  padding-right: 8px;
+}
+
+.defender {
+  grid-area: defender;
+  padding-left: 8px;
+}
+
+.combatUtils {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
 }
