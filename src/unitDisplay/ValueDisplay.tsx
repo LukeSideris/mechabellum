@@ -15,7 +15,7 @@ const ValueDisplay = ({
 }: {
   baseline: number;
   modded: number;
-  formatter: (value: number) => string | number;
+  formatter?: (value: number) => string | number;
   inverted?: boolean;
 }) => {
   return (

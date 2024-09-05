@@ -1,8 +1,13 @@
 .unitCombatReport {
   text-align: left;
+  background-color: var(--background-L0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px;
 
   h3 {
-    margin: 0;
+    font-size: 15px;
+    margin: 0 0 4px 0;
     text-transform: uppercase;
   }
 
@@ -17,8 +22,19 @@
   }
 
   td {
-    padding: 0 0 0 6px;
+    padding: 0;
   }
+}
+
+.contentWrapper {
+  background-size: 33%;
+  background-position: right top;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.attacker .contentWrapper {
+  /* TO DO: horizontal flip attacker's image? */
 }
 
 .unitHeader {
@@ -32,50 +48,55 @@
 }
 
 .versus {
-  font-size: 14px;
+  float: left;
+  margin-right: 6px;
+  font-size: 15px;
   font-weight: 900;
-  background: linear-gradient(red, yellow);
+  background: linear-gradient(rgb(255, 100, 72), rgb(255, 189, 66));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  display: block;
-  text-align: center;
-  transform: translateX(50%);
-  margin-right: -8px;
-}
-
-.combatStats {
-  display: flex;
-  gap: 8px;
-  align-items: flex-end;
-  margin-bottom: 8px;
-
-  dl {
-    margin-right: auto;
-  }
 }
 
 .unitStats {
-  background: var(--background-L0);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 8px;
+  background: url('/unit_data_bg.png');
+  background-size: contain;
+  width: 152px;
+  height: 108px;
+  padding-left: 30px;
+  font-size: 12px;
+  line-height: 16px;
+
+  th {
+    display: none;
+  }
+
+  tr {
+    height: 17.25px;
+  }
+
+  tr.unitHp {
+    height: 20px;
+  }
 }
 
-.thumbnail {
-  width: 64px;
-  height: auto;
-  order: 0;
-}
+.combatStats {
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 
-.attacker .thumbnail {
-  transform: scaleX(-1);
-  order: 1;
-  margin-left: auto;
-}
+  th {
+    font-weight: bold;
+    padding-right: 6px;
+  }
 
-.defender .unitHeader {
-  justify-content: flex-start;
+  td {
+    font-weight: normal;
+    min-width: 60px;
+  }
 }
 
 @media (max-height: 900px) {

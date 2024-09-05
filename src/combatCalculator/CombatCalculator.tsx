@@ -168,24 +168,8 @@ function CombatCalculatorPage() {
               moddedCombatResultsA[rightUnitId as UnitIdType]
             }
             position="attacker"
-            showVersus={Boolean(rightUnit)}
           />
         )}
-
-        {/*leftUnit && rightUnit && (
-          <div className={classes.combatUtils}>
-            <span className={classes.versus}>VS</span>
-            <button
-              className={classes.swapButton}
-              onClick={() => {
-                handleUnitSelectionA(unitSelectionB);
-                handleUnitSelectionB(unitSelectionA);
-              }}
-            >
-              ↔
-            </button>
-          </div>
-        )*/}
       </div>
 
       <div className={`combat-defender ${classes.defender}`}>

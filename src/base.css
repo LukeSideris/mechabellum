@@ -21,7 +21,7 @@
   --selected: #61cf5a;
   --selectedRGB: 32, 194, 14;
   --positive-change: #0ad000;
-  --negative-change: #cb0000;
+  --negative-change: hsl(0, 100%, 60%);
 
   /* UI base rules */
   --radius-sm: 1px;
