@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { combatReducer, getInitialState } from './combatReducer';
 import UnitCombatReport from 'src/unitDisplay/UnitCombatReport';
+import UnitPlaceholder from 'src/unitDisplay/UnitPlaceholder';
 import UnitCardSelector from './UnitCardSelector';
 import ModSelector from './ModSelector';
 
@@ -170,6 +171,9 @@ function CombatCalculatorPage() {
             position="attacker"
           />
         )}
+        {!leftUnit && rightUnit && (
+          <UnitPlaceholder />
+        )}
       </div>
 
       <div className={`combat-defender ${classes.defender}`}>
@@ -179,8 +183,10 @@ function CombatCalculatorPage() {
             baseCombatResults={baseCombatResultsB[leftUnitId as UnitIdType]}
             moddedCombatResults={moddedCombatResultsB[leftUnitId as UnitIdType]}
             position="defender"
-            showVersus={Boolean(leftUnit)}
           />
+        )}
+        {!rightUnit && leftUnit && (
+          <UnitPlaceholder />
         )}
       </div>
     </div>

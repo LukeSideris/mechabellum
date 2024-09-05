@@ -139,7 +139,7 @@ export const timeToKill = (
   const { damageMod = 1 } = attacker;
   const { hpMod = 1 } = target;
   const targetHp = Math.round(target.hp * hpMod);
-  const attackerDamage = Math.round(attacker.damage * damageMod);
+  const attackerDamage = attacker.damage * damageMod;
 
   let hitsRequired = Math.ceil(targetHp / attackerDamage);
   let totalHitsRequired = target.unitCount * hitsRequired;
@@ -220,14 +220,14 @@ export const timeToKill = (
       const totalHits = (hits * target.unitCount) / attacker.unitCount;
       results = {
         attackRounds: totalHits,
-        hitsPerKill: hitsRequired,
+        hitsPerKill: hits,
         splashDamageTargets: 1,
         time: totalHits * attacker.attackInterval,
       } as ttkInterface;
     } else {
       results = {
         attackRounds: hits,
-        hitsPerKill: hitsRequired,
+        hitsPerKill: hits * attacker.unitCount,
         splashDamageTargets: 1,
         time: hits * attacker.attackInterval,
       } as ttkInterface;

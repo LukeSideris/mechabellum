@@ -9,13 +9,11 @@ const UnitCombatReport = ({
   baseCombatResults,
   moddedCombatResults,
   position,
-  showVersus = false,
 }: {
   unit: UnitInterface;
   baseCombatResults: ttkInterface;
   moddedCombatResults: ttkInterface;
   position: 'attacker' | 'defender';
-  showVersus?: boolean;
 }) => {
   if (!unit) {
     return null;
@@ -31,11 +29,6 @@ const UnitCombatReport = ({
         backgroundImage: `url("${unit.thumbnail}")`,
       }}>
         <header>
-          {showVersus && (
-            <span className={classes.versus} aria-hidden>
-              VS
-            </span>
-          )}
           <h3>{unit.name}</h3>
         </header>
 
@@ -134,7 +127,7 @@ const UnitCombatReport = ({
                   </td>
                 </tr>
                 <tr>
-                  <th>Time to kill:</th>
+                  <th>Time to defeat:</th>
                   <td>
                     <ValueDisplay
                       baseline={baseCombatResults.time || 0}
