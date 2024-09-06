@@ -1,0 +1,10 @@
+.unitPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(var(--background-L0-rgb), 0.7);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  height: 100%;
+}

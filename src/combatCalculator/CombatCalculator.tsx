@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { combatReducer, getInitialState } from './combatReducer';
 import UnitCombatReport from 'src/unitDisplay/UnitCombatReport';
+import UnitPlaceholder from 'src/unitDisplay/UnitPlaceholder';
 import UnitCardSelector from './UnitCardSelector';
 import ModSelector from './ModSelector';
 
@@ -168,24 +169,11 @@ function CombatCalculatorPage() {
               moddedCombatResultsA[rightUnitId as UnitIdType]
             }
             position="attacker"
-            showVersus={Boolean(rightUnit)}
           />
         )}
-
-        {/*leftUnit && rightUnit && (
-          <div className={classes.combatUtils}>
-            <span className={classes.versus}>VS</span>
-            <button
-              className={classes.swapButton}
-              onClick={() => {
-                handleUnitSelectionA(unitSelectionB);
-                handleUnitSelectionB(unitSelectionA);
-              }}
-            >
-              ↔
-            </button>
-          </div>
-        )*/}
+        {!leftUnit && rightUnit && (
+          <UnitPlaceholder />
+        )}
       </div>
 
       <div className={`combat-defender ${classes.defender}`}>
@@ -195,8 +183,10 @@ function CombatCalculatorPage() {
             baseCombatResults={baseCombatResultsB[leftUnitId as UnitIdType]}
             moddedCombatResults={moddedCombatResultsB[leftUnitId as UnitIdType]}
             position="defender"
-            showVersus={Boolean(leftUnit)}
           />
+        )}
+        {!rightUnit && leftUnit && (
+          <UnitPlaceholder />
         )}
       </div>
     </div>

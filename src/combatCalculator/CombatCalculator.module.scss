@@ -80,10 +80,14 @@
 
 .unitsA {
   grid-area: unitsA;
+  position: relative;
+  // counteracts grid gap for attack/defend units
+  margin-bottom: -12px;
 }
 
 .unitsB {
   grid-area: unitsB;
+  position: relative;
 }
 
 .test {
@@ -99,6 +103,15 @@
 .defender {
   grid-area: defender;
   padding-left: 8px;
+}
+
+.attacker,
+.defender {
+  padding-top: 12px;
+
+  &:empty {
+    padding-top: 0;
+  }
 }
 
 .combatUtils {

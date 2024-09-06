@@ -1,12 +1,15 @@
 .increase {
   color: var(--positive-change);
+  text-shadow: 0 0 1px rgba(0, 0, 0, 1);
 }
+
 .decrease {
   color: var(--negative-change);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 1);
 }
+
 .modded {
   font-weight: bold;
-  font-size: 0.8em;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 1);
+  font-size: 0.9em;
   margin-left: 2px;
 }
