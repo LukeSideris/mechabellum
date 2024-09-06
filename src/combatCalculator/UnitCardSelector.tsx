@@ -61,24 +61,32 @@ const ModEffect = ({ diff }: { diff: number }) => {
   if (!diff || diff === 1) {
     return undefined;
   }
+  const diffPercent = Math.round((diff - 1) * 100);
+  let tooltip = "Active mods have no effect on the attacker's combat effectiveness";
 
   if (diff >= 1.3) {
     indicator = <span className={classes.positiveEffect}>+++</span>;
+    tooltip = `Attacker is significantly more effective with active mods (${diffPercent}%)`;
   } else if (diff >= 1.15) {
     indicator = <span className={classes.positiveEffect}>++</span>;
+    tooltip = `Attacker is more effective with active mods (${diffPercent}%)`;
   } else if (diff > 1) {
     indicator = <span className={classes.positiveEffect}>+</span>;
+    tooltip = `Attacker is slightly more effective with active mods (${diffPercent}%)`;
   } else if (diff <= 0.76) {
     // inverse of 1.3
     indicator = <span className={classes.negativeEffect}>---</span>;
+    tooltip = `Attacker is significantly less effective with active mods (${diffPercent}%)`;
   } else if (diff <= 0.86) {
     // inverse of 1.15
     indicator = <span className={classes.negativeEffect}>--</span>;
+    tooltip = `Attacker is less effective with active mods (${diffPercent}%)`;
   } else if (diff < 1) {
     indicator = <span className={classes.negativeEffect}>-</span>;
+    tooltip = `Attacker is slightly less effective with active mods (${diffPercent}%)`;
   }
 
-  return <div className={classes.modEffect}>{indicator}</div>;
+  return <div className={classes.modEffect} title={tooltip}>{indicator}</div>;
 };
 
 export default UnitSelector;

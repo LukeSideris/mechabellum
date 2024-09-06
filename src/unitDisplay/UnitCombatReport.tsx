@@ -111,7 +111,7 @@ const UnitCombatReport = ({
             <table>
               <tbody>
                 <tr>
-                  <th>Hits per kill:</th>
+                  <th>Shots per kill:</th>
                   <td>
                     <ValueDisplay
                       baseline={baseCombatResults.hitsPerKill || 0}
@@ -127,7 +127,7 @@ const UnitCombatReport = ({
                   </td>
                 </tr>
                 <tr>
-                  <th>Time to defeat:</th>
+                  <th>Time to kill:</th>
                   <td>
                     <ValueDisplay
                       baseline={baseCombatResults.time || 0}
@@ -146,10 +146,6 @@ const UnitCombatReport = ({
                 <tr>
                   <th>Effectiveness:</th>
                   <td>
-                    {/*
-                  This might change, but for now the attacker uses cost efficiency as its 
-                  effectiveness metric while the defender uses standard effectiveness.
-                */}
                     <ValueDisplay
                       baseline={baseCombatResults.costEfficiency || 0}
                       modded={moddedCombatResults.costEfficiency || 0}
@@ -160,6 +156,11 @@ const UnitCombatReport = ({
 
                         if (val === Infinity) {
                           return '∞';
+                        }
+
+                        if (val < 0.01) {
+                          // use a decimal
+                          return Math.round(val * 1000) / 10 + '%';
                         }
 
                         return Math.round(val * 100) + '%';

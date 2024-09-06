@@ -108,7 +108,7 @@ const calculateSplashDamageTargets = (
 export const timeToKill = (
   attacker: UnitInterface,
   target: UnitInterface,
-  calculateEffieciency = true
+  calculateEfficiency = true
 ): ttkInterface => {
   // safety check for invalid units
   if (!attacker || !target) {
@@ -286,18 +286,16 @@ export const timeToKill = (
   // speed/range approximations
   // TODO: Missile units like stormcaller might have a maximum speed threshold where they can hit a target
   const rangeDiff = target.range - attacker.range;
+  if (rangeDiff > 0) {
+    results.time = results.time + rangeDiff / attacker.speed;
+  }
 
-  if (calculateEffieciency) {
+  if (calculateEfficiency) {
     const ttkTarget = timeToKill(target, attacker, false);
-
-    if (rangeDiff > 0) {
-      results.time = results.time + rangeDiff / attacker.speed;
-    }
     const costRatio = attacker.cost / target.cost;
     const killRatio = ttkTarget.time / results.time;
 
     results.effectiveness = killRatio;
-    // TODO: test and validate this equation
     results.costEfficiency = killRatio / costRatio;
 
     if (attacker.unitCount > 1 && attacker.id !== target.id) {
