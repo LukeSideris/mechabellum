@@ -10,9 +10,9 @@ export type ttkInterface = {
   costEfficiency: number;
 };
 
-// TODO: Stormcallers are broken
-
 /*
+Below are notes from measured combat results in the testing grounds
+
 const crawlerSplashTable = [
   [0, 1],
   [3, 1.3],   // melter
@@ -26,15 +26,6 @@ const crawlerSplashTable = [
   [15, 11],  // scorpion, vulcan
 ];
 
-/* 
-AI Analysis:
-this seems to represent a quadratic forumla
-y=ax^2 + bx + c 
-The fitted quadratic function is:
-
-y=0.033x^2 + 0.166x + 0.919
-*/
-/*
 const fangSplashTable = [
   [0, 1],
   [3, 1.1],   // melter 11, 13, 17, 17, 
@@ -46,13 +37,6 @@ const fangSplashTable = [
   [8, 0],   // wraith
   [15, 10],  // scorpion, vulcan
 ];
-
-/* 
-AI Analysis:
-this seems to represent a quadratic forumla
-The fitted quadratic function is:
-
-y = 0.0538x^2 + -0.0504x + 0.6997
 */
 
 // the highest damage value of the melting point damage increments I have measured
@@ -68,39 +52,24 @@ const calculateSplashDamageTargets = (
 ) => {
   let splashDamageTargets = 1;
   if (attacker.splashRadius && target.unitCount > 1) {
-    // TODO: Change calculations
-    // for crawler, fang, mustang....
-    // figure out what number of units get hit at various splash damage thresholds
-    // turn that into a formula, possibly with a splash index value
+    // get total area of attacker splash damage
+    const splashArea = Math.PI * Math.pow(attacker.splashRadius, 2);
+    const splashRatio = splashArea / target.area;
+    splashDamageTargets = splashRatio * target.unitCount;
 
-    const { rows = 1 } = target;
-    let minDistance = target.unitSize / 2 + (target.unitSpacing || 0);
-
-    let rowCount = 1;
-    while (attacker.splashRadius > minDistance) {
-      // Sometimes there are units on both sides of the target, so 50% chance to hit 3 instead of 2
-      splashDamageTargets += 1.5;
-
-      if (rows > rowCount) {
-        // +1 hit for the unit in the row behind the target
-        splashDamageTargets += 1;
-        const diagonalDistance =
-          Math.hypot(minDistance, minDistance) * rowCount;
-        if (attacker.splashRadius > diagonalDistance) {
-          // Sometimes there are units on both sides of the target, so 50% chance to hit an edge
-          splashDamageTargets += 1.5;
-        }
-      }
-
-      minDistance += target.unitSize + (target.unitSpacing || 0);
-      rowCount++;
+    if (attacker.id === 'rhino' && target.id === 'crawler') {
+      console.log({
+        splashArea,
+        splashRatio,
+        splashDamageTargets,
+        radius: attacker.splashRadius,
+        targetArea: target.area,
+      });
     }
+
   }
 
-  // TODO: validate this
-  // splash damage calculation is just too unreliable, because the unit often hits off-center
-  // to account for this we reduce the impact of splash damage by 15%, hopefully this gives more accurate results.
-  return Math.max(1, splashDamageTargets * 0.85);
+  return Math.max(1, splashDamageTargets);
 };
 
 // Calculate an estimated time to kill for a given attacker and defender
