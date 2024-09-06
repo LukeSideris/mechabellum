@@ -112,10 +112,11 @@ function CombatCalculatorPage() {
         <ul>
           <li>Select mods to highlight changes in combat efficiency</li>
           <li>
-            Choose a unit on the left to see how selected mods apply to fights
+            Choose a left side unit to see how selected mods apply to fights
           </li>
-          <li>Select right and left units for combat stats</li>
+          <li>Choose right and left units for detailed combat stats</li>
         </ul>
+        <span className={classes.gameVersion}>patch 0.9.0.2</span>
       </div>
 
       <div className={classes.modsA}>

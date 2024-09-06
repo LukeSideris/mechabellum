@@ -44,10 +44,10 @@ export const mods = {
   costControl: {
     name: 'Cost Control',
     id: 'costControl',
-    description: 'Decrease health and attack of all units by 13%',
+    description: 'Decrease health and attack of all units by 11%',
     thumbnail: thumbnailCostControl,
-    modifyHp: -0.13,
-    modifyDamage: -0.13,
+    modifyHp: -0.11,
+    modifyDamage: -0.11,
   },
   speed: {
     name: 'Speed',
