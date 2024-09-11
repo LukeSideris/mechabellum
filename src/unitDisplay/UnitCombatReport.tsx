@@ -1,6 +1,7 @@
 import { units as baseUnits, UnitInterface, UnitIdType } from 'src/data/units';
 import { ttkInterface } from 'src/algorithms/timeToKill';
 import ValueDisplay from './ValueDisplay.tsx';
+import getLevelIcon from './getLevelIcon.ts';
 
 import classes from './UnitCombatReport.module.css';
 
@@ -9,11 +10,13 @@ const UnitCombatReport = ({
   baseCombatResults,
   moddedCombatResults,
   position,
+  setLevel,
 }: {
   unit: UnitInterface;
   baseCombatResults: ttkInterface;
   moddedCombatResults: ttkInterface;
   position: 'attacker' | 'defender';
+  setLevel: (unitId: UnitIdType, level: number) => void;
 }) => {
   if (!unit) {
     return null;
@@ -25,11 +28,27 @@ const UnitCombatReport = ({
     <section
       className={`${classes.unitCombatReport} ${position === 'attacker' ? classes.attacker : classes.defender}`}
     >
-      <div className={classes.contentWrapper} style={{
-        backgroundImage: `url("${unit.thumbnail}")`,
-      }}>
+      <div
+        className={classes.contentWrapper}
+        style={{
+          backgroundImage: `url("${unit.thumbnail}")`,
+        }}
+      >
         <header>
           <h3>{unit.name}</h3>
+          <button
+            aria-label={`${unit.level === 3 ? 'Reset' : 'Increase'} ${unit.name} level`}
+            title={`${unit.level === 3 ? 'Reset' : 'Increase'} ${unit.name} level`}
+            className={classes.unitLevelButton}
+            onClick={() => {
+              setLevel(unit.id as UnitIdType, unit.level + 1);
+            }}
+          >
+            <img
+              src={getLevelIcon(unit.level)}
+              alt={`${unit.name} level ${unit.level}`}
+            />
+          </button>
         </header>
 
         <div className={classes.unitStats}>
@@ -102,6 +121,12 @@ const UnitCombatReport = ({
                   />
                 </td>
               </tr>
+              <tr>
+                <th>Cost:</th>
+                <td>
+                  <ValueDisplay baseline={unit.cost} modded={unit.cost} />
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -111,7 +136,7 @@ const UnitCombatReport = ({
             <table>
               <tbody>
                 <tr>
-                  <th>Shots per kill:</th>
+                  <th>{unit.range ? 'Shots' : 'Hits'} per kill:</th>
                   <td>
                     <ValueDisplay
                       baseline={baseCombatResults.hitsPerKill || 0}

@@ -2,6 +2,7 @@ import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 
 import { CombatResultsInterface } from 'src/combatCalculator/combatReducer';
 import { units as baseUnits, UnitIdType } from 'src/data/units';
+import getLevelIcon from 'src/unitDisplay/getLevelIcon';
 import classes from './UnitCardSelector.module.scss';
 
 const UnitSelector = ({
@@ -9,9 +10,11 @@ const UnitSelector = ({
   selectedKeys,
   baseCombatResults,
   moddedCombatResults,
+  unitLibrary = baseUnits,
 }: ListBoxProps<object> & {
   baseCombatResults: CombatResultsInterface | undefined;
   moddedCombatResults: CombatResultsInterface | undefined;
+  unitLibrary?: typeof baseUnits;
 }) => {
   return (
     <ListBox
@@ -23,8 +26,8 @@ const UnitSelector = ({
       onSelectionChange={onSelectionChange}
       selectedKeys={selectedKeys}
     >
-      {Object.keys(baseUnits).map((unitId: string) => {
-        const unit = baseUnits[unitId as UnitIdType];
+      {Object.keys(unitLibrary).map((unitId: string) => {
+        const unit = unitLibrary[unitId as UnitIdType];
         const baseEfficiency =
           baseCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
         const moddedEfficiency =
@@ -45,7 +48,15 @@ const UnitSelector = ({
               }}
               aria-hidden
             />
-            <span className={classes.unitName}>{unit.name}</span>
+            <div className={`typeface-condensed ${classes.unitName}`}>
+              <span>{unit.name}</span>
+              <img
+                className={classes.levelIcon}
+                hidden={unit.level === 1}
+                src={getLevelIcon(unit.level)}
+                alt={`${unit.name} level ${unit.level}`}
+              />
+            </div>
             <ModEffect diff={diff} />
           </ListBoxItem>
         );
@@ -62,7 +73,8 @@ const ModEffect = ({ diff }: { diff: number }) => {
     return undefined;
   }
   const diffPercent = Math.round((diff - 1) * 100);
-  let tooltip = "Active mods have no effect on the attacker's combat effectiveness";
+  let tooltip =
+    "Active mods have no effect on the attacker's combat effectiveness";
 
   if (diff >= 1.3) {
     indicator = <span className={classes.positiveEffect}>+++</span>;
@@ -86,7 +98,11 @@ const ModEffect = ({ diff }: { diff: number }) => {
     tooltip = `Attacker is slightly less effective with active mods (${diffPercent}%)`;
   }
 
-  return <div className={classes.modEffect} title={tooltip}>{indicator}</div>;
+  return (
+    <div className={classes.modEffect} title={tooltip}>
+      {indicator}
+    </div>
+  );
 };
 
 export default UnitSelector;

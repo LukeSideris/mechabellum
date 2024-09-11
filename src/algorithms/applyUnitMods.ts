@@ -3,7 +3,8 @@ import { mods, ModInterface } from 'src/data/mods.ts';
 
 const applyUnitMods = (
   unitId: UnitIdType,
-  activeMods: Set<string>
+  activeMods: Set<string>,
+  units = baseUnits
 ): UnitInterface => {
   // convert applied mods set into array of mod objects
   const appliedMods = Array.from(activeMods).map(
@@ -11,7 +12,7 @@ const applyUnitMods = (
   );
 
   let modifiedUnit: UnitInterface = {
-    ...baseUnits[unitId],
+    ...units[unitId],
   };
   const attackIncrease = [] as number[];
   const attackDecrease = [] as number[];

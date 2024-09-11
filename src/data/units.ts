@@ -7,10 +7,40 @@ const thumbnails = import.meta.glob('./thumbnails/units/*.png', {
   import: 'default',
 });
 
+// validated list of unit ids
+export type UnitIdType =
+  | 'crawler'
+  | 'fang'
+  | 'arclight'
+  | 'marksman'
+  | 'mustang'
+  | 'sledgehammer'
+  | 'stormcaller'
+  | 'steel_ball'
+  | 'tarantula'
+  | 'rhino'
+  | 'hacker'
+  | 'wasp'
+  | 'phoenix'
+  | 'wraith'
+  | 'scorpion'
+  | 'vulcan'
+  | 'melting_point'
+  | 'fortress'
+  | 'sandworm'
+  | 'overlord'
+  | 'war_factory'
+  | 'fire_badger'
+  | 'sabertooth'
+  | 'typhoon'
+  | 'farseer';
+
 export type UnitInterface = {
   name: string;
-  id: string;
+  id: UnitIdType;
+  card: string;
   thumbnail: string;
+  level: number;
   cost: number;
   hp: number;
   hpMod?: number; // applied by applyMods function
@@ -25,16 +55,21 @@ export type UnitInterface = {
   flying: boolean;
   shootsUp: boolean;
   unitCount: number; // number of units in the squad
+  rows?: number; // number of rows in the squad
   area: number; // square meters required for deployment
 };
 
-// NOTE: All the health and damage values need to be checked
-export const units = {
+export type UnitLibraryInterface = {
+  [key in UnitIdType]: UnitInterface;
+};
+
+export const generateUnits = (): UnitLibraryInterface => ({
   crawler: {
     name: 'Crawler',
     id: 'crawler',
     card: cards['./cards/units/crawler.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/crawler.png'] as string,
+    level: 1,
     cost: 100,
     hp: 292,
     speed: 16,
@@ -45,7 +80,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 24,
-    unitSize: 3,
+    rows: 3,
     area: 50 * 20,
   },
   fang: {
@@ -53,6 +88,7 @@ export const units = {
     id: 'fang',
     card: cards['./cards/units/fang.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/fang.png'] as string,
+    level: 1,
     cost: 100,
     hp: 117,
     speed: 6,
@@ -63,6 +99,7 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 18,
+    rows: 3,
     area: 50 * 20,
   },
   arclight: {
@@ -70,6 +107,7 @@ export const units = {
     id: 'arclight',
     card: cards['./cards/units/arclight.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/arclight.png'] as string,
+    level: 1,
     cost: 100,
     hp: 4414,
     speed: 7,
@@ -80,6 +118,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
+    rows: 1,
     area: 20 * 20,
   },
   marksman: {
@@ -87,6 +126,7 @@ export const units = {
     id: 'marksman',
     card: cards['./cards/units/marksman.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/marksman.png'] as string,
+    level: 1,
     cost: 100,
     hp: 1622,
     speed: 8,
@@ -97,6 +137,7 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 1,
+    rows: 1,
     area: 20 * 20,
   },
   mustang: {
@@ -104,6 +145,7 @@ export const units = {
     id: 'mustang',
     card: cards['./cards/units/mustang.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/mustang.png'] as string,
+    level: 1,
     cost: 200,
     hp: 343,
     speed: 16,
@@ -114,13 +156,16 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 12,
+    rows: 2,
     area: 50 * 20,
   },
   sledgehammer: {
-    name: 'Sledgehammer',
+    // add a zero width space to control line breaks
+    name: 'Sledge\u200Bhammer',
     id: 'sledgehammer',
     card: cards['./cards/units/sledgehammer.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/sledgehammer.png'] as string,
+    level: 1,
     cost: 200,
     hp: 3478,
     speed: 7,
@@ -131,13 +176,16 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 5,
+    rows: 1,
     area: 50 * 20,
   },
   stormcaller: {
-    name: 'Stormcaller',
+    // add a zero width space to control line breaks
+    name: 'Storm\u200Bcaller',
     id: 'stormcaller',
     card: cards['./cards/units/stormcaller.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/stormcaller.png'] as string,
+    level: 1,
     cost: 200,
     hp: 1149,
     speed: 6,
@@ -148,6 +196,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 4,
+    rows: 1,
     area: 50 * 20,
   },
   steel_ball: {
@@ -155,6 +204,7 @@ export const units = {
     id: 'steel_ball',
     card: cards['./cards/units/steel_ball.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/steel_ball.png'] as string,
+    level: 1,
     cost: 200,
     hp: 4571,
     speed: 16,
@@ -166,6 +216,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 4,
+    rows: 1,
     area: 50 * 20,
   },
   tarantula: {
@@ -173,6 +224,7 @@ export const units = {
     id: 'tarantula',
     card: cards['./cards/units/tarantula.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/tarantula.png'] as string,
+    level: 1,
     cost: 200,
     hp: 15950,
     speed: 8,
@@ -183,6 +235,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
+    rows: 1,
     area: 30 * 30, // TODO check me
   },
   rhino: {
@@ -190,6 +243,7 @@ export const units = {
     id: 'rhino',
     card: cards['./cards/units/rhino.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/rhino.png'] as string,
+    level: 1,
     cost: 200,
     hp: 19297,
     speed: 16,
@@ -200,6 +254,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
+    rows: 1,
     area: 30 * 30,
   },
   hacker: {
@@ -207,6 +262,7 @@ export const units = {
     id: 'hacker',
     card: cards['./cards/units/hacker.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/hacker.png'] as string,
+    level: 1,
     cost: 300,
     hp: 3249,
     speed: 8,
@@ -217,6 +273,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
+    rows: 1,
     area: 30 * 30,
   },
   wasp: {
@@ -224,6 +281,7 @@ export const units = {
     id: 'wasp',
     card: cards['./cards/units/wasp.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/wasp.png'] as string,
+    level: 1,
     cost: 300,
     hp: 311,
     speed: 16,
@@ -234,7 +292,6 @@ export const units = {
     flying: true,
     shootsUp: true,
     unitCount: 12,
-    unitSize: 8,
     rows: 2,
     area: 50 * 20,
   },
@@ -243,6 +300,7 @@ export const units = {
     id: 'phoenix',
     card: cards['./cards/units/phoenix.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/phoenix.png'] as string,
+    level: 1,
     cost: 200,
     hp: 1464,
     speed: 16,
@@ -253,8 +311,7 @@ export const units = {
     flying: true,
     shootsUp: true,
     unitCount: 2,
-    unitSize: 18,
-    unitSpacing: 2,
+    rows: 1,
     area: 40 * 20,
   },
   wraith: {
@@ -262,6 +319,7 @@ export const units = {
     id: 'wraith',
     card: cards['./cards/units/wraith.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/wraith.png'] as string,
+    level: 1,
     cost: 300,
     hp: 15001,
     speed: 12,
@@ -275,6 +333,7 @@ export const units = {
     flying: true,
     shootsUp: true,
     unitCount: 1,
+    rows: 1,
     area: 30 * 30,
   },
   scorpion: {
@@ -282,6 +341,7 @@ export const units = {
     id: 'scorpion',
     card: cards['./cards/units/scorpion.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/scorpion.png'] as string,
+    level: 1,
     cost: 300,
     hp: 19625,
     speed: 7,
@@ -292,6 +352,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
+    rows: 1,
     area: 30 * 30,
   },
   vulcan: {
@@ -299,6 +360,7 @@ export const units = {
     id: 'vulcan',
     card: cards['./cards/units/vulcan.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/vulcan.png'] as string,
+    level: 1,
     cost: 400,
     hp: 38723,
     speed: 6,
@@ -309,6 +371,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
+    rows: 1,
     area: 40 * 40,
   },
   melting_point: {
@@ -316,6 +379,7 @@ export const units = {
     id: 'melting_point',
     card: cards['./cards/units/melting_point.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/melting_point.png'] as string,
+    level: 1,
     cost: 400,
     hp: 30907,
     speed: 6,
@@ -340,6 +404,7 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 1,
+    rows: 1,
     area: 40 * 40,
   },
   fortress: {
@@ -347,6 +412,7 @@ export const units = {
     id: 'fortress',
     card: cards['./cards/units/fortress.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/fortress.png'] as string,
+    level: 1,
     cost: 400,
     hp: 45297,
     speed: 6,
@@ -357,6 +423,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
+    rows: 1,
     area: 40 * 40,
   },
   sandworm: {
@@ -364,6 +431,7 @@ export const units = {
     id: 'sandworm',
     card: cards['./cards/units/sandworm.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
+    level: 1,
     cost: 400,
     hp: 48645,
     speed: 16,
@@ -374,6 +442,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
+    rows: 1,
     area: 40 * 40,
   },
   overlord: {
@@ -381,6 +450,7 @@ export const units = {
     id: 'overlord',
     card: cards['./cards/units/overlord.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/overlord.png'] as string,
+    level: 1,
     cost: 400,
     hp: 16099,
     speed: 10,
@@ -391,13 +461,16 @@ export const units = {
     flying: true,
     shootsUp: true,
     unitCount: 1,
+    rows: 1,
     area: 40 * 40,
   },
   war_factory: {
-    name: 'War Factory',
+    // add a zero width space to control line breaks
+    name: 'War Fac\u200Btory',
     id: 'war_factory',
     card: cards['./cards/units/war_factory.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/war_factory.png'] as string,
+    level: 1,
     cost: 800,
     hp: 166798,
     speed: 6,
@@ -408,7 +481,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
-    unitSize: 62,
+    rows: 1,
     area: 70 * 70,
   },
   fire_badger: {
@@ -416,6 +489,7 @@ export const units = {
     id: 'fire_badger',
     card: cards['./cards/units/fire_badger.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
+    level: 1,
     cost: 200,
     hp: 5635,
     speed: 10,
@@ -426,7 +500,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 3,
-    unitSize: 16,
+    rows: 1,
     area: 50 * 20, // TODO check me
   },
   sabertooth: {
@@ -434,6 +508,7 @@ export const units = {
     id: 'sabertooth',
     card: cards['./cards/units/sabertooth.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
+    level: 1,
     cost: 200,
     hp: 15258,
     speed: 8,
@@ -444,7 +519,7 @@ export const units = {
     flying: false,
     shootsUp: false,
     unitCount: 1,
-    unitSize: 25,
+    rows: 1,
     area: 30 * 30, // TODO check me
   },
   typhoon: {
@@ -452,6 +527,7 @@ export const units = {
     id: 'typhoon',
     card: cards['./cards/units/typhoon.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
+    level: 1,
     cost: 300,
     hp: 10030,
     speed: 9,
@@ -462,7 +538,7 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 2,
-    unitSize: 20,
+    rows: 1,
     area: 40 * 20, // TODO check me
   },
   farseer: {
@@ -470,6 +546,7 @@ export const units = {
     id: 'farseer',
     card: cards['./cards/units/farseer.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
+    level: 1,
     cost: 300,
     hp: 11991,
     speed: 16,
@@ -480,9 +557,9 @@ export const units = {
     flying: false,
     shootsUp: true,
     unitCount: 1,
-    unitSize: 25,
+    rows: 1,
     area: 30 * 30, // TODO check me
   },
-};
+});
 
-export type UnitIdType = keyof typeof units;
+export const units = generateUnits();

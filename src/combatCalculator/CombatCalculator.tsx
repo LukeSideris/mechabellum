@@ -16,6 +16,8 @@ const paramsNameMap = {
   unitSelectionB: 'b',
   modSelectionA: 'mods',
   modSelectionB: 'mods2',
+  leftUnitLevel: 'la',
+  rightUnitLevel: 'lb',
 };
 
 function CombatCalculatorPage() {
@@ -45,6 +47,8 @@ function CombatCalculatorPage() {
   const [rightUnitId] = unitSelectionB;
   const leftUnit = unitLibraryA[leftUnitId as UnitIdType];
   const rightUnit = unitLibraryB[rightUnitId as UnitIdType];
+  const leftUnitLevel = leftUnit?.level;
+  const rightUnitLevel = rightUnit?.level;
 
   // sync state with url params
   useEffect(() => {
@@ -53,6 +57,12 @@ function CombatCalculatorPage() {
       [paramsNameMap.unitSelectionB]: Array.from(unitSelectionB),
       [paramsNameMap.modSelectionA]: Array.from(modSelectionA),
       [paramsNameMap.modSelectionB]: Array.from(modSelectionB),
+      ...(leftUnitLevel && {
+        [paramsNameMap.leftUnitLevel]: String(leftUnitLevel),
+      }),
+      ...(rightUnitLevel && {
+        [paramsNameMap.rightUnitLevel]: String(rightUnitLevel),
+      }),
     });
   }, [
     setSearchParams,
@@ -60,6 +70,8 @@ function CombatCalculatorPage() {
     unitSelectionB,
     modSelectionA,
     modSelectionB,
+    leftUnitLevel,
+    rightUnitLevel,
   ]);
 
   const handleUnitSelectionA = useCallback(
@@ -97,6 +109,32 @@ function CombatCalculatorPage() {
       dispatch({
         type: 'setModSelectionB',
         payload: appliedMods,
+      });
+    },
+    [dispatch]
+  );
+
+  const handleSetUnitLevelA = useCallback(
+    (unitId: UnitIdType, level: number) => {
+      dispatch({
+        type: 'setAttackerLevel',
+        payload: {
+          unitId,
+          level,
+        },
+      });
+    },
+    [dispatch]
+  );
+
+  const handleSetUnitLevelB = useCallback(
+    (unitId: UnitIdType, level: number) => {
+      dispatch({
+        type: 'setDefenderLevel',
+        payload: {
+          unitId,
+          level,
+        },
       });
     },
     [dispatch]
@@ -147,6 +185,7 @@ function CombatCalculatorPage() {
           selectedKeys={unitSelectionA}
           baseCombatResults={undefined}
           moddedCombatResults={undefined}
+          unitLibrary={unitLibraryA}
         />
       </div>
 
@@ -156,6 +195,7 @@ function CombatCalculatorPage() {
           selectedKeys={unitSelectionB}
           baseCombatResults={baseCombatResultsA}
           moddedCombatResults={moddedCombatResultsA}
+          unitLibrary={unitLibraryB}
         />
       </div>
 
@@ -170,11 +210,10 @@ function CombatCalculatorPage() {
               moddedCombatResultsA[rightUnitId as UnitIdType]
             }
             position="attacker"
+            setLevel={handleSetUnitLevelA}
           />
         )}
-        {!leftUnit && rightUnit && (
-          <UnitPlaceholder />
-        )}
+        {!leftUnit && rightUnit && <UnitPlaceholder />}
       </div>
 
       <div className={`combat-defender ${classes.defender}`}>
@@ -184,11 +223,10 @@ function CombatCalculatorPage() {
             baseCombatResults={baseCombatResultsB[leftUnitId as UnitIdType]}
             moddedCombatResults={moddedCombatResultsB[leftUnitId as UnitIdType]}
             position="defender"
+            setLevel={handleSetUnitLevelB}
           />
         )}
-        {!rightUnit && leftUnit && (
-          <UnitPlaceholder />
-        )}
+        {!rightUnit && leftUnit && <UnitPlaceholder />}
       </div>
     </div>
   );
