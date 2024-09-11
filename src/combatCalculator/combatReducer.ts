@@ -60,6 +60,8 @@ export function getInitialState({
     unitSelectionB: string;
     modSelectionA: string;
     modSelectionB: string;
+    leftUnitLevel: string;
+    rightUnitLevel: string;
   };
 }): combatStateType {
   const initialState: combatStateType = { ...combatReducerDefaultState };
@@ -71,6 +73,24 @@ export function getInitialState({
         // validate the param matches a valid unit id
         .filter((unitId) => unitId in baseUnits)
     );
+
+    const [selectedUnitA] = initialState.unitSelectionA;
+    // apply stored unit level from search params
+    if (selectedUnitA && searchParams.has(paramsNameMap.leftUnitLevel)) {
+      const level = parseInt(
+        searchParams.get(paramsNameMap.leftUnitLevel) || '1'
+      );
+      const modifiedStats = getUnitStatsForLevel(
+        selectedUnitA as UnitIdType,
+        level
+      );
+      const newUnit: UnitInterface = {
+        ...baseUnits[selectedUnitA as UnitIdType],
+        ...modifiedStats,
+      };
+      // update local copy of baseUnitsA with leveled up unit
+      initialState.unitLibraryA[selectedUnitA as UnitIdType] = newUnit;
+    }
   }
 
   if (searchParams.has(paramsNameMap.unitSelectionB)) {
@@ -80,6 +100,24 @@ export function getInitialState({
         // validate the param matches a valid unit id
         .filter((unitId) => unitId in baseUnits)
     );
+
+    const [selectedUnitB] = initialState.unitSelectionA;
+    // apply stored unit level from search params
+    if (selectedUnitB && searchParams.has(paramsNameMap.rightUnitLevel)) {
+      const level = parseInt(
+        searchParams.get(paramsNameMap.rightUnitLevel) || '1'
+      );
+      const modifiedStats = getUnitStatsForLevel(
+        selectedUnitB as UnitIdType,
+        level
+      );
+      const newUnit: UnitInterface = {
+        ...baseUnits[selectedUnitB as UnitIdType],
+        ...modifiedStats,
+      };
+      // update local copy of baseUnitsB with leveled up unit
+      initialState.unitLibraryB[selectedUnitB as UnitIdType] = newUnit;
+    }
   }
 
   if (searchParams.has(paramsNameMap.modSelectionA)) {
@@ -274,6 +312,35 @@ export function combatReducer(
           state.unitLibraryB[activeUnitB as UnitIdType],
           newLibrary
         ),
+      };
+    }
+
+    case 'setDefenderLevel': {
+      const { unitId, level } = action.payload;
+      const [activeUnitA] = state.unitSelectionB;
+      const modifiedStats = getUnitStatsForLevel(unitId as UnitIdType, level);
+      const newUnit: UnitInterface = {
+        ...baseUnits[unitId as UnitIdType],
+        ...modifiedStats,
+      };
+      // update local copy of baseUnits
+      baseUnitsB[unitId as UnitIdType] = newUnit;
+      const newLibrary = generateUnitLibrary(state.modSelectionB, baseUnitsB);
+
+      return {
+        ...state,
+        unitLibraryB: newLibrary,
+        // Generate effectiveness tables for new library
+        baseCombatResultsA: generateCombatTable(
+          baseUnitsA[activeUnitA as UnitIdType],
+          baseUnitsB
+        ),
+        baseCombatResultsB: generateCombatTable(newUnit, baseUnitsA),
+        moddedCombatResultsA: generateCombatTable(
+          state.unitLibraryA[activeUnitA as UnitIdType],
+          newLibrary
+        ),
+        moddedCombatResultsB: generateCombatTable(newUnit, state.unitLibraryA),
       };
     }
 

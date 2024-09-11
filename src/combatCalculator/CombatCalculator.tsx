@@ -16,6 +16,8 @@ const paramsNameMap = {
   unitSelectionB: 'b',
   modSelectionA: 'mods',
   modSelectionB: 'mods2',
+  leftUnitLevel: 'la',
+  rightUnitLevel: 'lb',
 };
 
 function CombatCalculatorPage() {
@@ -45,6 +47,8 @@ function CombatCalculatorPage() {
   const [rightUnitId] = unitSelectionB;
   const leftUnit = unitLibraryA[leftUnitId as UnitIdType];
   const rightUnit = unitLibraryB[rightUnitId as UnitIdType];
+  const leftUnitLevel = leftUnit?.level;
+  const rightUnitLevel = rightUnit?.level;
 
   // sync state with url params
   useEffect(() => {
@@ -53,6 +57,12 @@ function CombatCalculatorPage() {
       [paramsNameMap.unitSelectionB]: Array.from(unitSelectionB),
       [paramsNameMap.modSelectionA]: Array.from(modSelectionA),
       [paramsNameMap.modSelectionB]: Array.from(modSelectionB),
+      ...(leftUnitLevel && {
+        [paramsNameMap.leftUnitLevel]: String(leftUnitLevel),
+      }),
+      ...(rightUnitLevel && {
+        [paramsNameMap.rightUnitLevel]: String(rightUnitLevel),
+      }),
     });
   }, [
     setSearchParams,
@@ -60,6 +70,8 @@ function CombatCalculatorPage() {
     unitSelectionB,
     modSelectionA,
     modSelectionB,
+    leftUnitLevel,
+    rightUnitLevel,
   ]);
 
   const handleUnitSelectionA = useCallback(
