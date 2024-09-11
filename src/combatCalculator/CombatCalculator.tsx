@@ -102,6 +102,32 @@ function CombatCalculatorPage() {
     [dispatch]
   );
 
+  const handleSetUnitLevelA = useCallback(
+    (unitId: UnitIdType, level: number) => {
+      dispatch({
+        type: 'setAttackerLevel',
+        payload: {
+          unitId,
+          level,
+        },
+      });
+    },
+    [dispatch]
+  );
+
+  const handleSetUnitLevelB = useCallback(
+    (unitId: UnitIdType, level: number) => {
+      dispatch({
+        type: 'setDefenderLevel',
+        payload: {
+          unitId,
+          level,
+        },
+      });
+    },
+    [dispatch]
+  );
+
   return (
     <div className={classes.gridContainer}>
       <div className={classes.pageTitle}>
@@ -170,11 +196,10 @@ function CombatCalculatorPage() {
               moddedCombatResultsA[rightUnitId as UnitIdType]
             }
             position="attacker"
+            setLevel={handleSetUnitLevelA}
           />
         )}
-        {!leftUnit && rightUnit && (
-          <UnitPlaceholder />
-        )}
+        {!leftUnit && rightUnit && <UnitPlaceholder />}
       </div>
 
       <div className={`combat-defender ${classes.defender}`}>
@@ -184,11 +209,10 @@ function CombatCalculatorPage() {
             baseCombatResults={baseCombatResultsB[leftUnitId as UnitIdType]}
             moddedCombatResults={moddedCombatResultsB[leftUnitId as UnitIdType]}
             position="defender"
+            setLevel={handleSetUnitLevelB}
           />
         )}
-        {!rightUnit && leftUnit && (
-          <UnitPlaceholder />
-        )}
+        {!rightUnit && leftUnit && <UnitPlaceholder />}
       </div>
     </div>
   );

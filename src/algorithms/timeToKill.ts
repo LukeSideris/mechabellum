@@ -1,4 +1,4 @@
-import { units, UnitInterface } from 'src/data/units.ts';
+import { UnitInterface } from 'src/data/units.ts';
 
 export type ttkInterface = {
   attackRounds: number | null;
@@ -39,12 +39,6 @@ const fangSplashTable = [
 ];
 */
 
-// the highest damage value of the melting point damage increments I have measured
-const melterDamageTableMax = units.melting_point.damageTable?.reduce(
-  (a, b) => a + b,
-  0
-);
-
 // splash damage formula
 const calculateSplashDamageTargets = (
   attacker: UnitInterface,
@@ -56,17 +50,6 @@ const calculateSplashDamageTargets = (
     const splashArea = Math.PI * Math.pow(attacker.splashRadius, 2);
     const splashRatio = splashArea / target.area;
     splashDamageTargets = splashRatio * target.unitCount;
-
-    if (attacker.id === 'rhino' && target.id === 'crawler') {
-      console.log({
-        splashArea,
-        splashRatio,
-        splashDamageTargets,
-        radius: attacker.splashRadius,
-        targetArea: target.area,
-      });
-    }
-
   }
 
   return Math.max(1, splashDamageTargets);
@@ -207,6 +190,10 @@ export const timeToKill = (
     let cumulativeDamage = 0;
     let hits = 0;
 
+    // the highest damage value of the melting point damage increments I have measured
+    const melterDamageTableMax =
+      attacker.damageTable?.reduce((a, b) => a + b, 0) || 0;
+
     // melting point has really weird damage scaling
     // I measured some of the damage values. If the target is within this range we use the damage table
     if (targetHp <= melterDamageTableMax * damageMod) {
@@ -275,8 +262,9 @@ export const timeToKill = (
         target.unitCount === 1
           ? results.time
           : // todo: add timeToFirstKill to ttk logic and use it instead here
-          Math.max(0, rangeDiff / attacker.speed) +
-          ((results.attackRounds || 0) / target.unitCount) * attacker.attackInterval;
+            Math.max(0, rangeDiff / attacker.speed) +
+            ((results.attackRounds || 0) / target.unitCount) *
+              attacker.attackInterval;
       // ex: an attrition ratio of 25% means 1/4 of the attackers were killed before
       // they could kill the target.
       let attritionAmount =

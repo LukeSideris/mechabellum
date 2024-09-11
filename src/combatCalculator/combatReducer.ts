@@ -1,11 +1,17 @@
-import { units as baseUnits, UnitInterface, UnitIdType } from 'src/data/units';
+import {
+  units as baseUnits,
+  generateUnits,
+  UnitInterface,
+  UnitLibraryInterface,
+} from 'src/data/units';
 import { timeToKill, ttkInterface } from 'src/algorithms/timeToKill';
 import { mods, filterMods } from 'src/data/mods';
 import applyUnitMods from 'src/algorithms/applyUnitMods';
 
-export type UnitLibraryInterface = {
-  [key in UnitIdType]: UnitInterface;
-};
+// make copies of baseUnits to modify with unit levels
+const baseUnitsA = generateUnits();
+const baseUnitsB = generateUnits();
+type UnitIdType = keyof typeof baseUnitsA;
 
 export type CombatResultsInterface = {
   [key in UnitIdType]: ttkInterface;
@@ -32,8 +38,8 @@ export const combatReducerDefaultState: combatStateType = {
   modSelectionB: new Set(),
 
   // unit libraries are updated whenever applied mods change
-  unitLibraryA: baseUnits,
-  unitLibraryB: baseUnits,
+  unitLibraryA: baseUnitsA,
+  unitLibraryB: baseUnitsB,
 
   // baseline combat tables are recalculated whenever unit selection changes
   baseCombatResultsA: {} as CombatResultsInterface,
@@ -98,10 +104,16 @@ export function getInitialState({
 
   // generate unit libraries if mods are selected
   if (initialState.modSelectionA.size > 0) {
-    initialState.unitLibraryA = generateUnitLibrary(initialState.modSelectionA);
+    initialState.unitLibraryA = generateUnitLibrary(
+      initialState.modSelectionA,
+      baseUnitsA
+    );
   }
   if (initialState.modSelectionB.size > 0) {
-    initialState.unitLibraryB = generateUnitLibrary(initialState.modSelectionB);
+    initialState.unitLibraryB = generateUnitLibrary(
+      initialState.modSelectionB,
+      baseUnitsB
+    );
   }
 
   // generate baseline combat results
@@ -109,8 +121,8 @@ export function getInitialState({
   const [selectedUnitB] = initialState.unitSelectionB;
   if (selectedUnitA) {
     initialState.baseCombatResultsA = generateCombatTable(
-      baseUnits[selectedUnitA as UnitIdType],
-      baseUnits
+      baseUnitsA[selectedUnitA as UnitIdType],
+      baseUnitsB
     );
 
     initialState.moddedCombatResultsA = generateCombatTable(
@@ -120,8 +132,8 @@ export function getInitialState({
   }
   if (selectedUnitB) {
     initialState.baseCombatResultsB = generateCombatTable(
-      baseUnits[selectedUnitB as UnitIdType],
-      baseUnits
+      baseUnitsB[selectedUnitB as UnitIdType],
+      baseUnitsA
     );
 
     initialState.moddedCombatResultsB = generateCombatTable(
@@ -133,16 +145,46 @@ export function getInitialState({
   return initialState;
 }
 
-const generateUnitLibrary = (activeMods: Set<string>) => {
+const getUnitStatsForLevel = (unitId: UnitIdType, newLevel: number) => {
+  // only levels between 1 and 3 are supported
+  const level = newLevel > 3 ? 1 : Math.max(1, newLevel);
+  const baseUnit = baseUnits[unitId];
+
+  interface OptionalStats {
+    damageMax?: number;
+    damageTable?: number[];
+  }
+  const optionalStats: OptionalStats = {};
+  if (baseUnit.damageMax) {
+    optionalStats['damageMax'] = baseUnit.damageMax * level;
+  }
+  if (baseUnit.damageTable) {
+    optionalStats.damageTable = baseUnit.damageTable.map(
+      (damage) => damage * level
+    );
+  }
+
+  // return only the stats modified by level
+  return {
+    level: level,
+    cost: baseUnit.cost * (1 + (level - 1) * 0.5), // each level is 1/2 the base cost
+    hp: baseUnit.hp * level,
+    damage: baseUnit.damage * level,
+    ...optionalStats,
+  };
+};
+
+const generateUnitLibrary = (activeMods: Set<string>, units = baseUnits) => {
   type ModifiedLibraryType = {
     [key in UnitIdType]: UnitInterface;
   };
   const modifiedLibrary = {} as ModifiedLibraryType;
 
-  Object.keys(baseUnits).forEach((unitId: string) => {
+  Object.keys(units).forEach((unitId: string) => {
     modifiedLibrary[unitId as UnitIdType] = applyUnitMods(
       unitId as UnitIdType,
-      activeMods
+      activeMods,
+      units
     );
   });
   return modifiedLibrary;
@@ -179,8 +221,8 @@ export function combatReducer(
         unitSelectionA: action.payload,
         // Generate effectiveness tables for selected unit
         baseCombatResultsA: generateCombatTable(
-          baseUnits[newUnit as UnitIdType],
-          baseUnits
+          baseUnitsA[newUnit as UnitIdType],
+          baseUnitsB
         ),
         moddedCombatResultsA: generateCombatTable(
           state.unitLibraryA[newUnit as UnitIdType],
@@ -196,8 +238,8 @@ export function combatReducer(
         unitSelectionB: action.payload,
         // Generate effectiveness tables for selected unit
         baseCombatResultsB: generateCombatTable(
-          baseUnits[newUnit as UnitIdType],
-          baseUnits
+          baseUnitsB[newUnit as UnitIdType],
+          baseUnitsA
         ),
         moddedCombatResultsB: generateCombatTable(
           state.unitLibraryB[newUnit as UnitIdType],
@@ -206,9 +248,38 @@ export function combatReducer(
       };
     }
 
+    case 'setAttackerLevel': {
+      const { unitId, level } = action.payload;
+      const [activeUnitB] = state.unitSelectionB;
+      const modifiedStats = getUnitStatsForLevel(unitId as UnitIdType, level);
+      const newUnit: UnitInterface = {
+        ...baseUnits[unitId as UnitIdType],
+        ...modifiedStats,
+      };
+      // update local copy of baseUnits
+      baseUnitsA[unitId as UnitIdType] = newUnit;
+      const newLibrary = generateUnitLibrary(state.modSelectionA, baseUnitsA);
+
+      return {
+        ...state,
+        unitLibraryA: newLibrary,
+        // Generate effectiveness tables for new library
+        baseCombatResultsA: generateCombatTable(newUnit, baseUnitsB),
+        baseCombatResultsB: generateCombatTable(
+          baseUnitsB[activeUnitB as UnitIdType],
+          baseUnitsA
+        ),
+        moddedCombatResultsA: generateCombatTable(newUnit, state.unitLibraryB),
+        moddedCombatResultsB: generateCombatTable(
+          state.unitLibraryB[activeUnitB as UnitIdType],
+          newLibrary
+        ),
+      };
+    }
+
     case 'setModSelectionA': {
       const newMods = filterMods(action.payload);
-      const newLibrary = generateUnitLibrary(newMods);
+      const newLibrary = generateUnitLibrary(newMods, baseUnitsA);
       const [activeUnitA] = state.unitSelectionA;
       const [activeUnitB] = state.unitSelectionB;
       return {
@@ -229,7 +300,7 @@ export function combatReducer(
 
     case 'setModSelectionB': {
       const newMods = filterMods(action.payload);
-      const newLibrary = generateUnitLibrary(newMods);
+      const newLibrary = generateUnitLibrary(newMods, baseUnitsB);
       const [activeUnitA] = state.unitSelectionA;
       const [activeUnitB] = state.unitSelectionB;
       return {
