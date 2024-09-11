@@ -49,14 +49,32 @@
 
 .unitName {
   background: rgba(0, 0, 0, 0.7);
-  font-size: 12px;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
   position: absolute;
-  padding: 4px 0;
+  padding: 2px 2px;
   text-align: center;
   bottom: 0;
   left: 0;
   right: 0;
+  text-transform: uppercase;
+  text-shadow: 1px 2px 1px #000;
+
+  span {
+    // force text to wrap if it's too long
+    height: 1lh;
+    overflow: hidden;
+  }
+}
+
+.levelIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: -2px 0 -2px 4px;
+  filter: drop-shadow(1px 2px 1px #000);
 }
 
 .levelButton {

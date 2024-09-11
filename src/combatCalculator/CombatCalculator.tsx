@@ -185,6 +185,7 @@ function CombatCalculatorPage() {
           selectedKeys={unitSelectionA}
           baseCombatResults={undefined}
           moddedCombatResults={undefined}
+          unitLibrary={unitLibraryA}
         />
       </div>
 
@@ -194,6 +195,7 @@ function CombatCalculatorPage() {
           selectedKeys={unitSelectionB}
           baseCombatResults={baseCombatResultsA}
           moddedCombatResults={moddedCombatResultsA}
+          unitLibrary={unitLibraryB}
         />
       </div>
 

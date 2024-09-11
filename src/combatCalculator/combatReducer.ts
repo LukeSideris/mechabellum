@@ -307,7 +307,10 @@ export function combatReducer(
           baseUnitsB[activeUnitB as UnitIdType],
           baseUnitsA
         ),
-        moddedCombatResultsA: generateCombatTable(newUnit, state.unitLibraryB),
+        moddedCombatResultsA: generateCombatTable(
+          newLibrary[unitId as UnitIdType],
+          state.unitLibraryB
+        ),
         moddedCombatResultsB: generateCombatTable(
           state.unitLibraryB[activeUnitB as UnitIdType],
           newLibrary
@@ -340,7 +343,10 @@ export function combatReducer(
           state.unitLibraryA[activeUnitA as UnitIdType],
           newLibrary
         ),
-        moddedCombatResultsB: generateCombatTable(newUnit, state.unitLibraryA),
+        moddedCombatResultsB: generateCombatTable(
+          newLibrary[unitId as UnitIdType],
+          state.unitLibraryA
+        ),
       };
     }
 

@@ -1,7 +1,7 @@
-/* Note: Ubuntu sans offers condensed and mono typefaces */
-/* Other options: Maven, Orbitron */
-/* Question - should I do link embed instead of css import? */
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+/* Load fonts from google fonts */
+/* Ubuntu: 400 and 700 weight */
+/* Sofia Sans Extra Condensed: wight 600 */
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@600&family=Ubuntu:wght@400;700&display=swap');
 
 :root {
   /* UI base colors */
@@ -34,6 +34,7 @@
   font-family: 'Ubuntu', sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  font-style: normal;
 
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
@@ -43,6 +44,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.typeface-condensed {
+  font-family: 'Sofia Sans Extra Condensed', 'Arial Narrow', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }
 
 *,

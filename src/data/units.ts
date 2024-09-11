@@ -160,7 +160,8 @@ export const generateUnits = (): UnitLibraryInterface => ({
     area: 50 * 20,
   },
   sledgehammer: {
-    name: 'Sledgehammer',
+    // add a zero width space to control line breaks
+    name: 'Sledge\u200Bhammer',
     id: 'sledgehammer',
     card: cards['./cards/units/sledgehammer.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/sledgehammer.png'] as string,
@@ -179,7 +180,8 @@ export const generateUnits = (): UnitLibraryInterface => ({
     area: 50 * 20,
   },
   stormcaller: {
-    name: 'Stormcaller',
+    // add a zero width space to control line breaks
+    name: 'Storm\u200Bcaller',
     id: 'stormcaller',
     card: cards['./cards/units/stormcaller.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/stormcaller.png'] as string,
@@ -463,7 +465,8 @@ export const generateUnits = (): UnitLibraryInterface => ({
     area: 40 * 40,
   },
   war_factory: {
-    name: 'War Factory',
+    // add a zero width space to control line breaks
+    name: 'War Fac\u200Btory',
     id: 'war_factory',
     card: cards['./cards/units/war_factory.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/war_factory.png'] as string,
