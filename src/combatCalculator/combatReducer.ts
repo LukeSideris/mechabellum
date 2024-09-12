@@ -1,6 +1,5 @@
 import {
   units as baseUnits,
-  generateUnits,
   UnitInterface,
   UnitLibraryInterface,
 } from 'src/data/units';
@@ -9,8 +8,8 @@ import { mods, filterMods } from 'src/data/mods';
 import applyUnitMods from 'src/algorithms/applyUnitMods';
 
 // make copies of baseUnits to modify with unit levels
-const baseUnitsA = generateUnits();
-const baseUnitsB = generateUnits();
+const baseUnitsA = structuredClone(baseUnits);
+const baseUnitsB = structuredClone(baseUnits);
 type UnitIdType = keyof typeof baseUnitsA;
 
 export type CombatResultsInterface = {
