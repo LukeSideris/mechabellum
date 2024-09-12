@@ -63,7 +63,7 @@ export type UnitLibraryInterface = {
   [key in UnitIdType]: UnitInterface;
 };
 
-export const generateUnits = (): UnitLibraryInterface => ({
+export const units: UnitLibraryInterface = {
   crawler: {
     name: 'Crawler',
     id: 'crawler',
@@ -560,6 +560,4 @@ export const generateUnits = (): UnitLibraryInterface => ({
     rows: 1,
     area: 30 * 30, // TODO check me
   },
-});
-
-export const units = generateUnits();
+};

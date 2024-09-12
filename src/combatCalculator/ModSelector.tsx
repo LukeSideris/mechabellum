@@ -8,12 +8,7 @@ import {
 
 import classes from './ModSelector.module.scss';
 
-function ModListBoxItem({
-  modName,
-}: {
-  // dispatch: React.Dispatch<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
-  modName: string;
-}) {
+function ModListBoxItem({ modName }: { modName: string }) {
   const mod = mods[modName as keyof typeof mods];
   return (
     <ListBoxItem
@@ -21,14 +16,6 @@ function ModListBoxItem({
       key={mod.id}
       id={mod.id}
       textValue={mod.name}
-      /*
-    onHoverChange={(isHovering: boolean): void => {
-      dispatch({
-        type: 'hoverMod',
-        payload: { state: isHovering, id: mod.id },
-      });
-    }}
-    */
     >
       <img src={mod.thumbnail} alt={mod.name} />
       <span className={classes.modName}>{mod.name}</span>
@@ -39,9 +26,7 @@ function ModListBoxItem({
 const ModSelector = ({
   onSelectionChange,
   selectedKeys,
-}: ListBoxProps<object> & {
-  dispatch: React.Dispatch<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
-}) => {
+}: ListBoxProps<object>) => {
   return (
     <ListBox
       aria-label="Unit mod specialist selection"
