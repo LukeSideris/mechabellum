@@ -162,7 +162,6 @@ function CombatCalculatorPage() {
           <span>Attacker mods</span>
         </h2>
         <ModSelector
-          dispatch={dispatch}
           onSelectionChange={handleModSelectionA}
           selectedKeys={modSelectionA}
         />
@@ -173,7 +172,6 @@ function CombatCalculatorPage() {
           <span>Defender mods</span>
         </h2>
         <ModSelector
-          dispatch={dispatch}
           onSelectionChange={handleModSelectionB}
           selectedKeys={modSelectionB}
         />

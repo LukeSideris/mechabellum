@@ -13,11 +13,12 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "types": ["vite/client"],
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["css.d.ts", "vite.config.ts"]
+  "include": ["modules.d.ts", "vite.config.ts"]
 }
