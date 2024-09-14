@@ -164,6 +164,7 @@ function CombatCalculatorPage() {
         <ModSelector
           onSelectionChange={handleModSelectionA}
           selectedKeys={modSelectionA}
+          unitId={leftUnitId}
         />
       </div>
 
@@ -174,6 +175,7 @@ function CombatCalculatorPage() {
         <ModSelector
           onSelectionChange={handleModSelectionB}
           selectedKeys={modSelectionB}
+          unitId={rightUnitId}
         />
       </div>
 

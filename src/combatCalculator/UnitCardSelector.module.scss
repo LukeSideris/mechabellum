@@ -66,6 +66,7 @@
     // force text to wrap if it's too long
     height: 1lh;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
