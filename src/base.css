@@ -1,7 +1,7 @@
-/* Load fonts from google fonts */
+/* Fonts from google fonts */
 /* Ubuntu: 400 and 700 weight */
 /* Sofia Sans Extra Condensed: wight 600 */
-@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@600&family=Ubuntu:wght@400;700&display=swap');
+/* fonts are linked in /index.html */
 
 :root {
   /* UI base colors */

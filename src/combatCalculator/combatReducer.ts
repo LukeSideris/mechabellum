@@ -100,7 +100,7 @@ export function getInitialState({
         .filter((unitId) => unitId in baseUnits)
     );
 
-    const [selectedUnitB] = initialState.unitSelectionA;
+    const [selectedUnitB] = initialState.unitSelectionB;
     // apply stored unit level from search params
     if (selectedUnitB && searchParams.has(paramsNameMap.rightUnitLevel)) {
       const level = parseInt(
@@ -319,7 +319,7 @@ export function combatReducer(
 
     case 'setDefenderLevel': {
       const { unitId, level } = action.payload;
-      const [activeUnitA] = state.unitSelectionB;
+      const [activeUnitA] = state.unitSelectionA;
       const modifiedStats = getUnitStatsForLevel(unitId as UnitIdType, level);
       const newUnit: UnitInterface = {
         ...baseUnits[unitId as UnitIdType],

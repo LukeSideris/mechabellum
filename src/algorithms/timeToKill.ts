@@ -162,9 +162,11 @@ export const timeToKill = (
     // otherwise we assume they each attack different targets
     let cumulativeDamage = 0;
     let hits = 0;
+    const damageMax = (attacker.damageMax || 1) * damageMod;
     const multiplier = Math.ceil(attacker.unitCount / target.unitCount);
     while (cumulativeDamage < targetHp) {
-      cumulativeDamage = attackerDamage * Math.pow(2, hits) * multiplier;
+      cumulativeDamage +=
+        Math.min(damageMax, attackerDamage * Math.pow(2, hits)) * multiplier;
       hits++;
     }
 
