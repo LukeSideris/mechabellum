@@ -8,11 +8,16 @@
 }
 
 .react-aria-Tooltip {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  --gradient-start: color-mix(in oklab, var(--background-L2) 75%, black);
+  --gradient-end: var(--background-L2);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.6),
+    0 0 1px 1px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  background: #6f46ed;
+  background: #000
+    linear-gradient(0deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
   padding: 2px 8px;
   max-width: 150px;
@@ -24,37 +29,40 @@
   }
 
   &[data-placement='top'] {
-    margin-bottom: 8px;
-    --origin: translateY(4px);
+    margin-bottom: 12px;
+    --origin: translateY(6px);
+    fill: var(--gradient-end);
   }
 
   &[data-placement='bottom'] {
-    margin-top: 8px;
-    --origin: translateY(-4px);
+    margin-top: 12px;
+    --origin: translateY(-6px);
     & .react-aria-OverlayArrow svg {
       transform: rotate(180deg);
     }
   }
 
   &[data-placement='right'] {
-    margin-left: 8px;
-    --origin: translateX(-4px);
+    margin-left: 12px;
+    --origin: translateX(-6px);
     & .react-aria-OverlayArrow svg {
       transform: rotate(90deg);
+      fill: color-mix(in oklab, var(--gradient-start) 50%, var(--gradient-end));
     }
   }
 
   &[data-placement='left'] {
-    margin-right: 8px;
-    --origin: translateX(4px);
+    margin-right: 12px;
+    --origin: translateX(6px);
     & .react-aria-OverlayArrow svg {
       transform: rotate(-90deg);
+      fill: color-mix(in oklab, var(--gradient-start) 50%, var(--gradient-end));
     }
   }
 
   & .react-aria-OverlayArrow svg {
     display: block;
-    fill: #6f46ed;
+    fill: var(--gradient-start);
   }
 
   &[data-entering] {

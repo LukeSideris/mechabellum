@@ -16,6 +16,7 @@ import {
   defenseResearch,
 } from 'src/data/mods.ts';
 import Tooltip from 'src/components/Tooltip';
+import ModDescription from 'src/unitDisplay/ModDescription';
 
 import classes from './ModSelector.module.scss';
 
@@ -29,12 +30,6 @@ function ModListBoxItem({
 }) {
   const mod = mods[modId as keyof typeof mods] as ModInterface;
 
-  const TooltipContent = (
-    <p className={classes.modDescription}>
-      <dfn>{mod.name}</dfn> {mod.description}
-    </p>
-  );
-
   return (
     <ListBoxItem
       className={classes.modOption}
@@ -42,18 +37,18 @@ function ModListBoxItem({
       id={mod.id}
       textValue={mod.name}
     >
-      <img src={mod.thumbnail} alt={mod.name} />
       {showLabel ? (
-        <span className={`${classes.modId} typeface-condensed`}>
+        <span className={`${classes.modName} typeface-condensed`}>
           {mod.name}
         </span>
       ) : (
         <VisuallyHidden>{mod.name}</VisuallyHidden>
       )}
+      <img src={mod.thumbnail} alt={mod.name} />
 
       <Tooltip
         {...tooltipProps}
-        content={TooltipContent}
+        content={<ModDescription mod={mod} />}
         wrapInteractive={false}
       >
         <Button
@@ -86,7 +81,7 @@ const ModSelector = ({
 
   return (
     <ListBox
-      aria-label="Unit mod specialist selection"
+      aria-label="Unit mod and specialist selection"
       className={classes.modSelector}
       layout="grid"
       orientation="horizontal"
@@ -95,16 +90,23 @@ const ModSelector = ({
       selectedKeys={selectedKeys}
     >
       <Section className={classes.starterSpecialistMods}>
-        <Header>Starter Specialists</Header>
+        <Header>Starter specialists and unit mods</Header>
         {starterSpecialists.map((modId) => (
-          <ModListBoxItem modId={modId} key={modId} placement="top start" crossOffset={-40} />
+          <ModListBoxItem
+            modId={modId}
+            key={modId}
+            placement="top start"
+            crossOffset={-40}
+          />
         ))}
-      </Section>
 
-      <Section className={classes.dynamicMods}>
-        <Header>Special mods for ${unitId}</Header>
         {dynamicMods.map((modId) => (
-          <ModListBoxItem modId={modId} key={modId} placement="top start" crossOffset={-40} />
+          <ModListBoxItem
+            modId={modId}
+            key={modId}
+            placement="top start"
+            crossOffset={-40}
+          />
         ))}
       </Section>
 

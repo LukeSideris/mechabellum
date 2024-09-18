@@ -68,7 +68,7 @@ export const mods = {
     },
   },
   aerial: {
-    name: 'Aerial',
+    name: 'Aerial Specialist',
     id: 'aerial',
     description: 'Increase HP and attack of all flying units by 10m',
     thumbnail: thumbnailAerial as string,
@@ -152,7 +152,7 @@ export const mods = {
     },
   },
   massProducedSledgehammer: {
-    name: 'Mass-Produced Sledgehammer',
+    name: 'Mass-Produced Sledge\u200Bhammer',
     id: 'massProducedSledgehammer',
     description:
       'Decreases the recruitment cost of Sledgehammer by 100 but decreases attack by 30%, and HP by 30%',
@@ -168,7 +168,7 @@ export const mods = {
     },
   },
   extendedRangeSledgehammer: {
-    name: 'Extended Range Sledgehammer',
+    name: 'Extended Range Sledge\u200Bhammer',
     id: 'extendedRangeSledgehammer',
     description:
       'Increase Sledgehammer’s range by 30 but decreases attack by 20% and HP by 20%',
@@ -184,7 +184,7 @@ export const mods = {
     },
   },
   improvedSledgehammer: {
-    name: 'Improved Sledgehammer',
+    name: 'Improved Sledge\u200Bhammer',
     id: 'improvedSledgehammer',
     description:
       'Increase Sledgehammer’s attack by 100%, and movement speed by 3 but increases recruitment cost by 50',
@@ -200,7 +200,7 @@ export const mods = {
     },
   },
   assaultStormcaller: {
-    name: 'Assault Stormcaller',
+    name: 'Assault Storm\u200Bcaller',
     id: 'assaultStormcaller',
     description:
       'Increase Stormcaller’s HP by 350% and movement speed by 5 but decreases range by 40',
@@ -216,7 +216,7 @@ export const mods = {
     },
   },
   extendedRangeStormcaller: {
-    name: 'Extended Range Stormcaller',
+    name: 'Extended Range Storm\u200Bcaller',
     id: 'extendedRangeStormcaller',
     description:
       'Increase Stormcaller’s range by 35 but decreases attack by 30%',
@@ -715,6 +715,7 @@ export const mods = {
   },
 
   // global HP and attack modifiers
+  /* not used yet
   advancedDefense: {
     name: 'Advanced Defensive Tactics',
     id: 'advancedDefense',
@@ -749,29 +750,31 @@ export const mods = {
       };
     },
   },
+  */
+
   rcAttack1: {
-    name: 'Attack 1',
+    name: 'Improved Attack 1',
     id: 'rcAttack1',
     description: 'Increase attack of all units by 12%',
     thumbnail: researchThumbs['./thumbnails/research/attack_1.png'] as string,
     modifyDamage: 0.12,
   },
   rcAttack2: {
-    name: 'Attack 2',
+    name: 'Improved Attack 2',
     id: 'rcAttack2',
     description: 'Increase attack of all units by 36%',
     thumbnail: researchThumbs['./thumbnails/research/attack_2.png'] as string,
     modifyDamage: 0.36,
   },
   rcDefense1: {
-    name: 'Defense 1',
+    name: 'Improved Defense 1',
     id: 'rcDefense1',
     description: 'Increase HP of all units by 10%',
     thumbnail: researchThumbs['./thumbnails/research/defense_1.png'] as string,
     modifyHp: 0.15,
   },
   rcDefense2: {
-    name: 'Defense 2',
+    name: 'Improved Defense 2',
     id: 'rcDefense2',
     description: 'Increase HP of all units by 30%',
     thumbnail: researchThumbs['./thumbnails/research/defense_2.png'] as string,

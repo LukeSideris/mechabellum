@@ -1,0 +1,10 @@
+.modDescription {
+  margin: 0.5em 0;
+
+  dfn {
+    font-weight: 700;
+  }
+  dfn::after {
+    content: ':';
+  }
+}

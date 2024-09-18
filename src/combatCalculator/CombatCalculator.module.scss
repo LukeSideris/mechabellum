@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+$layout-breakpoint: 1080px;
 
 .gridContainer {
   display: grid;
@@ -12,7 +13,22 @@
     "attacker defender  gap unitsB  unitsB"
     "modsA    modsA     gap modsB   modsB";
   width: 100%;
-  height: calc(100vh - 3.2rem);
+  min-height: calc(100vh - 3.2rem);
+  min-width: 512px;
+
+  @media (max-width: $layout-breakpoint) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr auto auto 0px 1fr auto auto;
+    grid-template-areas:
+      "header   header"
+      "unitsA   unitsA"
+      "attacker defender"
+      "modsA    modsA"
+      "gap      gap"
+      "unitsB   unitsB"
+      "modsB    modsB"
+      "infopanel infopanel";
+  }
 }
 
 .pageTitle {
@@ -46,6 +62,10 @@
       rgba(var(--background-L2-rgb), 0.0) 0%,
       rgba(var(--background-L2-rgb), 0.5) 64px,
       rgba(var(--background-L2-rgb), 0.5));
+
+  @media (max-width: $layout-breakpoint) {
+    margin-top: 0;
+  }
 
 
   strong {
@@ -96,6 +116,21 @@
 .unitsB {
   grid-area: unitsB;
   position: relative;
+}
+
+.unitsA, .unitsB {
+  @media (max-width: $layout-breakpoint) {
+    padding-bottom: 36px;
+  }
+  
+  h2 {
+    display: none;
+
+    @media (max-width: $layout-breakpoint) {
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
 }
 
 .test {

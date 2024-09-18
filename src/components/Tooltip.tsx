@@ -32,14 +32,14 @@ const Tooltip = ({
   );
 
   return (
-    <TooltipTrigger delay={800} closeDelay={200} >
+    <TooltipTrigger delay={800} closeDelay={200}>
       {trigger}
 
       <AriaTooltip {...tooltipProps}>
         {content}
 
         <OverlayArrow>
-          <svg width={8} height={8} viewBox="0 0 8 8">
+          <svg width={12} height={12} viewBox="0 0 8 8">
             <path d="M0 0 L4 4 L8 0" />
           </svg>
         </OverlayArrow>

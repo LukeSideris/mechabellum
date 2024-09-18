@@ -1,11 +1,11 @@
 .modSelector {
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: auto min-content min-content;
+  grid-template-columns: auto min-content;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
-    "starters dynamic attackResearch"
-    "starters dynamic defenseResearch";
+    "starters attackResearch"
+    "starters defenseResearch";
   flex-wrap: wrap;
   gap: 4px;
   padding: 8px 0;
@@ -15,11 +15,11 @@
   }
 }
 
-.starterSpecialistMods, .dynamicMods {
+.starterSpecialistMods {
   // grid layout for standard mods
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minMax(44px, 1fr));
   grid-template-rows: 1fr 1fr;
   gap: 2px;
 }
@@ -37,10 +37,6 @@
   grid-area: starters;
 }
 
-.dynamicMods {
-  grid-area: dynamic;
-}
-
 .attackResearchMods {
   grid-area: attackResearch;
 }
@@ -54,25 +50,52 @@
   border: 1px solid var(--border-interactive-off);
   border-radius: var(--radius-sm);
   display: flex;
-  gap: 8px;
-  font-size: 12px;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
   padding: 2px;
+  padding-left: 40px;
   position: relative;
-  text-align: left;
 
   img {
-    height: 48px;
-    width: 48px;
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
   }
 
   &:focus, &[data-hovered] {
+    border-color: var(--border-interactive-off-hover);
+    color: white;
     z-index: 1;
   }
 }
 
+.modName {
+  font-size: 14px;
+  line-height: 16px;
+  text-shadow: 1px 1px 0 #000, 0 0 2px rgba(0, 0, 0, 0.6);
+  max-height: 2lh;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
 .modOption[data-selected] {
-  background-color: var(--interactive-on);
+  background: var(--interactive-on);
   border-color: var(--border-interactive-on);
+  box-shadow: var(--interactive-on-glow);
+
+  &[data-hovered] {
+    border-color: var(--border-interactive-on-hover);
+    box-shadow: var(--interactive-on-glow-hover);
+  }
+
+  img {
+    filter: saturate(1.1) contrast(1.15);
+  }
 }
 
 .attackResearchMods .modOption,
@@ -95,23 +118,11 @@
     border-right-width: 1px;
     box-shadow: none;
   }
-}
 
-.modName {
-  font-size: 15px;
-}
-
-.modDescription {
-  margin: 0.5em 0;
-
-  dfn {
-    font-weight: 700;
-
-    // insert a colon after term
-    &::after {
-      content: ":";
-    }
-    }
+  &[data-selected] {
+    border-left-width: 1px;
+    border-right-width: 1px;
+  }
 }
 
 .descriptionTooltip {
