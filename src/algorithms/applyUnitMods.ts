@@ -3,12 +3,12 @@ import { mods, ModInterface } from 'src/data/mods.ts';
 
 const applyUnitMods = (
   unitId: UnitIdType,
-  activeMods: Set<string>,
+  activeMods: Set<keyof typeof mods>,
   units = baseUnits
 ): UnitInterface => {
   // convert applied mods set into array of mod objects
   const appliedMods = Array.from(activeMods).map(
-    (modName) => mods[modName as keyof typeof mods]
+    (modName) => mods[modName] as ModInterface
   );
 
   let modifiedUnit: UnitInterface = {
@@ -19,7 +19,7 @@ const applyUnitMods = (
   const hpIncrease = [] as number[];
   const hpDecrease = [] as number[];
 
-  Array.from(appliedMods).forEach((mod: ModInterface) => {
+  Array.from(appliedMods).forEach((mod) => {
     // positive attach and HP mods are additive, while negative mods are multiplicative
     if (mod.modifyDamage) {
       if (mod.modifyDamage > 0) {

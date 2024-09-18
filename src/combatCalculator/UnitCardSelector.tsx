@@ -2,7 +2,10 @@ import { ListBox, ListBoxItem, ListBoxProps } from 'react-aria-components';
 
 import { CombatResultsInterface } from 'src/combatCalculator/combatReducer';
 import { units as baseUnits, UnitIdType } from 'src/data/units';
+import { mods, ModInterface } from 'src/data/mods.ts';
 import getLevelIcon from 'src/unitDisplay/getLevelIcon';
+import Tooltip from 'src/components/Tooltip';
+import ModDescription from 'src/unitDisplay/ModDescription';
 import classes from './UnitCardSelector.module.scss';
 
 const UnitSelector = ({
@@ -11,10 +14,12 @@ const UnitSelector = ({
   baseCombatResults,
   moddedCombatResults,
   unitLibrary = baseUnits,
+  activeMods,
 }: ListBoxProps<object> & {
   baseCombatResults: CombatResultsInterface | undefined;
   moddedCombatResults: CombatResultsInterface | undefined;
   unitLibrary?: typeof baseUnits;
+  activeMods: Set<keyof typeof mods>;
 }) => {
   return (
     <ListBox
@@ -33,6 +38,10 @@ const UnitSelector = ({
         const moddedEfficiency =
           moddedCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
         const diff = moddedEfficiency / baseEfficiency;
+        const unitSpecificMods = [...activeMods].filter(
+          (modId) =>
+            'appliesTo' in mods[modId] && mods[modId].appliesTo === unitId
+        );
 
         return (
           <ListBoxItem
@@ -57,11 +66,33 @@ const UnitSelector = ({
                 alt={`${unit.name} level ${unit.level}`}
               />
             </div>
+            <UnitModThumbnails unitMods={unitSpecificMods} />
             <ModEffect diff={diff} />
           </ListBoxItem>
         );
       })}
     </ListBox>
+  );
+};
+
+const UnitModThumbnails = ({
+  unitMods = [],
+}: {
+  unitMods: (keyof typeof mods)[];
+}) => {
+  return (
+    <div className={classes.modThumbnails}>
+      {unitMods.map((modId) => {
+        const mod = mods[modId] as ModInterface;
+        return (
+          <Tooltip key={modId} content={<ModDescription mod={mod} />}>
+            <div className={classes.unitMod}>
+              <img src={mod.thumbnail} alt={mod.name} />
+            </div>
+          </Tooltip>
+        );
+      })}
+    </div>
   );
 };
 

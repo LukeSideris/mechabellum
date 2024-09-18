@@ -1,7 +1,7 @@
-/* Load fonts from google fonts */
+/* Fonts from google fonts */
 /* Ubuntu: 400 and 700 weight */
 /* Sofia Sans Extra Condensed: wight 600 */
-@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@600&family=Ubuntu:wght@400;700&display=swap');
+/* fonts are linked in /index.html */
 
 :root {
   /* UI base colors */
@@ -16,9 +16,13 @@
 
   /* interactive elements */
   --interactive-off: #24283b;
-  --interactive-on: #495777;
+  --interactive-on: #313e7c linear-gradient(0deg, #3a457b 0%, #313e7c 100%);
   --border-interactive-off: #5a74c0;
-  --border-interactive-on: #00b0f9;
+  --border-interactive-off-hover: #a0b3ea;
+  --border-interactive-on: #e8ac5f;
+  --border-interactive-on-hover: #ffcb87;
+  --interactive-on-glow: 0 0 3px rgba(232, 172, 95, 0.8);
+  --interactive-on-glow-hover: 0 0 5px rgba(232, 172, 95, 1);
   /* state management */
   --selected: #61cf5a;
   --selectedRGB: 32, 194, 14;
@@ -37,7 +41,7 @@
   font-style: normal;
 
   color-scheme: dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.9);
   background-color: var(--background-L0);
 
   font-synthesis: none;

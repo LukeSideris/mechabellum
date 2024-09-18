@@ -1,5 +1,6 @@
 import {
   units as baseUnits,
+  UnitIdType,
   UnitInterface,
   UnitLibraryInterface,
 } from 'src/data/units';
@@ -10,17 +11,16 @@ import applyUnitMods from 'src/algorithms/applyUnitMods';
 // make copies of baseUnits to modify with unit levels
 const baseUnitsA = structuredClone(baseUnits);
 const baseUnitsB = structuredClone(baseUnits);
-type UnitIdType = keyof typeof baseUnitsA;
 
 export type CombatResultsInterface = {
   [key in UnitIdType]: ttkInterface;
 };
 
 export type combatStateType = {
-  unitSelectionA: Set<string>;
-  unitSelectionB: Set<string>;
-  modSelectionA: Set<string>;
-  modSelectionB: Set<string>;
+  unitSelectionA: Set<UnitIdType>;
+  unitSelectionB: Set<UnitIdType>;
+  modSelectionA: Set<keyof typeof mods>;
+  modSelectionB: Set<keyof typeof mods>;
   unitLibraryA: UnitLibraryInterface;
   unitLibraryB: UnitLibraryInterface;
   baseCombatResultsA: CombatResultsInterface;
@@ -71,7 +71,7 @@ export function getInitialState({
         .getAll(paramsNameMap.unitSelectionA)
         // validate the param matches a valid unit id
         .filter((unitId) => unitId in baseUnits)
-    );
+    ) as Set<UnitIdType>;
 
     const [selectedUnitA] = initialState.unitSelectionA;
     // apply stored unit level from search params
@@ -98,9 +98,9 @@ export function getInitialState({
         .getAll(paramsNameMap.unitSelectionB)
         // validate the param matches a valid unit id
         .filter((unitId) => unitId in baseUnits)
-    );
+    ) as Set<UnitIdType>;
 
-    const [selectedUnitB] = initialState.unitSelectionA;
+    const [selectedUnitB] = initialState.unitSelectionB;
     // apply stored unit level from search params
     if (selectedUnitB && searchParams.has(paramsNameMap.rightUnitLevel)) {
       const level = parseInt(
@@ -126,7 +126,7 @@ export function getInitialState({
         // validate the param matches a valid mod id
         .filter((modId) => modId in mods)
     );
-    initialState.modSelectionA = filterMods(urlMods);
+    initialState.modSelectionA = filterMods(urlMods) as Set<keyof typeof mods>;
   }
 
   if (searchParams.has(paramsNameMap.modSelectionB)) {
@@ -136,7 +136,7 @@ export function getInitialState({
         // validate the param matches a valid mod id
         .filter((modId) => modId in mods)
     );
-    initialState.modSelectionB = filterMods(urlMods);
+    initialState.modSelectionB = filterMods(urlMods) as Set<keyof typeof mods>;
   }
 
   // generate unit libraries if mods are selected
@@ -211,7 +211,10 @@ const getUnitStatsForLevel = (unitId: UnitIdType, newLevel: number) => {
   };
 };
 
-const generateUnitLibrary = (activeMods: Set<string>, units = baseUnits) => {
+const generateUnitLibrary = (
+  activeMods: Set<keyof typeof mods>,
+  units = baseUnits
+) => {
   type ModifiedLibraryType = {
     [key in UnitIdType]: UnitInterface;
   };
@@ -319,7 +322,7 @@ export function combatReducer(
 
     case 'setDefenderLevel': {
       const { unitId, level } = action.payload;
-      const [activeUnitA] = state.unitSelectionB;
+      const [activeUnitA] = state.unitSelectionA;
       const modifiedStats = getUnitStatsForLevel(unitId as UnitIdType, level);
       const newUnit: UnitInterface = {
         ...baseUnits[unitId as UnitIdType],
@@ -351,7 +354,10 @@ export function combatReducer(
 
     case 'setModSelectionA': {
       const newMods = filterMods(action.payload);
-      const newLibrary = generateUnitLibrary(newMods, baseUnitsA);
+      const newLibrary = generateUnitLibrary(
+        newMods as Set<keyof typeof mods>,
+        baseUnitsA
+      );
       const [activeUnitA] = state.unitSelectionA;
       const [activeUnitB] = state.unitSelectionB;
       return {
@@ -372,7 +378,10 @@ export function combatReducer(
 
     case 'setModSelectionB': {
       const newMods = filterMods(action.payload);
-      const newLibrary = generateUnitLibrary(newMods, baseUnitsB);
+      const newLibrary = generateUnitLibrary(
+        newMods as Set<keyof typeof mods>,
+        baseUnitsB
+      );
       const [activeUnitA] = state.unitSelectionA;
       const [activeUnitB] = state.unitSelectionB;
       return {

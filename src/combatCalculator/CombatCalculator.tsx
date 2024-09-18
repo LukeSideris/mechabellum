@@ -38,6 +38,7 @@ function CombatCalculatorPage() {
     dispatch,
   ] = useReducer(
     combatReducer,
+    // @ts-expect-error - I am too lazy to type my reducer
     { searchParams, paramsNameMap },
     getInitialState
   );
@@ -76,6 +77,7 @@ function CombatCalculatorPage() {
 
   const handleUnitSelectionA = useCallback(
     (selection: Selection) => {
+      // @ts-expect-error - I am too lazy to type my reducer
       dispatch({
         type: 'selectUnitA',
         payload: selection,
@@ -86,6 +88,7 @@ function CombatCalculatorPage() {
 
   const handleUnitSelectionB = useCallback(
     (selection: Selection) => {
+      // @ts-expect-error - I am too lazy to type my reducer
       dispatch({
         type: 'selectUnitB',
         payload: selection,
@@ -96,6 +99,7 @@ function CombatCalculatorPage() {
 
   const handleModSelectionA = useCallback(
     (appliedMods: Selection) => {
+      // @ts-expect-error - I am too lazy to type my reducer
       dispatch({
         type: 'setModSelectionA',
         payload: appliedMods,
@@ -106,6 +110,7 @@ function CombatCalculatorPage() {
 
   const handleModSelectionB = useCallback(
     (appliedMods: Selection) => {
+      // @ts-expect-error - I am too lazy to type my reducer
       dispatch({
         type: 'setModSelectionB',
         payload: appliedMods,
@@ -116,6 +121,7 @@ function CombatCalculatorPage() {
 
   const handleSetUnitLevelA = useCallback(
     (unitId: UnitIdType, level: number) => {
+      // @ts-expect-error - I am too lazy to type my reducer
       dispatch({
         type: 'setAttackerLevel',
         payload: {
@@ -129,6 +135,7 @@ function CombatCalculatorPage() {
 
   const handleSetUnitLevelB = useCallback(
     (unitId: UnitIdType, level: number) => {
+      // @ts-expect-error - I am too lazy to type my reducer
       dispatch({
         type: 'setDefenderLevel',
         payload: {
@@ -157,43 +164,31 @@ function CombatCalculatorPage() {
         <span className={classes.gameVersion}>patch 0.9.0.2</span>
       </div>
 
-      <div className={classes.modsA}>
-        <h2 className="title-h3">
-          <span>Attacker mods</span>
-        </h2>
-        <ModSelector
-          onSelectionChange={handleModSelectionA}
-          selectedKeys={modSelectionA}
-        />
-      </div>
-
-      <div className={classes.modsB}>
-        <h2 className="title-h3">
-          <span>Defender mods</span>
-        </h2>
-        <ModSelector
-          onSelectionChange={handleModSelectionB}
-          selectedKeys={modSelectionB}
-        />
-      </div>
-
       <div className={`combat-left-side ${classes.unitsA}`}>
+        <h2 className="title-h3">
+          <span>Attacker Units</span>
+        </h2>
         <UnitCardSelector
           onSelectionChange={handleUnitSelectionA}
           selectedKeys={unitSelectionA}
           baseCombatResults={undefined}
           moddedCombatResults={undefined}
           unitLibrary={unitLibraryA}
+          activeMods={modSelectionA}
         />
       </div>
 
       <div className={`combat-right-side ${classes.unitsB}`}>
+        <h2 className="title-h3">
+          <span>Defender Units</span>
+        </h2>
         <UnitCardSelector
           onSelectionChange={handleUnitSelectionB}
           selectedKeys={unitSelectionB}
           baseCombatResults={baseCombatResultsA}
           moddedCombatResults={moddedCombatResultsA}
           unitLibrary={unitLibraryB}
+          activeMods={modSelectionB}
         />
       </div>
 
@@ -225,6 +220,28 @@ function CombatCalculatorPage() {
           />
         )}
         {!rightUnit && leftUnit && <UnitPlaceholder />}
+      </div>
+
+      <div className={classes.modsA}>
+        <h2 className="title-h3">
+          <span>Attacker mods</span>
+        </h2>
+        <ModSelector
+          onSelectionChange={handleModSelectionA}
+          selectedKeys={modSelectionA}
+          unitId={leftUnitId}
+        />
+      </div>
+
+      <div className={classes.modsB}>
+        <h2 className="title-h3">
+          <span>Defender mods</span>
+        </h2>
+        <ModSelector
+          onSelectionChange={handleModSelectionB}
+          selectedKeys={modSelectionB}
+          unitId={rightUnitId}
+        />
       </div>
     </div>
   );
