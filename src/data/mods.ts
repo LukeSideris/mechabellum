@@ -753,30 +753,30 @@ export const mods = {
   */
 
   rcAttack1: {
-    name: 'Improved Attack 1',
+    name: 'Attack Enhancement 1',
     id: 'rcAttack1',
     description: 'Increase attack of all units by 12%',
     thumbnail: researchThumbs['./thumbnails/research/attack_1.png'] as string,
     modifyDamage: 0.12,
   },
   rcAttack2: {
-    name: 'Improved Attack 2',
+    name: 'Attack Enhancement 2',
     id: 'rcAttack2',
     description: 'Increase attack of all units by 36%',
     thumbnail: researchThumbs['./thumbnails/research/attack_2.png'] as string,
     modifyDamage: 0.36,
   },
   rcDefense1: {
-    name: 'Improved Defense 1',
+    name: 'Defense Enhancement 1',
     id: 'rcDefense1',
-    description: 'Increase HP of all units by 10%',
+    description: 'Increase HP of all units by 15%',
     thumbnail: researchThumbs['./thumbnails/research/defense_1.png'] as string,
     modifyHp: 0.15,
   },
   rcDefense2: {
-    name: 'Improved Defense 2',
+    name: 'Defense Enhancement 2',
     id: 'rcDefense2',
-    description: 'Increase HP of all units by 30%',
+    description: 'Increase HP of all units by 45%',
     thumbnail: researchThumbs['./thumbnails/research/defense_2.png'] as string,
     modifyHp: 0.45,
   },
