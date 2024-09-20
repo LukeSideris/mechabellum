@@ -1,10 +1,12 @@
-.tooltip-trigger-button {
+.tooltip-trigger-button,
+.tooltip-trigger-button:hover {
   background: none;
   border: none;
   border-radius: inherit;
   padding: 0;
   font-weight: inherit;
   font-size: inherit;
+  transition: none;
 }
 
 .react-aria-Tooltip {

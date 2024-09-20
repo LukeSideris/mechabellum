@@ -1,5 +1,5 @@
 import { useCallback, useReducer, useEffect } from 'react';
-import { Selection } from 'react-aria-components';
+import { Button, Selection } from 'react-aria-components';
 import { useSearchParams } from 'react-router-dom';
 
 import { combatReducer, getInitialState } from './combatReducer';
@@ -226,6 +226,18 @@ function CombatCalculatorPage() {
         <h2 className="title-h3">
           <span>Attacker mods</span>
         </h2>
+
+        {modSelectionA.size > 0 && (
+          <Button
+            className={`${classes.resetButton} compressed`}
+            onPress={() => {
+              handleModSelectionA(new Set()); // clear mods
+            }}
+          >
+            Reset mods
+          </Button>
+        )}
+
         <ModSelector
           onSelectionChange={handleModSelectionA}
           selectedKeys={modSelectionA}
@@ -237,6 +249,18 @@ function CombatCalculatorPage() {
         <h2 className="title-h3">
           <span>Defender mods</span>
         </h2>
+
+        {modSelectionB.size > 0 && (
+          <Button
+            className={`${classes.resetButton} compressed`}
+            onPress={() => {
+              handleModSelectionB(new Set()); // clear mods
+            }}
+          >
+            Reset mods
+          </Button>
+        )}
+
         <ModSelector
           onSelectionChange={handleModSelectionB}
           selectedKeys={modSelectionB}

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
-$layout-breakpoint: 1080px;
+$layout-breakpoint: 1040px;
 
 .gridContainer {
   display: grid;
@@ -18,16 +18,16 @@ $layout-breakpoint: 1080px;
 
   @media (max-width: $layout-breakpoint) {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr auto auto 0px 1fr auto auto;
+    grid-template-rows: auto auto 1fr auto auto 0px 1fr auto;
     grid-template-areas:
       "header   header"
+      "infopanel infopanel"
       "unitsA   unitsA"
       "attacker defender"
       "modsA    modsA"
       "gap      gap"
       "unitsB   unitsB"
-      "modsB    modsB"
-      "infopanel infopanel";
+      "modsB    modsB";
   }
 }
 
@@ -75,7 +75,8 @@ $layout-breakpoint: 1080px;
     border-radius: var(--radius-sm);
     border-bottom-left-radius: var(--radius-md);
     padding: 6px 12px;
-    background: var(--background-L1);
+    background: rgba(var(--background-L1-rgb), 0.7);
+    display: none;
   }
 
   ul {
@@ -96,10 +97,12 @@ $layout-breakpoint: 1080px;
 
 .modsA {
   grid-area: modsA;
+  position: relative;
 }
 
 .modsB {
   grid-area: modsB;
+  position: relative;
 }
 
 .gap {
@@ -157,9 +160,8 @@ $layout-breakpoint: 1080px;
   }
 }
 
-.combatUtils {
+.resetButton {
   position: absolute;
+  top: 0;
   right: 0;
-  top: 50%;
-  transform: translate(50%, -50%);
 }

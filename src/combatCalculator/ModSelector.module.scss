@@ -1,48 +1,49 @@
+$modMinWidth: 44px;
+$modMaxWidth: 200px;
+
+@mixin gridColumnTemplate($columns) {
+  grid-template-columns: 
+    repeat($columns, minMax($modMinWidth, $modMaxWidth))
+    // attack and defense research mods
+    minMax(min-content, 1fr)
+    minMax(min-content, 1fr);
+}
+
 .modSelector {
+  container-type: inline-size;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: auto min-content;
+  @include gridColumnTemplate(1);
   grid-template-rows: 1fr 1fr;
-  grid-template-areas:
-    "starters attackResearch"
-    "starters defenseResearch";
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 8px 0;
+  gap: 2px;
 
-  header {
-    display: none;
+  // alternate column layouts based on number of mods
+  &.columnRepeat2 {
+    @include gridColumnTemplate(2);
+  }
+  &.columnRepeat3 {
+    @include gridColumnTemplate(3);
+  }
+  &.columnRepeat4 {
+    @include gridColumnTemplate(4);
+  }
+  // not used - just in case!
+  &.columnRepeat5 {
+    @include gridColumnTemplate(5);
   }
 }
 
-.starterSpecialistMods {
-  // grid layout for standard mods
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: repeat(auto-fit, minMax(44px, 1fr));
-  grid-template-rows: 1fr 1fr;
-  gap: 2px;
+.attackResearch1, .defenseResearch1 {
+  // align to 2nd last column
+  grid-column: -3;
+  // extra gap
+  margin-left: 2px;
 }
 
-.attackResearchMods, .defenseResearchMods {
-  // compact grid for research mods
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 0;
-}
-
-.starterSpecialistMods {
-  grid-area: starters;
-}
-
-.attackResearchMods {
-  grid-area: attackResearch;
-}
-
-.defenseResearchMods {
-  grid-area: defenseResearch;
+.attackResearch2, .defenseResearch2 {
+  // align to last column
+  grid-column: -2;
+  column-gap: 0;
 }
 
 .modOption {
@@ -52,11 +53,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 44px;
+  min-width: $modMinWidth;
+  max-width: $modMaxWidth;
   height: 44px;
   padding: 2px;
   padding-left: 40px;
   position: relative;
+  container-type: size;
 
   img {
     height: 40px;
@@ -64,6 +67,7 @@
     position: absolute;
     top: 2px;
     left: 2px;
+    z-index: 1;
   }
 
   &:focus, &[data-hovered] {
@@ -89,6 +93,7 @@
   box-shadow: var(--interactive-on-glow);
 
   &[data-hovered] {
+    background: var(--interactive-on);
     border-color: var(--border-interactive-on-hover);
     box-shadow: var(--interactive-on-glow-hover);
   }
@@ -98,30 +103,41 @@
   }
 }
 
-.attackResearchMods .modOption,
-.defenseResearchMods .modOption {
-  border-radius: 0;
-  border-left-width: 0;
-  border-right-width: 0;
-  box-shadow: 1px 0 0 0 rgba(255, 255, 255, 0.2);
+@container (max-width: 40px) {
+  .modOption img {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .modName {
+    display: none;
+  }
+}
 
-  // style the mods so they look connected
-  &:first-of-type {
-    border-top-left-radius: var(--radius-sm);
-    border-bottom-left-radius: var(--radius-sm);
-    border-left-width: 1px;
+@container (max-width: 800px) {
+  .attackResearch1,
+  .defenseResearch1 {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right-width: 0;
+    box-shadow: 1px 0 0 0 rgba(255, 255, 255, 0.2);
+
+
+    &[data-selected] {
+      border-right-width: 1px;
+    }
   }
 
-  &:last-of-type {
-    border-top-right-radius: var(--radius-sm);
-    border-bottom-right-radius: var(--radius-sm);
-    border-right-width: 1px;
-    box-shadow: none;
-  }
+  .attackResearch2,
+  .defenseResearch2 {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 0;
+    // removes gap
+    margin-left: -2px;
 
-  &[data-selected] {
-    border-left-width: 1px;
-    border-right-width: 1px;
+    &[data-selected] {
+      border-left-width: 1px;
+    }
   }
 }
 
@@ -133,4 +149,5 @@
   bottom: 0;
   right: 0;
   border-radius: var(--radius-sm);
+  z-index: 2;
 }
