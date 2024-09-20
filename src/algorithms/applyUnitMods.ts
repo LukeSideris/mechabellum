@@ -9,7 +9,10 @@ const applyUnitMods = (
   // convert applied mods set into array of mod objects
   const appliedMods = Array.from(activeMods).map(
     (modName) => mods[modName] as ModInterface
-  );
+  ).filter((mod) => {
+    // some mods apply to specific units
+    return !mod.appliesTo || mod.appliesTo === unitId;
+  });
 
   let modifiedUnit: UnitInterface = {
     ...units[unitId],
