@@ -19,7 +19,7 @@
   background: #000
     linear-gradient(0deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
   color: #fff;
-  font-size: 13px;
+  font-size: 0.8em;
   outline: none;
   padding: 2px 8px;
   max-width: 150px;

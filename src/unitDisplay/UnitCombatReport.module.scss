@@ -13,7 +13,7 @@
   }
 
   h3 {
-    font-size: 15px;
+    font-size: 1em;
     margin: 0;
     text-transform: uppercase;
   }
@@ -66,7 +66,7 @@
   border-radius: var(--radius-sm);
   background-size: contain;
   width: 152px;
-  font-size: 12px;
+  font-size: 0.75em;
   line-height: 16px;
 
   table {
@@ -97,7 +97,7 @@
 
 .combatStats {
   color: #fff;
-  font-size: 12px;
+  font-size: 0.75em;
   font-weight: 700;
   position: absolute;
   bottom: 0;
@@ -107,16 +107,11 @@
     font-weight: 700;
     padding-right: 4px;
     padding-left: 8px;
+    text-align: right;
   }
 
   td {
     font-weight: 400;
     min-width: 60px;
-  }
-}
-
-@media (max-height: 900px) {
-  .unitCombatReport {
-    font-size: 0.85em;
   }
 }

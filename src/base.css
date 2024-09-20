@@ -6,6 +6,7 @@
 :root {
   /* UI base colors */
   --border-subtle: #1b2b43;
+  --border-neutral: #5a5f78;
   --border-highlight: #5a74c0;
   --background-L0: #0f1013;
   --background-L0-rgb: 15, 16, 19;
@@ -75,7 +76,6 @@ a:hover {
 
 body {
   margin: 0;
-  min-width: 320px;
   min-height: 100vh;
 }
 
@@ -91,7 +91,7 @@ h1 {
   border-bottom-left-radius: var(--radius-md);
   box-shadow: inset 3px -3px 5px -2px var(--glow-interactive-off);
   text-align: left;
-  font-size: 14px;
+  font-size: 0.875em;
   font-weight: 700;
   margin: 0;
 }
@@ -127,7 +127,7 @@ button {
 button.compressed {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   padding: 0 0.8em;
-  font-size: 13px;
+  font-size: 0.8em;
   height: 26px;
 }
 

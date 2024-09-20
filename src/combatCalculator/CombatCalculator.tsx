@@ -153,7 +153,8 @@ function CombatCalculatorPage() {
         <h1>Combat Calculator</h1>
       </div>
       <div className={classes.infopanel}>
-        <strong>How to use</strong>
+        <strong>Instructions</strong>
+        <span className={classes.gameVersion}>patch 0.9.0.2</span>
         <ul>
           <li>Select mods to highlight changes in combat efficiency</li>
           <li>
@@ -161,7 +162,6 @@ function CombatCalculatorPage() {
           </li>
           <li>Choose right and left units for detailed combat stats</li>
         </ul>
-        <span className={classes.gameVersion}>patch 0.9.0.2</span>
       </div>
 
       <div className={`combat-left-side ${classes.unitsA}`}>
