@@ -66,12 +66,10 @@ const UnitCombatReport = ({
             <tbody>
               <tr>
                 <th>
-                  <VisuallyHidden>Cost</VisuallyHidden>
-                  <div aria-hidden="true">
-                    <Tooltip content="Unit cost">
-                      <img src={costIcon} />
-                    </Tooltip>
-                  </div>
+                  <Tooltip content="Unit cost">
+                    <VisuallyHidden>Cost</VisuallyHidden>
+                    <img src={costIcon} aria-hidden="true" />
+                  </Tooltip>
                 </th>
                 <td>
                   <ValueDisplay baseline={unit.cost} modded={unit.cost} />
@@ -79,12 +77,10 @@ const UnitCombatReport = ({
               </tr>
               <tr>
                 <th>
-                  <VisuallyHidden>HP</VisuallyHidden>
-                  <div aria-hidden="true">
-                    <Tooltip content="Unit HP">
-                      <img src={hpIcon} />
-                    </Tooltip>
-                  </div>
+                  <Tooltip content="Unit HP">
+                    <VisuallyHidden>HP</VisuallyHidden>
+                    <img src={hpIcon} aria-hidden="true" />
+                  </Tooltip>
                 </th>
                 <td>
                   <ValueDisplay
@@ -96,12 +92,10 @@ const UnitCombatReport = ({
               </tr>
               <tr>
                 <th>
-                  <VisuallyHidden>Damage</VisuallyHidden>
-                  <div aria-hidden="true">
-                    <Tooltip content="Unit attack damage">
-                      <img src={attackIcon} />
-                    </Tooltip>
-                  </div>
+                  <Tooltip content="Unit attack damage">
+                    <VisuallyHidden>Damage</VisuallyHidden>
+                    <img src={attackIcon} aria-hidden="true" />
+                  </Tooltip>
                 </th>
                 <td>
                   <ValueDisplay
@@ -113,12 +107,10 @@ const UnitCombatReport = ({
               </tr>
               <tr>
                 <th>
-                  <VisuallyHidden>Speed</VisuallyHidden>
-                  <div aria-hidden="true">
-                    <Tooltip content="Unit speed in meters per second">
-                      <img src={speedIcon} />
-                    </Tooltip>
-                  </div>
+                  <Tooltip content="Unit speed in meters per second">
+                    <VisuallyHidden>Speed</VisuallyHidden>
+                    <img src={speedIcon} aria-hidden="true" />
+                  </Tooltip>
                 </th>
                 <td>
                   <ValueDisplay
@@ -130,12 +122,10 @@ const UnitCombatReport = ({
               </tr>
               <tr>
                 <th>
-                  <VisuallyHidden>Splash Radius</VisuallyHidden>
-                  <div aria-hidden="true">
-                    <Tooltip content="Unit splash damage radius in meters">
-                      <img src={splashIcon} />
-                    </Tooltip>
-                  </div>
+                  <Tooltip content="Unit splash damage radius in meters">
+                    <VisuallyHidden>Splash Radius</VisuallyHidden>
+                    <img src={splashIcon} aria-hidden="true" />
+                  </Tooltip>
                 </th>
                 <td>
                   <ValueDisplay
@@ -146,12 +136,10 @@ const UnitCombatReport = ({
               </tr>
               <tr>
                 <th>
-                  <VisuallyHidden>Attack Interval</VisuallyHidden>
-                  <div aria-hidden="true">
-                    <Tooltip content="Unit Attack Interval in seconds">
-                      <img src={reloadIcon} />
-                    </Tooltip>
-                  </div>
+                  <Tooltip content="Unit Attack Interval in seconds">
+                    <VisuallyHidden>Attack Interval</VisuallyHidden>
+                    <img src={reloadIcon} aria-hidden="true" />
+                  </Tooltip>
                 </th>
                 <td>
                   <ValueDisplay
@@ -165,12 +153,10 @@ const UnitCombatReport = ({
               </tr>
               <tr>
                 <th>
-                  <VisuallyHidden>Range</VisuallyHidden>
-                  <div aria-hidden="true">
-                    <Tooltip content="Unit range in meters">
-                      <img src={rangeIcon} />
-                    </Tooltip>
-                  </div>
+                  <Tooltip content="Unit range in meters">
+                    <VisuallyHidden>Range</VisuallyHidden>
+                    <img src={rangeIcon} aria-hidden="true" />
+                  </Tooltip>
                 </th>
                 <td>
                   <ValueDisplay

@@ -45,6 +45,7 @@ function ModListBoxItem({
         wrapInteractive={false}
       >
         <Button
+          aria-label={mod.description}
           className={`tooltip-trigger-button ${classes.descriptionTooltip}`}
           onPress={(e) => {
             // trigger parent selection/click event

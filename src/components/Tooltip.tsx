@@ -1,4 +1,4 @@
-// TODO: Replace with Popover so it works on touch screens
+import { useState } from 'react';
 import {
   Button,
   TooltipTrigger,
@@ -24,16 +24,32 @@ const Tooltip = ({
   tooltipPlacement?: AriaTooltipProps['placement'];
   wrapInteractive?: boolean;
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   // trigger must use a react-aria Button to function
   // by default we wrap the trigger is a hidden button element
   const trigger = wrapInteractive ? (
-    <Button className={'tooltip-trigger-button'}>{children}</Button>
+    <Button
+      className={'tooltip-trigger-button'}
+      onPress={(e) => {
+        // force open tooltips if user is on a touch device
+        if (e.pointerType === 'touch') {
+          setIsOpen(true);
+        }
+      }}
+    >
+      {children}
+    </Button>
   ) : (
     children
   );
 
   return (
-    <TooltipTrigger delay={800} closeDelay={200}>
+    <TooltipTrigger
+      delay={800}
+      closeDelay={200}
+      isOpen={isOpen}
+      onOpenChange={setIsOpen}
+    >
       {trigger}
 
       <AriaTooltip {...tooltipProps}>
