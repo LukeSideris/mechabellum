@@ -8,6 +8,8 @@
   background-size: contain;
   background-blend-mode: lighten;
   margin: 0 auto;
+  /* important! If changing this value, also update the viewport meta in index.html! */
+  min-width: calc(500px + 4rem);
   padding: 1.6rem 2rem;
   text-align: center;
 }

@@ -13,28 +13,24 @@
   }
 
   h3 {
-    font-size: 15px;
+    font-size: 1em;
     margin: 0;
     text-transform: uppercase;
   }
 
   table {
     border-spacing: 0;
+    border-collapse: collapse;
   }
 
-  th {
-    font-weight: normal;
-    text-align: right;
-    padding: 0;
-  }
-
-  td {
+  th, td {
+    font-weight: 400;
     padding: 0;
   }
 }
 
 .contentWrapper {
-  background-size: 33%;
+  background-size: auto 66%;
   background-position: right top;
   background-repeat: no-repeat;
   position: relative;
@@ -65,48 +61,57 @@
 }
 
 .unitStats {
-  background: url('/unit_data_bg.png');
+  background: linear-gradient(to right, rgba(#264da4, 0.3) 0%, rgba(#264da4, 0.0) 100%);
+  border-left: 3px solid #80889e;
+  border-radius: var(--radius-sm);
   background-size: contain;
   width: 152px;
-  height: 108px;
-  padding-left: 30px;
-  font-size: 12px;
+  font-size: 0.75em;
   line-height: 16px;
 
+  table {
+    width: 100%;
+  }
+
   th {
-    display: none;
+    width: 16px;
+    vertical-align: middle;
+    line-height: 0;
+    padding: 0 8px;
+
+    button {
+      // fix tooltip trigger button height so image is centered
+      line-height: 0;
+    }
+
+    img {
+      width: 12px;
+      height: 12px;
+    }
   }
 
   tr {
-    height: 17.25px;
-  }
-
-  tr.unitHp {
-    height: 20px;
+    height: 18px;
   }
 }
 
 .combatStats {
   color: #fff;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 0.75em;
+  font-weight: 700;
   position: absolute;
   bottom: 0;
   right: 0;
 
   th {
-    font-weight: bold;
+    font-weight: 700;
     padding-right: 4px;
+    padding-left: 8px;
+    text-align: right;
   }
 
   td {
-    font-weight: normal;
+    font-weight: 400;
     min-width: 60px;
-  }
-}
-
-@media (max-height: 900px) {
-  .unitCombatReport {
-    font-size: 0.85em;
   }
 }

@@ -34,9 +34,9 @@ const UnitSelector = ({
       {Object.keys(unitLibrary).map((unitId: string) => {
         const unit = unitLibrary[unitId as UnitIdType];
         const baseEfficiency =
-          baseCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
+          baseCombatResults?.[unitId as UnitIdType]?.costEfficiency ?? 0;
         const moddedEfficiency =
-          moddedCombatResults?.[unitId as UnitIdType]?.effectiveness ?? 0;
+          moddedCombatResults?.[unitId as UnitIdType]?.costEfficiency ?? 0;
         const diff = moddedEfficiency / baseEfficiency;
         const unitSpecificMods = [...activeMods].filter(
           (modId) =>
@@ -107,20 +107,20 @@ const ModEffect = ({ diff }: { diff: number }) => {
   let tooltip =
     "Active mods have no effect on the attacker's combat effectiveness";
 
-  if (diff >= 1.3) {
+  if (diff >= 1.5) {
     indicator = <span className={classes.positiveEffect}>+++</span>;
     tooltip = `Attacker is significantly more effective with active mods (${diffPercent}%)`;
-  } else if (diff >= 1.15) {
+  } else if (diff >= 1.3) {
     indicator = <span className={classes.positiveEffect}>++</span>;
     tooltip = `Attacker is more effective with active mods (${diffPercent}%)`;
   } else if (diff > 1) {
     indicator = <span className={classes.positiveEffect}>+</span>;
     tooltip = `Attacker is slightly more effective with active mods (${diffPercent}%)`;
-  } else if (diff <= 0.76) {
+  } else if (diff <= 0.66) {
     // inverse of 1.3
     indicator = <span className={classes.negativeEffect}>---</span>;
     tooltip = `Attacker is significantly less effective with active mods (${diffPercent}%)`;
-  } else if (diff <= 0.86) {
+  } else if (diff <= 0.76) {
     // inverse of 1.15
     indicator = <span className={classes.negativeEffect}>--</span>;
     tooltip = `Attacker is less effective with active mods (${diffPercent}%)`;

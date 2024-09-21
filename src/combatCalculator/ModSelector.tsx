@@ -1,11 +1,8 @@
-import { VisuallyHidden } from 'react-aria';
 import {
   Button,
   ListBox,
   ListBoxItem,
   ListBoxProps,
-  Section,
-  Header,
   TooltipProps as AriaTooltipProps,
 } from 'react-aria-components';
 import {
@@ -21,29 +18,25 @@ import ModDescription from 'src/unitDisplay/ModDescription';
 import classes from './ModSelector.module.scss';
 
 function ModListBoxItem({
+  className = '',
   modId,
-  showLabel = true,
   ...tooltipProps
 }: AriaTooltipProps & {
+  className?: string;
   modId: string;
-  showLabel?: boolean;
 }) {
   const mod = mods[modId as keyof typeof mods] as ModInterface;
 
   return (
     <ListBoxItem
-      className={classes.modOption}
+      className={`${classes.modOption} ${className}`}
       key={mod.id}
       id={mod.id}
       textValue={mod.name}
     >
-      {showLabel ? (
-        <span className={`${classes.modName} typeface-condensed`}>
-          {mod.name}
-        </span>
-      ) : (
-        <VisuallyHidden>{mod.name}</VisuallyHidden>
-      )}
+      <span className={`${classes.modName} typeface-condensed`}>
+        {mod.name}
+      </span>
       <img src={mod.thumbnail} alt={mod.name} />
 
       <Tooltip
@@ -52,6 +45,7 @@ function ModListBoxItem({
         wrapInteractive={false}
       >
         <Button
+          aria-label={mod.description}
           className={`tooltip-trigger-button ${classes.descriptionTooltip}`}
           onPress={(e) => {
             // trigger parent selection/click event
@@ -79,67 +73,61 @@ const ModSelector = ({
     }
   );
 
+  const gridRepeatColumns = Math.ceil(
+    (starterSpecialists.length + dynamicMods.length) / 2
+  );
+
   return (
     <ListBox
       aria-label="Unit mod and specialist selection"
-      className={classes.modSelector}
+      className={`${classes.modSelector} ${classes[`columnRepeat${gridRepeatColumns}`]}`}
       layout="grid"
       orientation="horizontal"
       selectionMode="multiple"
       onSelectionChange={onSelectionChange}
       selectedKeys={selectedKeys}
     >
-      <Section className={classes.starterSpecialistMods}>
-        <Header>Starter specialists and unit mods</Header>
-        {starterSpecialists.map((modId) => (
-          <ModListBoxItem
-            modId={modId}
-            key={modId}
-            placement="top start"
-            crossOffset={-40}
-          />
-        ))}
+      {starterSpecialists.map((modId) => (
+        <ModListBoxItem
+          modId={modId}
+          key={modId}
+          placement="top start"
+          crossOffset={-40}
+        />
+      ))}
 
-        {dynamicMods.map((modId) => (
-          <ModListBoxItem
-            modId={modId}
-            key={modId}
-            placement="top start"
-            crossOffset={-40}
-          />
-        ))}
-      </Section>
+      {dynamicMods.map((modId) => (
+        <ModListBoxItem
+          modId={modId}
+          key={modId}
+          placement="top start"
+          crossOffset={-40}
+        />
+      ))}
 
-      <Section className={classes.attackResearchMods}>
-        <Header>Attack Research</Header>
-        <ModListBoxItem
-          modId={attackResearch[0]}
-          key={attackResearch[0]}
-          showLabel={false}
-        />
-        <ModListBoxItem
-          modId={attackResearch[1]}
-          key={attackResearch[1]}
-          showLabel={false}
-          placement="right"
-        />
-      </Section>
-
-      <Section className={classes.defenseResearchMods}>
-        <Header>Defense Research</Header>
-        <ModListBoxItem
-          modId={defenseResearch[0]}
-          key={defenseResearch[0]}
-          showLabel={false}
-          placement="top end"
-        />
-        <ModListBoxItem
-          modId={defenseResearch[1]}
-          key={defenseResearch[1]}
-          showLabel={false}
-          placement="right bottom"
-        />
-      </Section>
+      <ModListBoxItem
+        className={classes.attackResearch1}
+        modId={attackResearch[0]}
+        key={attackResearch[0]}
+      />
+      <ModListBoxItem
+        className={classes.attackResearch2}
+        modId={attackResearch[1]}
+        key={attackResearch[1]}
+        placement="right"
+      />
+      <ModListBoxItem
+        className={classes.defenseResearch1}
+        modId={defenseResearch[0]}
+        key={defenseResearch[0]}
+        placement="top end"
+      />
+      <ModListBoxItem
+        className={classes.defenseResearch2}
+        modId={defenseResearch[1]}
+        key={defenseResearch[1]}
+        placement="right bottom"
+      />
     </ListBox>
   );
 };

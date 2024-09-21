@@ -1,9 +1,19 @@
+import { VisuallyHidden } from 'react-aria';
 import { units as baseUnits, UnitInterface, UnitIdType } from 'src/data/units';
 import { ttkInterface } from 'src/algorithms/timeToKill';
 import ValueDisplay from './ValueDisplay.tsx';
 import getLevelIcon from './getLevelIcon.ts';
+import Tooltip from 'src/components/Tooltip.tsx';
+// stat icon imports
+import costIcon from 'src/data/icons/supply.png';
+import attackIcon from 'src/data/icons/attack.png';
+import hpIcon from 'src/data/icons/health.png';
+import speedIcon from 'src/data/icons/speed.png';
+import splashIcon from 'src/data/icons/splashRadius.png';
+import reloadIcon from 'src/data/icons/attackInterval.png';
+import rangeIcon from 'src/data/icons/range.png';
 
-import classes from './UnitCombatReport.module.css';
+import classes from './UnitCombatReport.module.scss';
 
 const UnitCombatReport = ({
   unit,
@@ -55,17 +65,23 @@ const UnitCombatReport = ({
           <table>
             <tbody>
               <tr>
-                <th>Speed:</th>
+                <th>
+                  <Tooltip content="Unit cost">
+                    <VisuallyHidden>Cost</VisuallyHidden>
+                    <img src={costIcon} aria-hidden="true" />
+                  </Tooltip>
+                </th>
                 <td>
-                  <ValueDisplay
-                    baseline={baseUnit.speed}
-                    modded={unit.speed}
-                    formatter={Math.round}
-                  />
+                  <ValueDisplay baseline={unit.cost} modded={unit.cost} />
                 </td>
               </tr>
-              <tr className={classes.unitHp}>
-                <th>HP:</th>
+              <tr>
+                <th>
+                  <Tooltip content="Unit HP">
+                    <VisuallyHidden>HP</VisuallyHidden>
+                    <img src={hpIcon} aria-hidden="true" />
+                  </Tooltip>
+                </th>
                 <td>
                   <ValueDisplay
                     baseline={unit.hp}
@@ -75,7 +91,12 @@ const UnitCombatReport = ({
                 </td>
               </tr>
               <tr>
-                <th>Damage:</th>
+                <th>
+                  <Tooltip content="Unit attack damage">
+                    <VisuallyHidden>Damage</VisuallyHidden>
+                    <img src={attackIcon} aria-hidden="true" />
+                  </Tooltip>
+                </th>
                 <td>
                   <ValueDisplay
                     baseline={unit.damage}
@@ -85,7 +106,58 @@ const UnitCombatReport = ({
                 </td>
               </tr>
               <tr>
-                <th>Range:</th>
+                <th>
+                  <Tooltip content="Unit speed in meters per second">
+                    <VisuallyHidden>Speed</VisuallyHidden>
+                    <img src={speedIcon} aria-hidden="true" />
+                  </Tooltip>
+                </th>
+                <td>
+                  <ValueDisplay
+                    baseline={baseUnit.speed}
+                    modded={unit.speed}
+                    formatter={Math.round}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <Tooltip content="Unit splash damage radius in meters">
+                    <VisuallyHidden>Splash Radius</VisuallyHidden>
+                    <img src={splashIcon} aria-hidden="true" />
+                  </Tooltip>
+                </th>
+                <td>
+                  <ValueDisplay
+                    baseline={baseUnit.splashRadius}
+                    modded={unit.splashRadius}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <Tooltip content="Unit Attack Interval in seconds">
+                    <VisuallyHidden>Attack Interval</VisuallyHidden>
+                    <img src={reloadIcon} aria-hidden="true" />
+                  </Tooltip>
+                </th>
+                <td>
+                  <ValueDisplay
+                    baseline={baseUnit.attackInterval}
+                    modded={unit.attackInterval}
+                    formatter={(value) => {
+                      return value + 's';
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <Tooltip content="Unit range in meters">
+                    <VisuallyHidden>Range</VisuallyHidden>
+                    <img src={rangeIcon} aria-hidden="true" />
+                  </Tooltip>
+                </th>
                 <td>
                   <ValueDisplay
                     baseline={baseUnit.range}
@@ -98,33 +170,6 @@ const UnitCombatReport = ({
                       return Math.round(value);
                     }}
                   />
-                </td>
-              </tr>
-              <tr>
-                <th>Attack Interval:</th>
-                <td>
-                  <ValueDisplay
-                    baseline={baseUnit.attackInterval}
-                    modded={unit.attackInterval}
-                    formatter={(value) => {
-                      return value + 's';
-                    }}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Splash damage radius:</th>
-                <td>
-                  <ValueDisplay
-                    baseline={baseUnit.splashRadius}
-                    modded={unit.splashRadius}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Cost:</th>
-                <td>
-                  <ValueDisplay baseline={unit.cost} modded={unit.cost} />
                 </td>
               </tr>
             </tbody>
