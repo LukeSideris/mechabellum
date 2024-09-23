@@ -83,7 +83,7 @@ const UnitSelector = ({
 
       <div className={classes.levelUp}>
         <Button
-          className={classes.levelAllButton}
+          className={`${classes.levelAllButton} typeface-condensed`}
           onPress={() => {
             const newLevel = globalLevel === 3 ? 1 : globalLevel + 1;
             setGlobalLevel(newLevel);
