@@ -291,27 +291,38 @@ export function combatReducer(
 
     case 'setAttackerLevel': {
       const { unitId, level } = action.payload;
+      const [activeUnitA] = state.unitSelectionA;
       const [activeUnitB] = state.unitSelectionB;
-      const modifiedStats = getUnitStatsForLevel(unitId as UnitIdType, level);
-      const newUnit: UnitInterface = {
-        ...baseUnits[unitId as UnitIdType],
-        ...modifiedStats,
-      };
-      // update local copy of baseUnits
-      baseUnitsA[unitId as UnitIdType] = newUnit;
+
+      const unitsToModify =
+        unitId === 'all' ? Object.keys(baseUnitsA) : [unitId];
+
+      unitsToModify.forEach((id) => {
+        const modifiedStats = getUnitStatsForLevel(id as UnitIdType, level);
+        const newUnit: UnitInterface = {
+          ...baseUnits[id as UnitIdType],
+          ...modifiedStats,
+        };
+        // update local copy of baseUnits
+        baseUnitsA[id as UnitIdType] = newUnit;
+      });
+
       const newLibrary = generateUnitLibrary(state.modSelectionA, baseUnitsA);
 
       return {
         ...state,
         unitLibraryA: newLibrary,
         // Generate effectiveness tables for new library
-        baseCombatResultsA: generateCombatTable(newUnit, baseUnitsB),
+        baseCombatResultsA: generateCombatTable(
+          baseUnitsA[activeUnitA],
+          baseUnitsB
+        ),
         baseCombatResultsB: generateCombatTable(
           baseUnitsB[activeUnitB as UnitIdType],
           baseUnitsA
         ),
         moddedCombatResultsA: generateCombatTable(
-          newLibrary[unitId as UnitIdType],
+          newLibrary[activeUnitA as UnitIdType],
           state.unitLibraryB
         ),
         moddedCombatResultsB: generateCombatTable(
@@ -324,13 +335,21 @@ export function combatReducer(
     case 'setDefenderLevel': {
       const { unitId, level } = action.payload;
       const [activeUnitA] = state.unitSelectionA;
-      const modifiedStats = getUnitStatsForLevel(unitId as UnitIdType, level);
-      const newUnit: UnitInterface = {
-        ...baseUnits[unitId as UnitIdType],
-        ...modifiedStats,
-      };
-      // update local copy of baseUnits
-      baseUnitsB[unitId as UnitIdType] = newUnit;
+      const [activeUnitB] = state.unitSelectionB;
+
+      const unitsToModify =
+        unitId === 'all' ? Object.keys(baseUnitsB) : [unitId];
+
+      unitsToModify.forEach((id) => {
+        const modifiedStats = getUnitStatsForLevel(id as UnitIdType, level);
+        const newUnit: UnitInterface = {
+          ...baseUnits[id as UnitIdType],
+          ...modifiedStats,
+        };
+        // update local copy of baseUnits
+        baseUnitsB[id as UnitIdType] = newUnit;
+      });
+
       const newLibrary = generateUnitLibrary(state.modSelectionB, baseUnitsB);
 
       return {
@@ -341,13 +360,16 @@ export function combatReducer(
           baseUnitsA[activeUnitA as UnitIdType],
           baseUnitsB
         ),
-        baseCombatResultsB: generateCombatTable(newUnit, baseUnitsA),
+        baseCombatResultsB: generateCombatTable(
+          baseUnitsB[activeUnitB],
+          baseUnitsA
+        ),
         moddedCombatResultsA: generateCombatTable(
           state.unitLibraryA[activeUnitA as UnitIdType],
           newLibrary
         ),
         moddedCombatResultsB: generateCombatTable(
-          newLibrary[unitId as UnitIdType],
+          newLibrary[activeUnitB as UnitIdType],
           state.unitLibraryA
         ),
       };
