@@ -118,6 +118,13 @@ $layout-breakpoint: 1040px;
   position: relative;
 }
 
+.modsA, .modsB {
+  button + h2 {
+    // prevents border from sticking out
+    margin-right: 2px;
+  }
+}
+
 .gap {
   grid-area: gap;
 }
@@ -175,6 +182,6 @@ $layout-breakpoint: 1040px;
 
 .resetButton {
   position: absolute;
-  top: 0;
+  top: 0px;
   right: 0;
 }

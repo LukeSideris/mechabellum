@@ -203,14 +203,14 @@ export const mods = {
     name: 'Assault Storm\u200Bcaller',
     id: 'assaultStormcaller',
     description:
-      'Increase Stormcaller’s HP by 350% and movement speed by 5 but decreases range by 40',
+      'Increase Stormcaller’s HP by 300% and movement speed by 5 but decreases range by 30',
     thumbnail: thumbnailAssault as string,
     appliesTo: 'stormcaller',
-    modifyHp: 3.5,
+    modifyHp: 3.0,
     modifier: (unit: UnitInterface) => {
       return {
         ...unit,
-        range: unit.range - 40,
+        range: unit.range - 30,
         speed: unit.speed + 5,
       };
     },
@@ -350,11 +350,11 @@ export const mods = {
     name: 'Mass-Produced Phoenix',
     id: 'massProducedPhoenix',
     description:
-      'Decreases the recruitment cost of Phoenix by 100 but decreases attack by 40%, and HP by 40%',
+      'Decreases the recruitment cost of Phoenix by 100 but decreases attack by 30%, and HP by 30%',
     thumbnail: thumbnailMassProduced as string,
     appliesTo: 'phoenix',
-    modifyHp: -0.4,
-    modifyDamage: -0.4,
+    modifyHp: -0.3,
+    modifyDamage: -0.3,
     modifier: (unit: UnitInterface) => {
       return {
         ...unit,
@@ -462,7 +462,7 @@ export const mods = {
     name: 'Improved Scorpion',
     id: 'improvedScorpion',
     description:
-      'Increase Scorpion’s attack by 15%, HP by 15%, and range by 5 but increases recruitment cost by 50',
+      'Increase Scorpion’s attack by 15%, HP by 15%, and range by 10 but increases recruitment cost by 50',
     thumbnail: thumbnailImproved as string,
     appliesTo: 'scorpion',
     modifyHp: 0.15,
@@ -471,7 +471,7 @@ export const mods = {
       return {
         ...unit,
         cost: unit.cost + 50,
-        range: unit.range + 5,
+        range: unit.range + 10,
       };
     },
   },

@@ -120,7 +120,7 @@ function CombatCalculatorPage() {
   );
 
   const handleSetUnitLevelA = useCallback(
-    (unitId: UnitIdType, level: number) => {
+    (unitId: UnitIdType | 'all', level: number) => {
       // @ts-expect-error - I am too lazy to type my reducer
       dispatch({
         type: 'setAttackerLevel',
@@ -134,7 +134,7 @@ function CombatCalculatorPage() {
   );
 
   const handleSetUnitLevelB = useCallback(
-    (unitId: UnitIdType, level: number) => {
+    (unitId: UnitIdType | 'all', level: number) => {
       // @ts-expect-error - I am too lazy to type my reducer
       dispatch({
         type: 'setDefenderLevel',
@@ -154,7 +154,7 @@ function CombatCalculatorPage() {
       </div>
       <div className={classes.infopanel}>
         <strong>Instructions</strong>
-        <span className={classes.gameVersion}>patch 0.9.0.2</span>
+        <span className={classes.gameVersion}>patch 1.0.0</span>
         <ul>
           <li>Select mods to highlight changes in combat efficiency</li>
           <li>
@@ -175,6 +175,7 @@ function CombatCalculatorPage() {
           moddedCombatResults={undefined}
           unitLibrary={unitLibraryA}
           activeMods={modSelectionA}
+          setLevel={handleSetUnitLevelA}
         />
       </div>
 
@@ -189,6 +190,7 @@ function CombatCalculatorPage() {
           moddedCombatResults={moddedCombatResultsA}
           unitLibrary={unitLibraryB}
           activeMods={modSelectionB}
+          setLevel={handleSetUnitLevelB}
         />
       </div>
 
@@ -223,10 +225,6 @@ function CombatCalculatorPage() {
       </div>
 
       <div className={classes.modsA}>
-        <h2 className="title-h3">
-          <span>Attacker mods</span>
-        </h2>
-
         {modSelectionA.size > 0 && (
           <Button
             className={`${classes.resetButton} compressed`}
@@ -238,6 +236,10 @@ function CombatCalculatorPage() {
           </Button>
         )}
 
+        <h2 className="title-h3">
+          <span>Attacker mods</span>
+        </h2>
+
         <ModSelector
           onSelectionChange={handleModSelectionA}
           selectedKeys={modSelectionA}
@@ -246,10 +248,6 @@ function CombatCalculatorPage() {
       </div>
 
       <div className={classes.modsB}>
-        <h2 className="title-h3">
-          <span>Defender mods</span>
-        </h2>
-
         {modSelectionB.size > 0 && (
           <Button
             className={`${classes.resetButton} compressed`}
@@ -260,6 +258,10 @@ function CombatCalculatorPage() {
             Reset mods
           </Button>
         )}
+
+        <h2 className="title-h3">
+          <span>Defender mods</span>
+        </h2>
 
         <ModSelector
           onSelectionChange={handleModSelectionB}

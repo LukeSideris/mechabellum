@@ -1,4 +1,5 @@
 import { VisuallyHidden } from 'react-aria';
+import { Button } from 'react-aria-components';
 import { units as baseUnits, UnitInterface, UnitIdType } from 'src/data/units';
 import { ttkInterface } from 'src/algorithms/timeToKill';
 import ValueDisplay from './ValueDisplay.tsx';
@@ -46,19 +47,24 @@ const UnitCombatReport = ({
       >
         <header>
           <h3>{unit.name}</h3>
-          <button
-            aria-label={`${unit.level === 3 ? 'Reset' : 'Increase'} ${unit.name} level`}
-            title={`${unit.level === 3 ? 'Reset' : 'Increase'} ${unit.name} level`}
-            className={classes.unitLevelButton}
-            onClick={() => {
-              setLevel(unit.id as UnitIdType, unit.level + 1);
-            }}
+          <Tooltip
+            content={`${unit.level === 3 ? 'Reset' : 'Increase'} ${unit.name} level`}
+            wrapInteractive={false}
           >
-            <img
-              src={getLevelIcon(unit.level)}
-              alt={`${unit.name} level ${unit.level}`}
-            />
-          </button>
+            <Button
+              aria-label={`${unit.level === 3 ? 'Reset' : 'Increase'} ${unit.name} level`}
+              className="compressed"
+              onPress={() => {
+                setLevel(unit.id as UnitIdType, unit.level + 1);
+              }}
+            >
+              <img
+                className={classes.unitLevelIcon}
+                src={getLevelIcon(unit.level)}
+                alt={`${unit.name} level ${unit.level}`}
+              />
+            </Button>
+          </Tooltip>
         </header>
 
         <div className={classes.unitStats}>
