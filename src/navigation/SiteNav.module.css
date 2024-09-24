@@ -2,6 +2,11 @@
   position: absolute;
 }
 
+.hamburger {
+  margin-right: 8px;
+  transform: scale(1.15) translateY(-0.5px);
+}
+
 .siteNav ul {
   list-style: none;
   padding: 0;
@@ -18,4 +23,14 @@
 .link {
   display: block;
   padding: 8px;
+  color: inherit;
+  font-weight: 400;
+
+  &:hover {
+    color: white;
+  }
+
+  &[data-active="true"] {
+    color: var(--selected);
+  }
 }

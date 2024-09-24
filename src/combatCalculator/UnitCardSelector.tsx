@@ -131,7 +131,7 @@ const ModEffect = ({
   const moddedEfficiency = ttkModded?.costEfficiency ?? 0;
 
   const diff = moddedEfficiency / baseEfficiency;
-  if (!diff || diff === 1) {
+  if (!diff || (diff < 1.005 && diff > 0.995)) {
     return undefined;
   }
 

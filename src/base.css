@@ -5,6 +5,7 @@
 
 :root {
   /* UI base colors */
+  --text-default: rgba(255, 255, 255, 0.9);
   --border-subtle: #1b2b43;
   --border-neutral: #5a5f78;
   --border-highlight: #5a74c0;
@@ -24,6 +25,8 @@
   --border-interactive-on-hover: #ffcb87;
   --interactive-on-glow: 0 0 3px rgba(232, 172, 95, 0.8);
   --interactive-on-glow-hover: 0 0 5px rgba(232, 172, 95, 1);
+  --border-ui-off: rgba(163, 168, 183, 0.5);
+  --border-ui-on: #a3a8b7;
   /* state management */
   --selected: #61cf5a;
   --selectedRGB: 32, 194, 14;
@@ -42,7 +45,7 @@
   font-style: normal;
 
   color-scheme: dark;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-default);
   background-color: var(--background-L0);
 
   font-synthesis: none;
@@ -110,7 +113,7 @@ h1 {
 
 button {
   border-radius: var(--radius-md);
-  border: 1px solid rgba(163, 168, 183, 0.5);
+  border: 1px solid var(--border-ui-off);
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
@@ -127,11 +130,16 @@ button {
 }
 
 button.compressed {
-  border: 1px outset #a3a8b7;
+  border: 1px outset var(--border-ui-on);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   padding: 0 0.8em;
   font-size: 0.8em;
   height: 26px;
+}
+
+button[data-pressed="true"] {
+  border-color: var(--border-interactive-on);
+  box-shadow: var(--interactive-on-glow);
 }
 
 button:hover {
@@ -144,9 +152,113 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* 
-  Focus style
-*/
+.react-aria-Menu {
+  max-height: inherit;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 2px;
+  min-width: 150px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.react-aria-MenuItem {
+  margin: 2px;
+  padding: 0.286rem 0.571rem;
+  border-radius: var(--radius-md);
+  outline: none;
+  cursor: default;
+  font-size: 1.072rem;
+
+  &[data-focused] {
+    background: var(--interactive-on);
+    color: #fff;
+  }
+}
+
+.react-aria-Popover {
+  --background-color: rgba(0, 0, 0, 0.9);
+
+  border: 1px solid var(--border-interactive-on-hover);
+  box-shadow: 2px 4px 16px rgba(0 0 0 / 0.4);
+  border-radius: var(--radius-md);
+  background: var(--background-color);
+  outline: none;
+  max-width: 250px;
+
+  .react-aria-OverlayArrow svg {
+    display: block;
+    fill: var(--background-color);
+    stroke: var(--border-interactive-on-hover);
+    stroke-width: 1px;
+  }
+
+  &[data-placement=top] {
+    --origin: translateY(8px);
+
+    &:has(.react-aria-OverlayArrow) {
+      margin-bottom: 6px;
+    }
+  }
+
+  &[data-placement=bottom] {
+    --origin: translateY(-8px);
+
+    &:has(.react-aria-OverlayArrow) {
+      margin-top: 6px;
+    }
+
+    .react-aria-OverlayArrow svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  &[data-placement=right] {
+    --origin: translateX(-8px);
+
+    &:has(.react-aria-OverlayArrow) {
+      margin-left: 6px;
+    }
+
+    .react-aria-OverlayArrow svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &[data-placement=left] {
+    --origin: translateX(8px);
+
+    &:has(.react-aria-OverlayArrow) {
+      margin-right: 6px;
+    }
+
+    .react-aria-OverlayArrow svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &[data-entering] {
+    animation: popover-slide 200ms;
+  }
+
+  &[data-exiting] {
+    animation: popover-slide 200ms reverse ease-in;
+  }
+}
+
+@keyframes popover-slide {
+  from {
+    transform: var(--origin);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* global focus style */
 :focus-visible,
 *:focus {
   border-color: var(--selected);
@@ -156,3 +268,5 @@ button:focus-visible {
     0 0 12px 0 rgba(var(--selectedRGB), 0.6),
     0 0 0 2px var(--selected);
 }
+
+

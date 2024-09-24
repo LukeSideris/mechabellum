@@ -64,6 +64,9 @@ function CombatCalculatorPage() {
       ...(rightUnitLevel && {
         [paramsNameMap.rightUnitLevel]: String(rightUnitLevel),
       }),
+    }, {
+      // does not push history
+      replace: true,
     });
   }, [
     setSearchParams,
