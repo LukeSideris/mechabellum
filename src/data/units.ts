@@ -160,8 +160,8 @@ export const units: UnitLibraryInterface = {
     area: 50 * 20,
   },
   sledgehammer: {
-    // add a zero width space to control line breaks
-    name: 'Sledge\u200Bhammer',
+    // add a shy to control line breaks
+    name: 'Sledge\u00ADhammer',
     id: 'sledgehammer',
     card: cards['./cards/units/sledgehammer.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/sledgehammer.png'] as string,
@@ -180,8 +180,8 @@ export const units: UnitLibraryInterface = {
     area: 50 * 20,
   },
   stormcaller: {
-    // add a zero width space to control line breaks
-    name: 'Storm\u200Bcaller',
+    // add a shy to control line breaks
+    name: 'Storm\u00ADcaller',
     id: 'stormcaller',
     card: cards['./cards/units/stormcaller.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/stormcaller.png'] as string,
@@ -465,8 +465,7 @@ export const units: UnitLibraryInterface = {
     area: 40 * 40,
   },
   war_factory: {
-    // add a zero width space to control line breaks
-    name: 'War Fac\u200Btory',
+    name: 'War Factory',
     id: 'war_factory',
     card: cards['./cards/units/war_factory.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/war_factory.png'] as string,
@@ -504,7 +503,8 @@ export const units: UnitLibraryInterface = {
     area: 50 * 20, // TODO check me
   },
   sabertooth: {
-    name: 'Sabertooth',
+    // add a shy to control line breaks
+    name: 'Saber\u00ADtooth',
     id: 'sabertooth',
     card: cards['./cards/units/sabertooth.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/sabertooth.png'] as string,

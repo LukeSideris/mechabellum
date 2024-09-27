@@ -1,8 +1,13 @@
 import classes from './UnitPlaceholder.module.css';
 
-const UnitPlaceholder = () => (
+const UnitPlaceholder = ({
+  position,
+}: {
+  position: 'attacker' | 'defender';
+}) => (
   <div className={classes.unitPlaceholder}>
-    Select a unit for combat analysis
+    Select {position === 'attacker' ? 'attacking' : 'defending'} unit for combat
+    analysis
   </div>
 );
 

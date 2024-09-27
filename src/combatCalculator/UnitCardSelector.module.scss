@@ -1,3 +1,4 @@
+@use "sass:math";
 .container {
   position: relative;
   height: 100%;
@@ -13,8 +14,8 @@
   justify-content: start;
   padding: 1em;
   // update this when adding a new unit or changing grid layout
-  width: percentage(3/7);
-  height: percentage(1/4);
+  width: percentage(math.div(3, 7));
+  height: percentage(math.div(1, 4));
 }
 
 .levelAllButton {
@@ -39,7 +40,7 @@
   position: relative;
   text-align: center;
   min-width: 60px;
-  min-height: 60px;
+  min-height: 80px;
 
   &[data-hovered] {
     border-color: var(--border-interactive-off-hover);
@@ -92,19 +93,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.875em;
+  font-size: 1em;
+  letter-spacing: -0.2px;
   position: absolute;
-  padding: 2px 2px;
+  padding: 2px 0px;
   text-align: center;
   bottom: 0;
   left: 0;
   right: 0;
-  text-transform: uppercase;
   text-shadow: 1px 2px 1px #000;
 
   span {
-    // force text to wrap if it's too long
-    height: 1lh;
+    // text is allowed to flow onto two lines if required
+    line-height: 1.2em;
+    min-height: 1lh;
+    max-height: 2lh;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -112,10 +115,13 @@
 
 .levelIcon {
   flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  margin: -2px 0 -2px 4px;
-  filter: drop-shadow(1px 2px 1px #000);
+  width: 20px;
+  height: 20px;
+  filter: drop-shadow(1px 1px 1px #000) drop-shadow(0px 0px 4px #000);
+
+  position: absolute;
+  top: 1px;
+  left: 2px;
 }
 
 .levelAllButton > .levelIcon {
@@ -125,7 +131,8 @@
 .modThumbnails {
   position: absolute;
   left: 0;
-  bottom: 21px;
+  top: 0;
+  transform: translateY(-100%);
   z-index: 1;
 }
 
@@ -153,12 +160,13 @@
 
 .modEffectContent {
   background: rgba(0, 0, 0, 0.8);
+  border-bottom-left-radius: var(--radius-md);
   font-size: 0.875em;
   font-weight: 700;
   line-height: 14px;
-  height: 30px;
-  min-width: 30px;
-  padding: 8px;
+  height: 24px;
+  min-width: 24px;
+  padding: 4px;
   text-align: center;
 }
 

@@ -62,16 +62,16 @@ const UnitSelector = ({
                 }}
                 aria-hidden
               />
+              <img
+                className={classes.levelIcon}
+                hidden={unit.level === 1}
+                src={getLevelIcon(unit.level)}
+                alt={`${unit.name} level ${unit.level}`}
+              />
               <div className={`typeface-condensed ${classes.unitName}`}>
                 <span>{unit.name}</span>
-                <img
-                  className={classes.levelIcon}
-                  hidden={unit.level === 1}
-                  src={getLevelIcon(unit.level)}
-                  alt={`${unit.name} level ${unit.level}`}
-                />
+                <UnitModThumbnails unitMods={unitSpecificMods} />
               </div>
-              <UnitModThumbnails unitMods={unitSpecificMods} />
               <ModEffect
                 ttk={baseCombatResults?.[unitId as UnitIdType]}
                 ttkModded={moddedCombatResults?.[unitId as UnitIdType]}
@@ -131,7 +131,7 @@ const ModEffect = ({
   const moddedEfficiency = ttkModded?.costEfficiency ?? 0;
 
   const diff = moddedEfficiency / baseEfficiency;
-  if (!diff || diff === 1) {
+  if (!diff || (diff < 1.005 && diff > 0.995)) {
     return undefined;
   }
 

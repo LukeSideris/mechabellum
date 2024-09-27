@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import routes from './routes.tsx';
 import './base.css';
 
-const router = createBrowserRouter(routes, { basename: '/mechabellum/' });
+const router = createBrowserRouter(routes, { basename: '/' });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
