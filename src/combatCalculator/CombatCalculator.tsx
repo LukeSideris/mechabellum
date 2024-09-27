@@ -53,21 +53,24 @@ function CombatCalculatorPage() {
 
   // sync state with url params
   useEffect(() => {
-    setSearchParams({
-      [paramsNameMap.unitSelectionA]: Array.from(unitSelectionA),
-      [paramsNameMap.unitSelectionB]: Array.from(unitSelectionB),
-      [paramsNameMap.modSelectionA]: Array.from(modSelectionA),
-      [paramsNameMap.modSelectionB]: Array.from(modSelectionB),
-      ...(leftUnitLevel && {
-        [paramsNameMap.leftUnitLevel]: String(leftUnitLevel),
-      }),
-      ...(rightUnitLevel && {
-        [paramsNameMap.rightUnitLevel]: String(rightUnitLevel),
-      }),
-    }, {
-      // does not push history
-      replace: true,
-    });
+    setSearchParams(
+      {
+        [paramsNameMap.unitSelectionA]: Array.from(unitSelectionA),
+        [paramsNameMap.unitSelectionB]: Array.from(unitSelectionB),
+        [paramsNameMap.modSelectionA]: Array.from(modSelectionA),
+        [paramsNameMap.modSelectionB]: Array.from(modSelectionB),
+        ...(leftUnitLevel && {
+          [paramsNameMap.leftUnitLevel]: String(leftUnitLevel),
+        }),
+        ...(rightUnitLevel && {
+          [paramsNameMap.rightUnitLevel]: String(rightUnitLevel),
+        }),
+      },
+      {
+        // does not push history
+        replace: true,
+      }
+    );
   }, [
     setSearchParams,
     unitSelectionA,
@@ -160,10 +163,8 @@ function CombatCalculatorPage() {
         <span className={classes.gameVersion}>patch 1.0.0</span>
         <ul>
           <li>Select mods to highlight changes in combat efficiency</li>
-          <li>
-            Choose a left side unit to see how selected mods apply to fights
-          </li>
-          <li>Choose right and left units for detailed combat stats</li>
+          <li>Choose an attacker to see how selected mods apply to fights</li>
+          <li>Choose attacker and defender units for detailed combat stats</li>
         </ul>
       </div>
 
@@ -211,7 +212,7 @@ function CombatCalculatorPage() {
             setLevel={handleSetUnitLevelA}
           />
         )}
-        {!leftUnit && rightUnit && <UnitPlaceholder />}
+        {!leftUnit && rightUnit && <UnitPlaceholder position="attacker" />}
       </div>
 
       <div className={`combat-defender ${classes.defender}`}>
@@ -224,7 +225,7 @@ function CombatCalculatorPage() {
             setLevel={handleSetUnitLevelB}
           />
         )}
-        {!rightUnit && leftUnit && <UnitPlaceholder />}
+        {!rightUnit && leftUnit && <UnitPlaceholder position="defender" />}
       </div>
 
       <div className={classes.modsA}>

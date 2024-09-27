@@ -30,7 +30,7 @@
     color: white;
   }
 
-  &[data-active="true"] {
+  &[data-active='true'] {
     color: var(--selected);
   }
 }

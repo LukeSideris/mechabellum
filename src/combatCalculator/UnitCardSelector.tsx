@@ -62,14 +62,14 @@ const UnitSelector = ({
                 }}
                 aria-hidden
               />
+              <img
+                className={classes.levelIcon}
+                hidden={unit.level === 1}
+                src={getLevelIcon(unit.level)}
+                alt={`${unit.name} level ${unit.level}`}
+              />
               <div className={`typeface-condensed ${classes.unitName}`}>
                 <span>{unit.name}</span>
-                <img
-                  className={classes.levelIcon}
-                  hidden={unit.level === 1}
-                  src={getLevelIcon(unit.level)}
-                  alt={`${unit.name} level ${unit.level}`}
-                />
               </div>
               <UnitModThumbnails unitMods={unitSpecificMods} />
               <ModEffect

@@ -55,9 +55,9 @@
 }
 
 .typeface-condensed {
-  font-family: 'Sofia Sans Extra Condensed', 'Arial Narrow', sans-serif;
+  font-family: 'Ubuntu Condensed', sans-serif;
   font-optical-sizing: auto;
-  font-weight: 600;
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -137,7 +137,7 @@ button.compressed {
   height: 26px;
 }
 
-button[data-pressed="true"] {
+button[data-pressed='true'] {
   border-color: var(--border-interactive-on);
   box-shadow: var(--interactive-on-glow);
 }
@@ -193,7 +193,7 @@ button:focus-visible {
     stroke-width: 1px;
   }
 
-  &[data-placement=top] {
+  &[data-placement='top'] {
     --origin: translateY(8px);
 
     &:has(.react-aria-OverlayArrow) {
@@ -201,7 +201,7 @@ button:focus-visible {
     }
   }
 
-  &[data-placement=bottom] {
+  &[data-placement='bottom'] {
     --origin: translateY(-8px);
 
     &:has(.react-aria-OverlayArrow) {
@@ -213,7 +213,7 @@ button:focus-visible {
     }
   }
 
-  &[data-placement=right] {
+  &[data-placement='right'] {
     --origin: translateX(-8px);
 
     &:has(.react-aria-OverlayArrow) {
@@ -225,7 +225,7 @@ button:focus-visible {
     }
   }
 
-  &[data-placement=left] {
+  &[data-placement='left'] {
     --origin: translateX(8px);
 
     &:has(.react-aria-OverlayArrow) {
@@ -268,5 +268,3 @@ button:focus-visible {
     0 0 12px 0 rgba(var(--selectedRGB), 0.6),
     0 0 0 2px var(--selected);
 }
-
-
