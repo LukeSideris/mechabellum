@@ -1,3 +1,4 @@
+@use "sass:math";
 .container {
   position: relative;
   height: 100%;
@@ -13,8 +14,8 @@
   justify-content: start;
   padding: 1em;
   // update this when adding a new unit or changing grid layout
-  width: percentage(3/7);
-  height: percentage(1/4);
+  width: percentage(math.div(3, 7));
+  height: percentage(math.div(1, 4));
 }
 
 .levelAllButton {
@@ -130,7 +131,8 @@
 .modThumbnails {
   position: absolute;
   left: 0;
-  bottom: 21px;
+  top: 0;
+  transform: translateY(-100%);
   z-index: 1;
 }
 

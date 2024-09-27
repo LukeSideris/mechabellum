@@ -70,8 +70,8 @@ const UnitSelector = ({
               />
               <div className={`typeface-condensed ${classes.unitName}`}>
                 <span>{unit.name}</span>
+                <UnitModThumbnails unitMods={unitSpecificMods} />
               </div>
-              <UnitModThumbnails unitMods={unitSpecificMods} />
               <ModEffect
                 ttk={baseCombatResults?.[unitId as UnitIdType]}
                 ttkModded={moddedCombatResults?.[unitId as UnitIdType]}
