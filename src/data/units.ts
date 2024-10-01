@@ -545,7 +545,7 @@ export const units: UnitLibraryInterface = {
     name: 'Farseer',
     id: 'farseer',
     card: cards['./cards/units/farseer.jpg'] as string,
-    thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
+    thumbnail: thumbnails['./thumbnails/units/farseer.png'] as string,
     level: 1,
     cost: 300,
     hp: 11991,

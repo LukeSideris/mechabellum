@@ -36,6 +36,7 @@
   /* UI base rules */
   --radius-sm: 1px;
   --radius-md: 4px;
+  --radius-lg: 12px;
 }
 
 :root {
@@ -74,7 +75,7 @@ a {
 }
 
 a:hover {
-  color: #535bf2;
+  color: #ffcb87;
 }
 
 body {
