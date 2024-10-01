@@ -1,0 +1,21 @@
+.aboutPage {
+}
+
+.aboutPageContent {
+  padding: 2em;
+  margin: 0 auto;
+  max-width: 40rem;
+  background: rgba(var(--background-L0-rgb), 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-highlight);
+  border-radius: var(--radius-lg);
+  text-align: left;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}

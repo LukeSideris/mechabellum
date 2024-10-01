@@ -10,6 +10,12 @@
   margin: 0 auto;
   /* important! If changing this value, also update the viewport meta in index.html! */
   min-width: calc(500px + 4rem);
+  min-height: 100vh;
   padding: 1.6rem 2rem;
   text-align: center;
+}
+
+.app:global(.page-about) {
+  background-image: url('/site-background-2.png'),
+    url('/site-background-bottom.jpg');
 }
