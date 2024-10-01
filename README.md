@@ -11,6 +11,6 @@ instructions on how to report bugs or send feedback.
 
 Some elements of the source code you might be interested in:
 
-- [src/data/units.ts](Unit list, stats, and configuration)
-- [src/data/mods.ts](Mods list and configuration)
-- [src/algorithms/timeToKill.ts](Math code for time to kill calculation)
+- [Unit list, stats, and configuration](src/data/units.ts)
+- [Mods list and configuration](src/data/mods.ts)
+- [Math code for time to kill calculation](src/algorithms/timeToKill.ts)
