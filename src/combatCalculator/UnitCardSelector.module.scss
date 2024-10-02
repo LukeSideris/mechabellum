@@ -59,6 +59,10 @@
   height: 0;
 }
 
+.hasSelection .unitImage {
+  filter: saturate(0.7) contrast(0.7);
+}
+
 .unit[data-selected] {
   border-color: var(--border-interactive-on);
   box-shadow: var(--interactive-on-glow);
