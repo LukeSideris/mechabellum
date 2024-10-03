@@ -23,6 +23,7 @@ const UnitSelector = ({
   activeMods,
   setLevel,
 }: ListBoxProps<object> & {
+    selectedKeys: Set<UnitIdType>;
   baseCombatResults: CombatResultsInterface | undefined;
   moddedCombatResults: CombatResultsInterface | undefined;
   unitLibrary?: typeof baseUnits;
@@ -33,7 +34,7 @@ const UnitSelector = ({
   return (
     <div className={classes.container}>
       <ListBox
-        className={classes.unitSelector}
+        className={`${classes.unitSelector} ${selectedKeys?.size ? classes.hasSelection : classes.noSelection}`}
         aria-label="Unit selection"
         layout="grid"
         selectionMode="single"
