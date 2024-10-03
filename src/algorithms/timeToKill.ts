@@ -167,7 +167,7 @@ export const timeToKill = (
     while (cumulativeDamage < targetHp) {
       cumulativeDamage +=
         Math.min(damageMax, attackerDamage * Math.pow(2, hits)) * multiplier;
-      hits++;
+      hits += multiplier;
     }
 
     if (multiplier === 1) {
