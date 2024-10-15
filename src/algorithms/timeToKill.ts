@@ -167,7 +167,7 @@ export const timeToKill = (
     while (cumulativeDamage < targetHp) {
       cumulativeDamage +=
         Math.min(damageMax, attackerDamage * Math.pow(2, hits)) * multiplier;
-      hits += multiplier;
+      hits++;
     }
 
     if (multiplier === 1) {
@@ -181,7 +181,7 @@ export const timeToKill = (
     } else {
       results = {
         attackRounds: hits,
-        hitsPerKill: hits * attacker.unitCount,
+        hitsPerKill: hits * multiplier,
         splashDamageTargets: 1,
         time: hits * attacker.attackInterval,
       } as ttkInterface;

@@ -509,7 +509,7 @@ export const mods = {
     name: 'Assault Melting Point',
     id: 'assaultMeltingPoint',
     description:
-      'Increase Melting Point’s HP by 70% and movement speed by 3 but decreases range by 15',
+      'Increase Melting Point’s HP by 70% and movement speed by 5 but decreases range by 15',
     thumbnail: thumbnailAssault as string,
     appliesTo: 'melting_point',
     modifyHp: 0.7,
@@ -517,7 +517,7 @@ export const mods = {
       return {
         ...unit,
         range: unit.range - 15,
-        speed: unit.speed + 3,
+        speed: unit.speed + 5,
       };
     },
   },
