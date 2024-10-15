@@ -181,7 +181,7 @@ export const timeToKill = (
     } else {
       results = {
         attackRounds: hits,
-        hitsPerKill: hits * attacker.unitCount,
+        hitsPerKill: hits * multiplier,
         splashDamageTargets: 1,
         time: hits * attacker.attackInterval,
       } as ttkInterface;
