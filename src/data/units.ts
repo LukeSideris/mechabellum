@@ -71,7 +71,7 @@ export const units: UnitLibraryInterface = {
     thumbnail: thumbnails['./thumbnails/units/crawler.png'] as string,
     level: 1,
     cost: 100,
-    hp: 292,
+    hp: 277,
     speed: 16,
     damage: 79,
     splashRadius: 0,
@@ -189,9 +189,9 @@ export const units: UnitLibraryInterface = {
     cost: 200,
     hp: 1149,
     speed: 6,
-    damage: 784 * 4, // 4 missiles
+    damage: 821 * 4, // 4 missiles
     splashRadius: 5.5,
-    attackInterval: 6.3,
+    attackInterval: 6.6,
     range: 180,
     flying: false,
     shootsUp: false,
@@ -345,7 +345,7 @@ export const units: UnitLibraryInterface = {
     cost: 300,
     hp: 18632,
     speed: 7,
-    damage: 10047,
+    damage: 10650,
     splashRadius: 15,
     attackInterval: 4.5,
     range: 100,
@@ -452,7 +452,7 @@ export const units: UnitLibraryInterface = {
     thumbnail: thumbnails['./thumbnails/units/overlord.png'] as string,
     level: 1,
     cost: 400,
-    hp: 16099,
+    hp: 15294,
     speed: 10,
     damage: 3742 * 4, // 4 missiles
     splashRadius: 7,
