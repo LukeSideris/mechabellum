@@ -19,6 +19,7 @@ export type UnitIdType =
   | 'steel_ball'
   | 'tarantula'
   | 'rhino'
+  | 'phantom_ray'
   | 'hacker'
   | 'wasp'
   | 'phoenix'
@@ -256,6 +257,25 @@ export const units: UnitLibraryInterface = {
     unitCount: 1,
     rows: 1,
     area: 30 * 30,
+  },
+  phantom_ray: {
+    name: 'Phantom Ray',
+    id: 'phantom_ray',
+    card: cards['./cards/units/phantom_ray.jpg'] as string,
+    thumbnail: thumbnails['./thumbnails/units/phantom_ray.png'] as string,
+    level: 1,
+    cost: 200,
+    hp: 3159,
+    speed: 16,
+    damage: 1036 * 2, // 2 missiles
+    splashRadius: 3,
+    attackInterval: 3,
+    range: 65,
+    flying: true,
+    shootsUp: true,
+    unitCount: 3,
+    rows: 1,
+    area: 50 * 20,
   },
   hacker: {
     name: 'Hacker',
