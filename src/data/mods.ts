@@ -2,6 +2,7 @@ import { UnitInterface, UnitIdType } from './units';
 import thumbnailAerial from './thumbnails/specialists/aerial.png';
 import thumbnailFortifiedSpecialist from './thumbnails/specialists/fortifiedSpecialist.png';
 import thumbnailCostControl from './thumbnails/specialists/costControl.png';
+import thumbnailAmplifySpecialist from './thumbnails/specialists/amplify.png';
 import thumbnailSpeed from './thumbnails/specialists/speed.png';
 import thumbnailMassProduced from './thumbnails/mods/massProduced.png';
 import thumbnailAssault from './thumbnails/mods/assault.png';
@@ -35,6 +36,7 @@ export const starterSpecialists = [
   'costControl',
   'speed',
   'aerial',
+  'amplify',
 ];
 export const attackResearch = ['rcAttack1', 'rcAttack2'];
 export const defenseResearch = ['rcDefense1', 'rcDefense2'];
@@ -74,6 +76,14 @@ export const mods = {
     thumbnail: thumbnailAerial as string,
     modifyHpAerial: 0.13,
     modifyDamageAerial: 0.13,
+  },
+  amplify: {
+    name: 'Amplify Specialist',
+    id: 'amplify',
+    description: 'Get 3 small Amplifying Cores, which boost unit attack and HP by 20%. For this calculator, the stats are applied to all units.',
+    thumbnail: thumbnailAmplifySpecialist as string,
+    modifyHp: 0.2,
+    modifyDamage: 0.2,
   },
 
   // Unit-specific mods
