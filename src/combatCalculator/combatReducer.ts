@@ -12,6 +12,7 @@ import applyUnitMods from 'src/algorithms/applyUnitMods';
 // make copies of baseUnits to modify with unit levels
 const baseUnitsA = structuredClone(baseUnits);
 const baseUnitsB = structuredClone(baseUnits);
+console.log(baseUnits);
 
 export type CombatResultsInterface = {
   [key in UnitIdType]: ttkInterface;
