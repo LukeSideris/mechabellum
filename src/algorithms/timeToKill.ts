@@ -225,6 +225,19 @@ export const timeToKill = (
     totalHitsRequired = target.unitCount * hitsRequired;
   }
 
+  if (attacker.id === 'raiden') {
+    // the raiden can hit 3 different targets at once
+    const targetGroups = Math.ceil(target.unitCount / 3);
+    const totalHitsRequired = hitsRequired * targetGroups;
+    
+    results = {
+      attackRounds: totalHitsRequired,
+      hitsPerKill: hitsRequired,
+      splashDamageTargets: 1,
+      time: totalHitsRequired * attacker.attackInterval,
+    } as ttkInterface;
+  }
+
   // if results are not calculated from a special case, use the default formula
   if (!results) {
     const splashDamageTargets = calculateSplashDamageTargets(attacker, target);

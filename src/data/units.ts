@@ -29,6 +29,7 @@ export type UnitIdType =
   | 'melting_point'
   | 'fortress'
   | 'sandworm'
+  | 'raiden'
   | 'overlord'
   | 'war_factory'
   | 'fire_badger'
@@ -237,7 +238,7 @@ export const units: UnitLibraryInterface = {
     shootsUp: false,
     unitCount: 1,
     rows: 1,
-    area: 30 * 30, // TODO check me
+    area: 30 * 30,
   },
   rhino: {
     name: 'Rhino',
@@ -404,8 +405,8 @@ export const units: UnitLibraryInterface = {
     hp: 30907,
     speed: 6,
     damage: 1,
+    damageMax: 7952,
     // todo - recalc. patch notes changed.
-    damageMax: 6721,
     damageTable: [
       1,
       4,
@@ -465,6 +466,25 @@ export const units: UnitLibraryInterface = {
     rows: 1,
     area: 40 * 40,
   },
+  raiden: {
+    name: 'Raiden',
+    id: 'raiden',
+    card: cards['./cards/units/placeholder.jpg'] as string,
+    thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
+    level: 1,
+    cost: 400,
+    hp: 15132,
+    speed: 10,
+    damage: 5304,
+    splashRadius: 0,
+    attackInterval: 4.6,
+    range: 110,
+    flying: true,
+    shootsUp: true,
+    unitCount: 1,
+    rows: 1,
+    area: 40 * 40,
+  },
   overlord: {
     name: 'Overlord',
     id: 'overlord',
@@ -520,7 +540,7 @@ export const units: UnitLibraryInterface = {
     shootsUp: false,
     unitCount: 3,
     rows: 1,
-    area: 50 * 20, // TODO check me
+    area: 50 * 20,
   },
   sabertooth: {
     // add a shy to control line breaks
@@ -530,17 +550,17 @@ export const units: UnitLibraryInterface = {
     thumbnail: thumbnails['./thumbnails/units/sabertooth.png'] as string,
     level: 1,
     cost: 200,
-    hp: 15258,
+    hp: 14801,
     speed: 8,
-    damage: 6000,
+    damage: 7372,
     splashRadius: 6.0,
-    attackInterval: 3.0,
+    attackInterval: 3.6,
     range: 95,
     flying: false,
     shootsUp: false,
     unitCount: 1,
     rows: 1,
-    area: 30 * 30, // TODO check me
+    area: 30 * 30,
   },
   typhoon: {
     name: 'Typhoon',
@@ -559,7 +579,7 @@ export const units: UnitLibraryInterface = {
     shootsUp: true,
     unitCount: 2,
     rows: 1,
-    area: 40 * 20, // TODO check me
+    area: 40 * 20,
   },
   farseer: {
     name: 'Farseer',
@@ -578,6 +598,6 @@ export const units: UnitLibraryInterface = {
     shootsUp: true,
     unitCount: 1,
     rows: 1,
-    area: 30 * 30, // TODO check me
+    area: 30 * 30,
   },
 };
