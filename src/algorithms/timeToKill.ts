@@ -266,8 +266,14 @@ export const timeToKill = (
     const costRatio = attacker.cost / target.cost;
     const killRatio = ttkTarget.time / results.time;
 
-    results.effectiveness = killRatio;
-    results.costEfficiency = killRatio / costRatio;
+    if (ttkTarget.time === Infinity) {
+      results.effectiveness = 1;
+      results.costEfficiency = 1;
+    }
+    else {
+      results.effectiveness = killRatio;
+      results.costEfficiency = killRatio / costRatio;
+    }
 
     if (attacker.unitCount > 1 && attacker.id !== target.id) {
       // factor in unit deaths during the time it takes to kill the target
