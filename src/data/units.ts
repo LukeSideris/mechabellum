@@ -191,7 +191,7 @@ export const units: UnitLibraryInterface = {
     cost: 200,
     hp: 1149,
     speed: 6,
-    damage: 821 * 4, // 4 missiles
+    damage: 796 * 4, // 4 missiles
     splashRadius: 5.5,
     attackInterval: 6.6,
     range: 180,
@@ -228,7 +228,7 @@ export const units: UnitLibraryInterface = {
     thumbnail: thumbnails['./thumbnails/units/tarantula.png'] as string,
     level: 1,
     cost: 200,
-    hp: 15631,
+    hp: 15162,
     speed: 8,
     damage: 469,
     splashRadius: 5.0,
@@ -343,14 +343,14 @@ export const units: UnitLibraryInterface = {
     level: 1,
     cost: 300,
     hp: 15001,
-    speed: 12,
+    speed: 10,
     damage: 405,
     splashRadius: 8,
     // base attack interval: 1.6s
     // the wraith weapons can attack independently
     // so we divide the base attack interval by the number of artillery beams
     attackInterval: 0.4,
-    range: 55,
+    range: 60,
     flying: true,
     shootsUp: true,
     unitCount: 1,
@@ -491,8 +491,8 @@ export const units: UnitLibraryInterface = {
     card: cards['./cards/units/overlord.jpg'] as string,
     thumbnail: thumbnails['./thumbnails/units/overlord.png'] as string,
     level: 1,
-    cost: 400,
-    hp: 15294,
+    cost: 500,
+    hp: 21412,
     speed: 10,
     damage: 3742 * 4, // 4 missiles
     splashRadius: 7,
