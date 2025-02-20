@@ -13,6 +13,7 @@ export type UnitIdType =
   | 'fang'
   | 'arclight'
   | 'marksman'
+  | 'hound'
   | 'mustang'
   | 'sledgehammer'
   | 'stormcaller'
@@ -142,6 +143,25 @@ export const units: UnitLibraryInterface = {
     rows: 1,
     area: 20 * 20,
   },
+  hound: {
+    name: 'Hound',
+    id: 'hound',
+    card: cards['./cards/units/placeholder.jpg'] as string,
+    thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
+    level: 1,
+    cost: 100,
+    hp: 848,
+    speed: 10,
+    damage: 267,
+    splashRadius: 6,
+    attackInterval: 2.4,
+    range: 70,
+    flying: false,
+    shootsUp: false,
+    unitCount: 6,
+    rows: 2,
+    area: 40 * 20,
+  },
   mustang: {
     name: 'Mustang',
     id: 'mustang',
@@ -269,7 +289,7 @@ export const units: UnitLibraryInterface = {
     cost: 200,
     hp: 19297,
     speed: 16,
-    damage: 3297,
+    damage: 3560,
     splashRadius: 6,
     attackInterval: 0.9,
     range: 0,
@@ -405,7 +425,7 @@ export const units: UnitLibraryInterface = {
     cost: 400,
     hp: 35332,
     speed: 6,
-    damage: 88,
+    damage: 90,
     splashRadius: 15,
     attackInterval: 0.1,
     range: 95,

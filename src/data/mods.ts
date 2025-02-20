@@ -278,16 +278,15 @@ export const mods = {
     name: 'Improved Tarantula',
     id: 'improvedTarantula',
     description:
-      'Increase Tarantula’s attack by 20%, HP by 20%, and movement speed by 5 but increases recruitment cost by 50',
+      'Increase Tarantula’s HP by 20%, and movement speed by 3 but increases recruitment cost by 50',
     thumbnail: thumbnailImproved as string,
     appliesTo: 'tarantula',
-    modifyHp: 0.2,
     modifyDamage: 0.2,
     modifier: (unit: UnitInterface) => {
       return {
         ...unit,
         cost: unit.cost + 50,
-        speed: unit.speed + 5,
+        speed: unit.speed + 3,
       };
     },
   },
@@ -569,11 +568,11 @@ export const mods = {
     name: 'Mass-Produced Fortress',
     id: 'massProducedFortress',
     description:
-      'Decreases the recruitment cost of Fortress by 100 but decreases attack by 30% and HP by 30%',
+      'Decreases the recruitment cost of Fortress by 100 but decreases attack by 40% and HP by 40%',
     thumbnail: thumbnailMassProduced as string,
     appliesTo: 'fortress',
-    modifyHp: -0.3,
-    modifyDamage: -0.3,
+    modifyHp: -0.4,
+    modifyDamage: -0.4,
     modifier: (unit: UnitInterface) => {
       return {
         ...unit,
