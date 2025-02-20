@@ -158,7 +158,7 @@ export const units: UnitLibraryInterface = {
     range: 70,
     flying: false,
     shootsUp: false,
-    unitCount: 6,
+    unitCount: 5,
     rows: 2,
     area: 40 * 20,
   },
