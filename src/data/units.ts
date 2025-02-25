@@ -11,9 +11,9 @@ const thumbnails = import.meta.glob('./thumbnails/units/*.png', {
 export type UnitIdType =
   | 'crawler'
   | 'fang'
+  | 'hound'
   | 'arclight'
   | 'marksman'
-  | 'hound'
   | 'mustang'
   | 'sledgehammer'
   | 'stormcaller'
@@ -105,6 +105,25 @@ export const units: UnitLibraryInterface = {
     rows: 3,
     area: 50 * 20,
   },
+  hound: {
+    name: 'Hound',
+    id: 'hound',
+    card: cards['./cards/units/hound.jpg'] as string,
+    thumbnail: thumbnails['./thumbnails/units/hound.png'] as string,
+    level: 1,
+    cost: 100,
+    hp: 848,
+    speed: 10,
+    damage: 267,
+    splashRadius: 6,
+    attackInterval: 2.4,
+    range: 70,
+    flying: false,
+    shootsUp: false,
+    unitCount: 5,
+    rows: 2,
+    area: 40 * 20,
+  },
   arclight: {
     name: 'Arclight',
     id: 'arclight',
@@ -142,25 +161,6 @@ export const units: UnitLibraryInterface = {
     unitCount: 1,
     rows: 1,
     area: 20 * 20,
-  },
-  hound: {
-    name: 'Hound',
-    id: 'hound',
-    card: cards['./cards/units/placeholder.jpg'] as string,
-    thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
-    level: 1,
-    cost: 100,
-    hp: 848,
-    speed: 10,
-    damage: 267,
-    splashRadius: 6,
-    attackInterval: 2.4,
-    range: 70,
-    flying: false,
-    shootsUp: false,
-    unitCount: 5,
-    rows: 2,
-    area: 40 * 20,
   },
   mustang: {
     name: 'Mustang',
@@ -509,8 +509,8 @@ export const units: UnitLibraryInterface = {
   raiden: {
     name: 'Raiden',
     id: 'raiden',
-    card: cards['./cards/units/placeholder.jpg'] as string,
-    thumbnail: thumbnails['./thumbnails/units/unknown.png'] as string,
+    card: cards['./cards/units/raiden.jpg'] as string,
+    thumbnail: thumbnails['./thumbnails/units/raiden.png'] as string,
     level: 1,
     cost: 400,
     hp: 15888,
