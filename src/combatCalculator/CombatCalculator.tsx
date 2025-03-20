@@ -160,7 +160,7 @@ function CombatCalculatorPage() {
       </div>
       <div className={classes.infopanel}>
         <strong>Instructions</strong>
-        <span className={classes.gameVersion}>patch 1.3.0.4</span>
+        <span className={classes.gameVersion}>patch 1.3.1</span>
         <ul>
           <li>Select mods to highlight changes in combat efficiency</li>
           <li>Choose an attacker to see how selected mods apply to fights</li>
