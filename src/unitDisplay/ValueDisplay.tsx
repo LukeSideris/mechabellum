@@ -18,6 +18,9 @@ const ValueDisplay = ({
   formatter?: (value: number) => string | number;
   inverted?: boolean;
 }) => {
+  // mitigate floating point bug
+  const diff = parseFloat(Math.abs(modded - baseline).toPrecision(12));
+
   return (
     <>
       <span className={classes.baseline}>{formatter(modded || baseline)}</span>{' '}
@@ -25,11 +28,11 @@ const ValueDisplay = ({
         <span className={classes.modded}>
           {modded > baseline ? (
             <span className={!inverted ? classes.increase : classes.decrease}>
-              +{formatter(Math.abs(modded - baseline))}
+              +{formatter(diff)}
             </span>
           ) : (
             <span className={!inverted ? classes.decrease : classes.increase}>
-              -{formatter(Math.abs(modded - baseline))}
+                -{formatter(diff)}
             </span>
           )}
         </span>

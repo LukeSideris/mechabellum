@@ -290,6 +290,54 @@ export const mods = {
       };
     },
   },
+  extendedRangeSabertooth: {
+    name: 'Extended Range Sabertooth',
+    id: 'extendedRangeSabertooth',
+    description:
+      'Increase Sabertooth’s range by 30 but decreases attack by 20% and HP by 40%',
+    thumbnail: thumbnailExtendedRange as string,
+    appliesTo: 'sabertooth',
+    modifyHp: -0.4,
+    modifyDamage: -0.2,
+    modifier: (unit: UnitInterface) => {
+      return {
+        ...unit,
+        range: unit.range + 30,
+      };
+    },
+  },
+  massProducedSabertooth: {
+    name: 'Mass-Produced Sabertooth',
+    id: 'massProducedSabertooth',
+    description:
+      'Decreases the recruitment cost of Sabertooth by 100 but decreases attack by 40%, and HP by 40%',
+    thumbnail: thumbnailMassProduced as string,
+    appliesTo: 'sabertooth',
+    modifyHp: -0.4,
+    modifyDamage: -0.4,
+    modifier: (unit: UnitInterface) => {
+      return {
+        ...unit,
+        cost: unit.cost - 100,
+      };
+    },
+  },
+  improvedSabertooth: {
+    name: 'Improved Sabertooth',
+    id: 'improvedSabertooth',
+    description:
+      'Increase Sabertooth’s HP by 20%, and decreases attack interval by 0.6s, but increases recruitment cost by 50',
+    thumbnail: thumbnailImproved as string,
+    appliesTo: 'sabertooth',
+    modifyHp: 0.2,
+    modifier: (unit: UnitInterface) => {
+      return {
+        ...unit,
+        cost: unit.cost + 50,
+        attackInterval: unit.attackInterval - 0.6,
+      };
+    },
+  },
   massProducedWasp: {
     name: 'Mass-Produced Wasp',
     id: 'massProducedWasp',
