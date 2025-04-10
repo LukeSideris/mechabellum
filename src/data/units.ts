@@ -270,7 +270,7 @@ export const units: UnitLibraryInterface = {
     cost: 200,
     hp: 14801,
     speed: 8,
-    damage: 7962,
+    damage: 8360,
     splashRadius: 5.0,
     attackInterval: 3.6,
     range: 95,
@@ -365,7 +365,7 @@ export const units: UnitLibraryInterface = {
     cost: 200,
     hp: 3159,
     speed: 16,
-    damage: 1036 * 2, // 2 missiles
+    damage: 1087 * 2, // 2 missiles
     splashRadius: 3,
     attackInterval: 3,
     range: 65,
@@ -534,10 +534,10 @@ export const units: UnitLibraryInterface = {
     cost: 500,
     hp: 22054,
     speed: 10,
-    damage: 5039 * 4, // 4 missiles
+    damage: 4855 * 4, // 4 missiles
     splashRadius: 7,
     attackInterval: 4.6,
-    range: 115,
+    range: 120,
     flying: true,
     shootsUp: true,
     unitCount: 1,

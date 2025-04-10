@@ -582,16 +582,15 @@ export const mods = {
     name: 'Improved Melting Point',
     id: 'improvedMeltingPoint',
     description:
-      'Increase Melting Point’s attack by 50%, HP by 20%, and range by 20 but increases recruitment cost by 100',
+      'Increase Melting Point’s HP by 20% and range by 10 but increases recruitment cost by 100',
     thumbnail: thumbnailImproved as string,
     appliesTo: 'melting_point',
     modifyHp: 0.2,
-    modifyDamage: 0.5,
     modifier: (unit: UnitInterface) => {
       return {
         ...unit,
         cost: unit.cost + 100,
-        range: unit.range + 20,
+        range: unit.range + 10,
       };
     },
   },
